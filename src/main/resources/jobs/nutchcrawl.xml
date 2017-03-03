@@ -1,0 +1,57 @@
+<beans:beans xmlns="http://www.springframework.org/schema/batch"
+     xmlns:beans="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:hdp="http://www.springframework.org/schema/hadoop"
+     xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/hadoop
+    	   http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
+           http://www.springframework.org/schema/batch
+           http://www.springframework.org/schema/batch/spring-batch-2.2.xsd">
+
+	<beans:bean class="org.springframework.batch.core.launch.support.RunIdIncrementer" scope="job" id="runIdIncrementerXml"></beans:bean>
+
+    <job id="nutch-inject" incrementer="runIdIncrementerXml" restartable="true">
+        <step id="nutch-copy-seed" next="nutch-init-inject">
+        	<tasklet start-limit="1" ref="copySeedTasklet"></tasklet>
+        </step>
+        <step id="nutch-init-inject">
+        	<tasklet ref="nutchInjectToolTasklet"></tasklet>
+        </step>
+    </job>
+    
+     <job id="nutch-copy-jar" incrementer="runIdIncrementerXml" restartable="true">
+        <step id="nutch-copy-jobjar">
+         <tasklet ref="uploadNutchJobJarTasklet" allow-start-if-complete="true"></tasklet>
+        </step>
+    </job>
+    
+    
+    <job id="nutch-crawl" incrementer="runIdIncrementerXml" restartable="true">
+    <!-- 
+        <step id="nutch-copy-jobjar" next="nutch-generate-step">
+         <tasklet ref="uploadNutchJobJarTasklet" allow-start-if-complete="true"></tasklet>
+        </step>
+        <end> cause whole job to end.
+ 	-->
+        <step id="nutch-generate-step">
+        	<tasklet ref="nutchGenerateToolTasklet"></tasklet>
+        	<end on="FAILED"/>
+        	<next on="*" to="nutch-fetching-step"/>
+        	<listeners>
+        		<listener ref="generateStepExecutionListener"></listener>
+        	</listeners>
+        </step>
+        <step id="nutch-fetching-step" next="nutch-parsing-step">
+        	<tasklet ref="nutchFetchToolTasklet"></tasklet>
+        </step>
+        <step id="nutch-parsing-step" next="nutch-updatedb-step">
+        	<tasklet ref="nutchParseToolTasklet"></tasklet>
+        </step>
+        <!-- next="nutch-generate-step" -->
+        <step id="nutch-updatedb-step">
+        	<tasklet ref="nutchUpdateDbToolTasklet"></tasklet>
+        </step>
+    </job>
+</beans:beans>
