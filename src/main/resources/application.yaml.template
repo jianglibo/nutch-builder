@@ -7,7 +7,7 @@ spring:
         validation-query: select 1 from INFORMATION_SCHEMA.SYSTEM_USERS
         test-on-borrow: true
     secondarydatasource:
-        url: jdbc:mysql://localhost:3306/boottemplate?useUnicode=true&characterEncoding=utf-8
+        url: jdbc:mysql://localhost:3306/nutchbuilder?useUnicode=true&characterEncoding=utf-8
         username: nutchbuilder
         password: 123456
         driver-class-name: com.mysql.jdbc.Driver
@@ -17,13 +17,11 @@ spring:
         test-on-borrow: true
         max-wait: 10000
     jpa:
-        database: HSQL
         show-sql: true
-        generate-ddl: true
-#        hibernate:
-#            ddl-auto: update
-#            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-#            dialect: org.hibernate.dialect.H2Dialect
+        hibernate:
+            ddl-auto: update
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     messages:
         basename: messages/shared,messages/children/format,messages/children/validate
         always-use-message-format: false

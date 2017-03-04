@@ -15,7 +15,7 @@ import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
-@Configuration
+// @Configuration
 public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
 
 	@Autowired

@@ -29,3 +29,4 @@ jobproperties/**/*.job
 jobproperties/libs/
 /testtmp
 *.class
+.vscode

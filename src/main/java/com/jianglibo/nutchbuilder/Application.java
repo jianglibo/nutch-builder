@@ -25,13 +25,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableSpringDataWebSupport
-//@ImportResource(locations={"classpath:registrarOfJobs.xml", "classpath:repositories.xml", "classpath:hadoop-config.xml"})
 @EnableJpaRepositories(basePackages="com.jianglibo.nutchbuilder.repository")
 @EnableWebMvc
 @EnableBatchProcessing
 @EnableAsync
 @EnableScheduling
-//@EnableJpaAuditing(auditorAwareRef="externalEntityLifeCycleAware")
 @EnableAspectJAutoProxy
 public class Application {
 
