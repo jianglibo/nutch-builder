@@ -32,8 +32,8 @@ eclipse {
 }
 
 remotes {
-  qingyun01 {
-    host = 'www.xxx.xx'
+  nutchbuilderweb {
+    host = webhost
     user = 'root'
     knownHosts = allowAnyHosts
     identity = file(identityFile)
@@ -143,3 +143,68 @@ eclipse {
 task wrapper(type: Wrapper) {
     gradleVersion = '3.2.1'
 }
+
+// /etc/systemd/system/
+// PIDFile=/var/run/chronyd.pid
+
+task instllSystemd {
+  doLast {
+    ssh.run {
+      session(remotes.nutchbuilderweb) {
+        // Execute a command
+        put from: 'systemd/nutchbuilder.service', into: '/etc/systemd/system/'
+        put from: 'bin/nutchbuilder.jar', into: '/var/nutchbuilder/'
+        // execute 'systemctl daemon-reload'
+        execute 'systemctl enable nutchbuilder.service'
+        // execute 'systemctl start nutchbuilder.service'
+      }
+    }
+  }
+}
+
+// [Unit]
+// Description=NTP client/server
+// After=ntpdate.service sntp.service ntpd.service
+// Conflicts=ntpd.service
+
+// [Service]
+// Type=forking
+// PIDFile=/var/run/chronyd.pid
+// EnvironmentFile=-/etc/sysconfig/chronyd
+// ExecStart=/usr/sbin/chronyd $OPTIONS
+// ExecStartPost=/usr/libexec/chrony-helper update-daemon
+
+// [Install]
+// WantedBy=multi-user.target
+
+
+// [Unit]
+// Description=Postfix Mail Transport Agent
+// After=syslog.target network.target
+// Conflicts=sendmail.service exim.service
+
+// [Service]
+// Type=forking
+// PIDFile=/var/spool/postfix/pid/master.pid
+// EnvironmentFile=-/etc/sysconfig/network
+// ExecStartPre=-/usr/libexec/postfix/aliasesdb
+// ExecStartPre=-/usr/libexec/postfix/chroot-update
+// ExecStart=/usr/sbin/postfix start
+// ExecReload=/usr/sbin/postfix reload
+// ExecStop=/usr/sbin/postfix stop
+
+// [Install]
+// WantedBy=multi-user.target
+
+
+// [Unit]
+// Description=myapp
+// After=syslog.target
+
+// [Service]
+// User=myapp
+// ExecStart=/var/myapp/myapp.jar
+// SuccessExitStatus=143
+
+// [Install]
+// WantedBy=multi-user.target
