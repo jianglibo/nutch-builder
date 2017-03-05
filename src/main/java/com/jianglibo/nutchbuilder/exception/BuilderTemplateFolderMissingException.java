@@ -7,6 +7,6 @@ public class BuilderTemplateFolderMissingException extends NutchBuilderException
 	private static final int code = 1001;
 
 	public BuilderTemplateFolderMissingException() {
-		super(code, BuilderTemplateFolderMissingException.class.getSimpleName());
+		super(code, "templateNotExists", "It means template with this name doesn't exist on disk.");
 	}
 }

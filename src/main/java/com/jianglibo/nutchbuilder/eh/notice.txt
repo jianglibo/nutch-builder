@@ -1,1 +1,0 @@
-This package almost copy from another project in github. https://github.com/jirutka/spring-rest-exception-handler

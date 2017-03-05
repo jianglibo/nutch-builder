@@ -5,5 +5,5 @@ package com.jianglibo.nutchbuilder.repository;
  * @author jianglibo@gmail.com
  *
  */
-public interface NutchBuilderTemplateRepositoryCustom {
+public interface RoleRepositoryCustom {
 }

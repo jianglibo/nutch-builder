@@ -1,5 +1,7 @@
 package com.jianglibo.nutchbuilder;
 
+import java.io.UnsupportedEncodingException;
+
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,6 +48,10 @@ public abstract class M3958TsBase {
         result.getResponse().getHeaderNames().forEach(hn -> {
             printme(hn + ":" + result.getResponse().getHeaderValue(hn));
         });
+        
+    }
+    public void printContent(MvcResult result) throws UnsupportedEncodingException {
+        printme(result.getResponse().getContentAsString());
         
     }
 }

@@ -25,8 +25,8 @@ import org.springframework.web.servlet.handler.HandlerExceptionResolverComposite
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
-import com.jianglibo.nutchbuilder.eh.DomainExceptionResolver;
 import com.jianglibo.nutchbuilder.exception.BuilderTemplateFolderMissingException;
+import com.jianglibo.nutchbuilder.exception.DomainExceptionResolver;
 
 /**
  * @author jianglibo@gmail.com

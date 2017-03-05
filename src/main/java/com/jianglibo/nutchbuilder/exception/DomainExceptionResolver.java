@@ -1,4 +1,4 @@
-package com.jianglibo.nutchbuilder.eh;
+package com.jianglibo.nutchbuilder.exception;
 
 import java.lang.reflect.UndeclaredThrowableException;
 
@@ -10,8 +10,6 @@ import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
-
-import com.jianglibo.nutchbuilder.exception.BuilderTemplateFolderMissingException;
 
 public class DomainExceptionResolver  extends  AbstractHandlerExceptionResolver {
 
@@ -29,9 +27,10 @@ public class DomainExceptionResolver  extends  AbstractHandlerExceptionResolver 
 			UndeclaredThrowableException ute = (UndeclaredThrowableException) ex;
 			Throwable tb = ute.getUndeclaredThrowable();
 			if (tb instanceof BuilderTemplateFolderMissingException) {
-				ModelAndView mav = new ModelAndView(new MappingJackson2JsonView());
+				MappingJackson2JsonView m2v = new MappingJackson2JsonView();
+				ModelAndView mav = new ModelAndView(m2v);
 				mav.setStatus(HttpStatus.CREATED);
-				mav.addObject("hello", "world");
+				mav.addObject("error", ((NutchBuilderException)tb).convert2ForClientJson());
 				return mav;
 			}
 		}

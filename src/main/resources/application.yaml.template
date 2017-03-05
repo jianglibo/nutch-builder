@@ -112,4 +112,4 @@ spring:
             names: a,b,c
             enabled: false
 myapp:
-  disableCsrf: false
+  disableCsrf: true

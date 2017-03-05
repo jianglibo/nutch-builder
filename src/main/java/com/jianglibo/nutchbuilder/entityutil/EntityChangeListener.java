@@ -25,18 +25,6 @@ public class EntityChangeListener {
 		EntityChangeListener.applicationConfig = applicationConfig;
 	}
 	
-//	@EventListener
-//	public void nutchBuildTemplateHandler(NutchBuilderTemplateEvent event)  throws NutchBuilderException {
-//		NutchBuilderTemplate nbt = (NutchBuilderTemplate) event.getSource();
-//		Path rp = applicationConfig.getTemplateRootPath();
-//		if (!Files.exists(rp.resolve(nbt.getName()))) {
-//			throw new BuilderTemplateFolderMissingException();
-//		}
-//		if (!rp.resolve(nbt.getName()).normalize().startsWith(rp)) {
-//			throw new BuilderTemplateFolderBeyondBoundaryException();
-//		}
-//	}
-	
 	/**
 	 * BeforeCreateEvent
 	 * BeforeCreateEnvt
@@ -58,9 +46,4 @@ public class EntityChangeListener {
 			}
 		}
 	}
-//	
-//	@PreUpdate
-//	public void touchForUpdate(Object target) throws NutchBuilderException {
-//		
-//	}
 }

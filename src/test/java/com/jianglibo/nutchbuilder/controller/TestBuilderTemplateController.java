@@ -4,9 +4,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.attoparser.trace.MarkupTraceEvent.ProcessingInstructionTraceEvent;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultHandler;
 
@@ -37,6 +39,7 @@ public class TestBuilderTemplateController extends MvcBase {
             @Override
             public void handle(MvcResult result) throws Exception {
                 printHeaders(result);
+                printContent(result);
                 long count = nbtRepo.count();
                 assertThat("there should be no item", count, equalTo(0L));
             }
@@ -56,10 +59,12 @@ public class TestBuilderTemplateController extends MvcBase {
             @Override
             public void handle(MvcResult result) throws Exception {
                 printHeaders(result);
-                long count = nbtRepo.count();
-                assertThat("there should be 1 item", count, equalTo(1L));
             }
         }, status().is(201));
+        
+        Thread.sleep(100);
+        long count = nbtRepo.count();
+        assertThat("there should be 1 item", count, equalTo(1L));
     }
 
     /* (non-Javadoc)
