@@ -159,37 +159,86 @@ task printVars {
 	}
 }
 
-task installSystemd {
+task installSystemd(dependsOn: bootRepackage) {
   doLast {
-    def jn = "build/libs/nutchbuilder.jar"
-    copy {
-      	from 'build/libs/' + jar.baseName + "-" + jar.version + ".jar"
-       	into "build/libs"
-       	rename { String fn ->
-       		'nutchbuilder.jar'
-       	}
-    }
+    // def jn = "build/libs/nutchbuilder.jar"
+    // copy {
+    //   	from 'build/libs/' + jar.baseName + "-" + jar.version + ".jar"
+    //    	into "build/libs"
+    //    	rename { String fn ->
+    //    		'nutchbuilder.jar'
+    //    	}
+    // }
+  def clientJarName = 'build/libs/' + jar.baseName + "-" + jar.version + ".jar"
+  def serverJarName = '/var/nutchbuilder/nutchbuilder.jar'
+  def serverJarNameNew = '/var/nutchbuilder/' + jar.baseName + "-" + jar.version + ".jar"
   // journalctl to view log file.
   //  Failed at step EXEC spawning /var/nutchbuilder/nutchbuilder.jar: Permission denied
   // lsof -i :25
     ssh.run {
       session(remotes.nutchbuilderweb) {
         // execute 'systemctl daemon-reload'
-        execute 'mkdir -p /var/nutchbuilder/db'
+        execute 'systemctl stop nutchbuilder'
+        execute "rm -f ${serverJarName}.bak", ignoreError: true
+        execute "mv $serverJarName ${serverJarName}.bak", ignoreError: true
+        execute "mv $serverJarNameNew $serverJarName", ignoreError: true
+        execute 'mkdir -p /var/nutchbuilder/db', ignoreError: true
+
         put from: 'systemd/nutchbuilder.service', into: '/etc/systemd/system/'
-        put from: jn , into: '/var/nutchbuilder/'
-        try {
-	        execute 'useradd nutchbuilder'
-	    } catch (Exception e) {
-	    	println e
-	    }
+        put from: clientJarName , into: serverJarName
+        execute 'useradd nutchbuilder', ignoreError: true
         execute 'chown -R nutchbuilder:nutchbuilder /var/nutchbuilder'
         execute 'chmod +x /var/nutchbuilder/nutchbuilder.jar'
         execute 'systemctl enable nutchbuilder.service'
-        // execute 'systemctl start nutchbuilder.service'
+        execute 'systemctl start nutchbuilder.service'
       }
     }
   }
+}
+
+task doRegression {
+  doLast {
+    def clientJarName = 'build/libs/' + jar.baseName + "-" + jar.version + ".jar"
+    def serverJarName = '/var/nutchbuilder/nutchbuilder.jar'
+    def serverJarNameNew = '/var/nutchbuilder/' + jar.baseName + "-" + jar.version + ".jar"
+    ssh.run {
+      session(remotes.nutchbuilderweb) {
+        // execute 'systemctl daemon-reload'
+        execute 'systemctl stop nutchbuilder'
+        execute "rm -f ${serverJarName}.bak.bak", ignoreError: true
+        execute "mv ${serverJarName} ${serverJarName}.bak.bak", ignoreError: true
+        execute "mv ${serverJarName}.bak ${serverJarName}", ignoreError: true
+        execute 'chown -R nutchbuilder:nutchbuilder /var/nutchbuilder'
+        execute 'chmod +x /var/nutchbuilder/nutchbuilder.jar'
+        execute 'systemctl start nutchbuilder.service'
+      }
+    }
+  }
+}
+
+task uploadTemplate {
+  doLast {
+    def srvd = "/home/nutchbuilder/nutchBuilderRoot"
+    def tsrc = 'templateRoot/apache-nutch-2.3.1'
+    ssh.run {
+      session(remotes.nutchbuilderweb) {
+        // execute 'systemctl daemon-reload'
+        execute "mkdir -p ${srvd}", ignoreError: true
+        put from: tsrc, into: srvd
+        execute "chown -R nutchbuilder:nutchbuilder ${srvd}"
+      }
+    }
+  }
+}
+
+task restartWeb {
+  doLast {
+     ssh.run {
+       session(remotes.nutchbuilderweb) {
+        execute 'systemctl restart nutchbuilder.service'
+      }
+     }
+    }
 }
 
 task eliminateBom {

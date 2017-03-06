@@ -30,3 +30,4 @@ jobproperties/libs/
 /testtmp
 *.class
 .vscode
+templateRoot/
