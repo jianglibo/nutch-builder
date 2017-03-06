@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.controller;
+package com.jianglibo.nutchbuilder.controller;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.batch;
+package com.jianglibo.nutchbuilder.batch;
 
 public class Person {
     private String lastName;

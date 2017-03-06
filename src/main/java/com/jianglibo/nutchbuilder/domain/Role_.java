@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.domain;
+package com.jianglibo.nutchbuilder.domain;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;

@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.domain;
+package com.jianglibo.nutchbuilder.domain;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import com.jianglibo.nutchbuilder.repository.NutchBuilderTemplateRepository;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年9月28日
  *
  */
 public class TestNutchBuilderTemplate extends Tbase {

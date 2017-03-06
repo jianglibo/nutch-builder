@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年10月12日
  *
  */
 public class JsonAssertUtil {
@@ -66,7 +65,7 @@ public class JsonAssertUtil {
 
 
     /**
-     * noKey的话，中间的都可以存在，在最后一个不能存在。
+     * noKey�Ļ����м�Ķ����Դ��ڣ������һ�����ܴ��ڡ�
      * 
      * @param jn
      * @param keys

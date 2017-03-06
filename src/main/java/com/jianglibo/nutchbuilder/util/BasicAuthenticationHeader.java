@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.util;
+package com.jianglibo.nutchbuilder.util;
 
 import java.util.Base64;
 
@@ -7,7 +7,6 @@ import org.apache.http.message.BasicHeader;
 
 /**
  * @author jianglibo@gmail.com
- *         2015�?8�?26�?
  *
  */
 public class BasicAuthenticationHeader {

@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.batch;
+package com.jianglibo.nutchbuilder.batch;
 
 import javax.sql.DataSource;
 

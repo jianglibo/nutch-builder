@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.config;
+package com.jianglibo.nutchbuilder.config;
 
 import java.util.ArrayList;
 import java.util.List;

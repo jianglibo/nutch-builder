@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.json;
+package com.jianglibo.nutchbuilder.json;
 
 import java.io.IOException;
 
@@ -54,10 +54,8 @@ public class TestProjectionJson {
 //    }
 //
 //    /**
-//     * 为了验证可以用一个class来serialize另一个class的对象。就是 spring data rest里面的projection概念。
 //     * 
 //     * @author jianglibo@gmail.com
-//     *         2015年9月30日
 //     *
 //     */
 //    public static class Pmodule extends SimpleModule {

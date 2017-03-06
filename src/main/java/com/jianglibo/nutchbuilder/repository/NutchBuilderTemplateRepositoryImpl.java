@@ -1,7 +1,3 @@
-/**
- * 2016 jianglibo@gmail.com
- *
- */
 package com.jianglibo.nutchbuilder.repository;
 
 import javax.persistence.EntityManager;
@@ -13,7 +9,6 @@ import com.jianglibo.nutchbuilder.domain.NutchBuilderTemplate;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年9月28日
  *
  */
 public class NutchBuilderTemplateRepositoryImpl extends SimpleJpaRepository<NutchBuilderTemplate, Long> implements NutchBuilderTemplateRepositoryCustom {

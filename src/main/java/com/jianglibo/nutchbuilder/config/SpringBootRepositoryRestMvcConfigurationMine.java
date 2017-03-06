@@ -1,7 +1,3 @@
-﻿/**
- * 2016 jianglibo@gmail.com
- *
- */
 package com.jianglibo.nutchbuilder.config;
 
 import java.util.List;
@@ -13,7 +9,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年9月28日
  *
  */
 @Configuration
@@ -33,7 +28,7 @@ public class SpringBootRepositoryRestMvcConfigurationMine /* extends SpringBootR
 
     /*
      * (non-Javadoc)
-     * 深入配置，这里可能产生影响。
+     * �������ã�������ܲ���Ӱ�졣
      * 
      * @see org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration#defaultMethodArgumentResolvers()
      */

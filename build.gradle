@@ -31,9 +31,13 @@ eclipse {
     }
 }
 
+springBoot {
+    executable = true
+}
+
 remotes {
   nutchbuilderweb {
-    host = webhost
+    host = "$nutchbuilderwebhost"
     user = 'root'
     knownHosts = allowAnyHosts
     identity = file(identityFile)
@@ -147,20 +151,64 @@ task wrapper(type: Wrapper) {
 // /etc/systemd/system/
 // PIDFile=/var/run/chronyd.pid
 
-task instllSystemd {
+task printVars {
+	doLast {
+		println jar.baseName + "-" + jar.version + ".jar"
+		println remotes.nutchbuilderweb.host
+		
+	}
+}
+
+task installSystemd {
   doLast {
+    def jn = "build/libs/nutchbuilder.jar"
+    copy {
+      	from 'build/libs/' + jar.baseName + "-" + jar.version + ".jar"
+       	into "build/libs"
+       	rename { String fn ->
+       		'nutchbuilder.jar'
+       	}
+    }
+  // journalctl to view log file.
+  //  Failed at step EXEC spawning /var/nutchbuilder/nutchbuilder.jar: Permission denied
+  // lsof -i :25
     ssh.run {
       session(remotes.nutchbuilderweb) {
-        // Execute a command
-        put from: 'systemd/nutchbuilder.service', into: '/etc/systemd/system/'
-        put from: 'bin/nutchbuilder.jar', into: '/var/nutchbuilder/'
         // execute 'systemctl daemon-reload'
+        execute 'mkdir -p /var/nutchbuilder/db'
+        put from: 'systemd/nutchbuilder.service', into: '/etc/systemd/system/'
+        put from: jn , into: '/var/nutchbuilder/'
+        try {
+	        execute 'useradd nutchbuilder'
+	    } catch (Exception e) {
+	    	println e
+	    }
+        execute 'chown -R nutchbuilder:nutchbuilder /var/nutchbuilder'
+        execute 'chmod +x /var/nutchbuilder/nutchbuilder.jar'
         execute 'systemctl enable nutchbuilder.service'
         // execute 'systemctl start nutchbuilder.service'
       }
     }
   }
 }
+
+task eliminateBom {
+	doLast {
+		sourceSets.main.java.each { file -> 
+            if (file.name.endsWith('.java')) {
+            	def c = file.getText('utf8')
+			 	file.setText(c, 'utf8')
+            }
+        }
+		sourceSets.test.java.each { file -> 
+            if (file.name.endsWith('.java')) {
+            	def c = file.getText('utf8')
+			 	file.setText(c, 'utf8')
+            }
+        }
+	}
+}
+
 
 // [Unit]
 // Description=NTP client/server

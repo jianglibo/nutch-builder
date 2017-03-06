@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.repository;
+package com.jianglibo.nutchbuilder.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

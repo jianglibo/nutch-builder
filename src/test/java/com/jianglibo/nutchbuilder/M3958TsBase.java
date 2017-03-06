@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年10月9日
  *
  */
 public abstract class M3958TsBase {

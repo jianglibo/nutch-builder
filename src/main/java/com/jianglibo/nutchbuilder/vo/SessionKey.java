@@ -1,12 +1,7 @@
-﻿/**
- * Copyright 2015 jianglibo@gmail.com
- *
- */
 package com.jianglibo.nutchbuilder.vo;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年12月12日
  *
  */
 public class SessionKey {

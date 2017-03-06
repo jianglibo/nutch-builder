@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.domain;
+package com.jianglibo.nutchbuilder.domain;
 
 import java.util.Date;
 import javax.annotation.Generated;

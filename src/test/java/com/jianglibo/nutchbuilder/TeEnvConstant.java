@@ -2,7 +2,6 @@ package com.jianglibo.nutchbuilder;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年10月10日
  *
  */
 public class TeEnvConstant {

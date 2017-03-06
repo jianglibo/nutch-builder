@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.util;
+package com.jianglibo.nutchbuilder.util;
 
 public class TaskFeedbackTemplate extends SendCloudTemplate {
     
@@ -6,7 +6,7 @@ public class TaskFeedbackTemplate extends SendCloudTemplate {
 
     public TaskFeedbackTemplate(String appname) {
         super("task_feedback", APPNAME);
-        setSubjectTpl("任务完成通知");
+        setSubjectTpl("�������֪ͨ");
         withVar(APPNAME, appname);
     }
 

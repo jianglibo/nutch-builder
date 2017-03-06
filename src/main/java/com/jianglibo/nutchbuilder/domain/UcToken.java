@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.domain;
+package com.jianglibo.nutchbuilder.domain;
 
 import java.time.Duration;
 import java.time.Instant;

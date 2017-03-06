@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.batch.learning;
+package com.jianglibo.nutchbuilder.batch.learning;
 
 import static org.junit.Assert.assertTrue;
 

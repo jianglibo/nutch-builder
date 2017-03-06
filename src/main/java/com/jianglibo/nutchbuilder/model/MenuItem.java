@@ -1,11 +1,12 @@
-﻿package com.jianglibo.nutchbuilder.model;
+package com.jianglibo.nutchbuilder.model;
 
 import java.util.Collection;
 import java.util.Set;
 
-import org.assertj.core.util.Sets;
-import org.assertj.core.util.Strings;
 import org.springframework.security.core.GrantedAuthority;
+
+import com.google.common.base.Strings;
+import com.google.common.collect.Sets;
 
 public class MenuItem {
 	

@@ -10,7 +10,6 @@ import com.jianglibo.nutchbuilder.domain.SourceFile;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年9月28日
  *
  */
 public class SourceFileRepositoryImpl extends SimpleJpaRepository<SourceFile, Long> implements SourceFileRepositoryCustom {

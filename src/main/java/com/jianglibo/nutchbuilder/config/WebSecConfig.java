@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.config;
+package com.jianglibo.nutchbuilder.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,6 @@ import com.jianglibo.nutchbuilder.config.userdetail.BootUserManagerConfigurer;
 /**
  * 
  * @author jianglibo@gmail.com
- *         2015年9月29日
  *
  */
 @Configuration

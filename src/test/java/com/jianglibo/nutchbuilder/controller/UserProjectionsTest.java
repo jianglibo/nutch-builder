@@ -13,7 +13,6 @@ import com.jianglibo.nutchbuilder.MvcBase;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年8月19日
  * 
  */
 public class UserProjectionsTest extends MvcBase {

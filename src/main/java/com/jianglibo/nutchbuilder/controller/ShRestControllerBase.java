@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.controller;
+package com.jianglibo.nutchbuilder.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +15,6 @@ import org.springframework.hateoas.Resources;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年8月19日
  *
  */
 public class ShRestControllerBase {

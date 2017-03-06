@@ -1,7 +1,3 @@
-﻿/**
- * 2016 jianglibo@gmail.com
- *
- */
 package com.jianglibo.nutchbuilder.config;
 
 import org.springframework.core.MethodParameter;
@@ -19,7 +15,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 /**
  * copy from RootResourceInformationHandlerMethodArgumentResolver
  * @author jianglibo@gmail.com
- *         2015年9月28日
  *
  */
 public class RootResourceInformationKnownHandlerMethodArgumentResolver /* implements HandlerMethodArgumentResolver*/ {

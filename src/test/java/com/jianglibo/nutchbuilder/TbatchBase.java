@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder;
+package com.jianglibo.nutchbuilder;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;

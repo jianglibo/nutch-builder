@@ -1,10 +1,9 @@
-﻿package com.jianglibo.nutchbuilder.util;
+package com.jianglibo.nutchbuilder.util;
 
 import java.util.UUID;
 
 /**
  * @author jianglibo@gmail.com
- *         2015�?8�?12�?
  *
  */
 public class UuidUtil {

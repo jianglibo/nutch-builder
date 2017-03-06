@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.util;
+package com.jianglibo.nutchbuilder.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public abstract class SendCloudTemplate {
 
     private final String from = "service@openscanner.cc";
 
-    private final String fromname = "网蛙科技";
+    private final String fromname = "���ܿƼ�";
 
     private final String tplName;
 

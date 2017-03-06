@@ -1,16 +1,10 @@
-﻿/**
- * 2016 jianglibo@gmail.com
- *
- */
 package com.jianglibo.nutchbuilder.config;
 
 import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.data.rest.core.mapping.ResourceMetadata;
-import org.springframework.data.rest.webmvc.RootResourceInformation;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年9月28日
  *
  */
 public class RootResourceInformationKnown /* extends RootResourceInformation*/ {

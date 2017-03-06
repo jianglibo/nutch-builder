@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.util;
+package com.jianglibo.nutchbuilder.util;
 
 import java.util.Objects;
 

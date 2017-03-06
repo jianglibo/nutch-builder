@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.util;
+package com.jianglibo.nutchbuilder.util;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -31,7 +31,7 @@ public class SendCloudService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // curl -F api_user='***' -F api_key='***' -F from='test@test.com' -F fromname='来自测试发�??' -F subject=' 测试' -F template_invoke_name='ifaxin_bill' -F
+    // curl -F api_user='***' -F api_key='***' -F from='test@test.com' -F fromname='���Բ��Է�???' -F subject=' ����' -F template_invoke_name='ifaxin_bill' -F
     // substitution_vars='{"to": ["ben@ifaxin.com", "joe@ifaxin.com"],"sub":{"%name%": ["Ben", "Joe"],"%money%":[288, 497]}}' -F replyto='reply@test.com' -F
     // resp_email_id='true' -F files=@/path/attach.pdf http://sendcloud.sohu.com/webapi/mail.send_template.json
     

@@ -1,7 +1,3 @@
-﻿/**
- * 2016 jianglibo@gmail.com
- *
- */
 package com.jianglibo.nutchbuilder.config;
 
 
@@ -30,7 +26,6 @@ import com.jianglibo.nutchbuilder.exception.DomainExceptionResolver;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年9月28日
  *
  */
 @Configuration

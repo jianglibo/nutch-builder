@@ -1,7 +1,3 @@
-﻿/**
- * 2016 jianglibo@gmail.com
- *
- */
 package com.jianglibo.nutchbuilder.vo;
 
 import java.util.Collection;
@@ -18,7 +14,6 @@ import com.jianglibo.nutchbuilder.domain.Role;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年9月29日
  *
  */
 public class BootUserVo extends User {

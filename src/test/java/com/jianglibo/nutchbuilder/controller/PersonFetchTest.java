@@ -21,7 +21,6 @@ import com.jianglibo.nutchbuilder.util.LinkUtil;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年8月19日
  * 
  */
 public class PersonFetchTest extends MvcBase {
@@ -100,7 +99,7 @@ public class PersonFetchTest extends MvcBase {
 //    }
 
     /*
-     * 用/people?id=xxx&projection=xxx的格式访问。为了减少emberjs data的个性化代码，直接使用emberjsdata而设计。
+     * ��/people?id=xxx&projection=xxx�ĸ�ʽ���ʡ�Ϊ�˼���emberjs data�ĸ��Ի����룬ֱ��ʹ��emberjsdata����ơ�
      */
 //    @Test
 //    public void testEmberQueryOneRecord() throws Exception {
@@ -140,7 +139,7 @@ public class PersonFetchTest extends MvcBase {
 //         * }
 //         */
 //        /**
-//         * 在没有projection的情况下，不会返回ID。
+//         * ��û��projection������£����᷵��ID��
 //         */
 //        mvc.perform(get(getPluralPath())//
 //                .param("id", auth.getPrincipal().getId() + "")//
@@ -154,14 +153,14 @@ public class PersonFetchTest extends MvcBase {
 //                        contentTypeShoudBeApplicationJson(result);
 //                        String c = result.getResponse().getContentAsString();
 ////                        printme(c);
-//                        jsonAssertUtil().noAllKeys(c, "roles", "id"); // 没有携带roles
+//                        jsonAssertUtil().noAllKeys(c, "roles", "id"); // û��Я��roles
 //                        jsonAssertUtil().hasLinks(c, "roles", "self", "person", "thirdConns");
 //                    }
 //                });
 //
 //        mvc.perform(get(getPluralPath())//
 //                .param("id", auth.getPrincipal().getId() + "")//
-//                .param("projection", "person-roles")// 增加projection，获取更详细的内容。
+//                .param("projection", "person-roles")// ����projection����ȡ����ϸ�����ݡ�
 //                .contentType(MediaType.JSON_UTF_8.toString())//
 //                .accept(MediaType.JSON_UTF_8.toString())//
 //                .with(authentication(auth)))//
@@ -172,7 +171,7 @@ public class PersonFetchTest extends MvcBase {
 //                        contentTypeShoudBeApplicationJson(result);
 //                        String c = result.getResponse().getContentAsString();
 ////                        printme(c);
-//                        jsonAssertUtil().hasKey(c, "roles"); // 携带roles
+//                        jsonAssertUtil().hasKey(c, "roles"); // Я��roles
 //                        jsonAssertUtil().hasLinks(c, "roles", "self", "person", "thirdConns");
 //                    }
 //                });
@@ -205,7 +204,7 @@ public class PersonFetchTest extends MvcBase {
 //                        
 //                        long id = linkUtil.extractIdFromHref(on, "self");
 //
-//                        // 更新用户，不行，字段不全，version字段没有。
+//                        // �����û������У��ֶβ�ȫ��version�ֶ�û�С�
 //                        mvc.perform(put(getOneItemUrl(id) + "/update").with(csrf()).with(authentication(auth))//
 //                                .contentType(MediaType.JSON_UTF_8.toString()).content(content))//
 //                                .andExpect(status().is2xxSuccessful()).andDo(new ResultHandler() {

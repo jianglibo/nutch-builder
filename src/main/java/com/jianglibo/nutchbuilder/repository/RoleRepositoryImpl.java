@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.repository;
+package com.jianglibo.nutchbuilder.repository;
 
 import javax.persistence.EntityManager;
 
@@ -9,7 +9,6 @@ import com.jianglibo.nutchbuilder.domain.Role;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年9月28日
  *
  */
 public class RoleRepositoryImpl extends SimpleJpaRepository<Role, Long> implements RoleRepositoryCustom {

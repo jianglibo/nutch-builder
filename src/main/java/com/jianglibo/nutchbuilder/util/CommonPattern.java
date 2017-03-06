@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright 2015 jianglibo@gmail.com
  *
  */
@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 /**
  * @author jianglibo@gmail.com
- *         2015�?12�?25�?
  *
  */
 public class CommonPattern {

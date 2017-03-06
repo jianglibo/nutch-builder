@@ -1,7 +1,6 @@
-﻿package com.jianglibo.nutchbuilder.util;
+package com.jianglibo.nutchbuilder.util;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashSet;
 
 import org.springframework.web.util.UriUtils;
 
@@ -13,7 +12,7 @@ public class EmailVerifyTemplate extends SendCloudTemplate {
     
     public EmailVerifyTemplate(UcToken uctk, String host, String rdUrl) throws UnsupportedEncodingException {
         super("email_verify", VURL);
-        setSubjectTpl("[网蛙科技]邮件验证?");
+        setSubjectTpl("[���ܿƼ�]�ʼ���֤?");
         withVar(VURL, createVurl(host, uctk, rdUrl));
     }
     

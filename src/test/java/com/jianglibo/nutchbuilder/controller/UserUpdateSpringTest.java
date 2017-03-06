@@ -24,10 +24,8 @@ import com.jianglibo.nutchbuilder.MvcBase;
 
 
 /**
- * 用来测试spring内置的update机制。也就是repositoryentitycontroller
  * 
  * @author jianglibo@gmail.com
- *         2015年9月8日
  *
  */
 public class UserUpdateSpringTest extends MvcBase {

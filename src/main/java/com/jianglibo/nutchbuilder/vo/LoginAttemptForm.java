@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.vo;
+package com.jianglibo.nutchbuilder.vo;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

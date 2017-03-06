@@ -2,12 +2,12 @@
 WantedBy=multi-user.target
 
 [Unit]
-Description=myapp
+Description=Make nutch builder process easy.
 After=syslog.target
 
 [Service]
-User=myapp
-ExecStart=/var/myapp/myapp.jar
+User=nutchbuilder
+ExecStart=/var/nutchbuilder/nutchbuilder.jar
 SuccessExitStatus=143
 
 [Install]

@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.repository;
+package com.jianglibo.nutchbuilder.repository;
 
 import javax.persistence.EntityManager;
 

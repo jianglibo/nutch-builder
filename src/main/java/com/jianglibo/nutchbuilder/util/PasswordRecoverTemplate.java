@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.util;
+package com.jianglibo.nutchbuilder.util;
 
 import java.io.UnsupportedEncodingException;
 
@@ -15,7 +15,7 @@ public class PasswordRecoverTemplate extends SendCloudTemplate {
     public PasswordRecoverTemplate(UcToken uctk, String host, String rdUrl) throws UnsupportedEncodingException {
         super("password_recover", VURL);
         Assert.notNull(uctk.getTk(), "uctoken's tk is null, have you save it before use?");
-        setSubjectTpl("密码重置?");
+        setSubjectTpl("��������?");
         withVar(VURL, createVurl(host, uctk, rdUrl));
     }
     

@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.util;
+package com.jianglibo.nutchbuilder.util;
 
 
 import com.jianglibo.nutchbuilder.domain.UcToken;
@@ -12,7 +12,7 @@ public class SignupConfirmTemplate extends SendCloudTemplate {
 
     public SignupConfirmTemplate(BootUserVo personVo, String host, UcToken uctk) {
         super("regist_confirm", VURL);
-        setSubjectTpl("请激活您的账号，%s?");
+        setSubjectTpl("�뼤�������˺ţ�%s?");
         this.personVo = personVo;
         withVar(VURL, host + "/email-verify?uctk=" + uctk.getTk());
     }

@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import com.jianglibo.nutchbuilder.config.ApplicationConfig;
@@ -113,7 +112,7 @@ public class TemplateHolder implements InitializingBean {
 			log.error("template folder {} doesn't exists.", nbtpath);
 			return set;
 		}
-		Assert.isTrue(nbtpath.startsWith(applicationConfig.getTemplateRootPath()));
+		Assert.isTrue(nbtpath.startsWith(applicationConfig.getTemplateRootPath()), "template cannot beyond the configurated root.");
 		Files.walk(nbtpath).filter(filter).filter(dorf -> !Files.isDirectory(dorf)).forEach(f -> {
 			String rp = nbtpath.relativize(f).toString();
 			set.add(rp);

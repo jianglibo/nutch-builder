@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 2016 jianglibo@gmail.com
  *
  */
@@ -19,7 +19,6 @@ import org.junit.Test;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年9月24日
  *
  */
 public class TestUseCookie {

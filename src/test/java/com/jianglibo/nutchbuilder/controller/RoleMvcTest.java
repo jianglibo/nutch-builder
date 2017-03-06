@@ -13,14 +13,14 @@ import com.jianglibo.nutchbuilder.MvcBase;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年8月19日
+ *         2015��8��19��
  * 
  * 
  */
 public class RoleMvcTest extends MvcBase {
 
     /**
-     * user manager可以访问。
+     * user manager���Է��ʡ�
      * 
      * @throws Exception
      */

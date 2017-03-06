@@ -30,7 +30,6 @@ import com.jianglibo.nutchbuilder.vo.RoleNames;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年8月17日
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)

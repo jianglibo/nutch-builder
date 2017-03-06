@@ -7,7 +7,6 @@ import com.google.common.io.Resources;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年10月8日
  *
  */
 public class ResourceLoader {

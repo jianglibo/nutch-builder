@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.config;
+package com.jianglibo.nutchbuilder.config;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

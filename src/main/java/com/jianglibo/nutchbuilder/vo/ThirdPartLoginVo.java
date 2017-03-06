@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.vo;
+package com.jianglibo.nutchbuilder.vo;
 
 import java.util.Set;
 import java.util.stream.Collectors;

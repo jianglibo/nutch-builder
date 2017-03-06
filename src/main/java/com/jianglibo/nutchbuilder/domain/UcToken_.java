@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.domain;
+package com.jianglibo.nutchbuilder.domain;
 
 import com.jianglibo.nutchbuilder.domain.UcToken.UcTokenFor;
 import java.util.Date;

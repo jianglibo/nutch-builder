@@ -13,8 +13,6 @@ import com.google.common.io.Files;
 
 /**
  * @author jianglibo@gmail.com 
- * 2015年8月21日
- * 描述 : Scanhub 项目的测试基类，提供创建 keypairs 和 扫描列表的方法
  */
 public abstract class TaskBase extends Tbase {
 

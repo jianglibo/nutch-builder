@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.vo;
+package com.jianglibo.nutchbuilder.vo;
 
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;

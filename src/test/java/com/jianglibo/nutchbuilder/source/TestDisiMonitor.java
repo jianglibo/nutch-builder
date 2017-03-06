@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.source;
+package com.jianglibo.nutchbuilder.source;
 
 import java.io.IOException;
 

@@ -1,7 +1,3 @@
-/**
- * Copyright 2015 jianglibo@gmail.com
- *
- */
 package com.jianglibo.nutchbuilder.vo;
 
 import java.util.Map;
@@ -15,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author jianglibo@gmail.com
- *         2016年1月14日
  *
  */
 @Component

@@ -1,7 +1,3 @@
-﻿/**
- * 2016 jianglibo@gmail.com
- *
- */
 package com.jianglibo.nutchbuilder.config;
 
 import static org.springframework.util.StringUtils.hasText;
@@ -22,7 +18,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 /**
  * @author jianglibo@gmail.com
- *         2015年9月28日
  *
  */
 public class ResourceMetadataKnownHandlerMethodArgumentResolver /* extends ResourceMetadataHandlerMethodArgumentResolver */{

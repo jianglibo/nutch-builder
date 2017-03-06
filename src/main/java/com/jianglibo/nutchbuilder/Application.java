@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder;
+package com.jianglibo.nutchbuilder;
 
 import javax.sql.DataSource;
 

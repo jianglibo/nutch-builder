@@ -1,4 +1,4 @@
-﻿package com.jianglibo.nutchbuilder.model;
+package com.jianglibo.nutchbuilder.model;
 
 import java.util.List;
 import java.util.Map;
@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
-import org.assertj.core.util.Lists;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.Lists;
 import com.jianglibo.nutchbuilder.controller.HasMenuItemController;
 import com.jianglibo.nutchbuilder.util.SecurityUtil;
 
