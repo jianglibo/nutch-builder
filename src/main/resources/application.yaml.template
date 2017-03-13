@@ -87,7 +87,8 @@ logging:
 myapp:
     dataWriteSourcePath: E:\OneDriver\OneDrive\浙江政务服务网
     mapredout: e:\mapredout
-    templateRoot: e:\nutchBuilderRoot
+    templateRoot: /home/nutchbuilder/templateRoot
+    buildRoot: /home/nutchbuilder/buildRoot
 ---
 spring:
     profiles: prod
@@ -101,6 +102,7 @@ server:
 # setx SPRING_PROFILES_ACTIVE dev
 ---
 spring:
+    profiles: dev
     datasource:
         url: jdbc:hsqldb:file:c:/db/nutchbuilder;shutdown=true
         username: sa
@@ -115,7 +117,6 @@ spring:
         driver-class-name: com.mysql.jdbc.Driver
         validation-query: SELECT 1
         test-on-borrow: true
-    profiles: dev
     security:
         enable-csrf: true
     thymeleaf:
@@ -126,5 +127,15 @@ spring:
         job:
             names: a,b,c
             enabled: false
+    nutch:
+        baseFolder: nutch
+        localBaseFolder: jobproperties
+        maxUnjarNumber: 6
+        # from core-default.xml, property name is "hadoop.tmp.dir"
+        unjarFolder: D:/tmp/hadoop-admin
 myapp:
-  disableCsrf: false
+    disableCsrf: false
+    dataWriteSourcePath: E:\OneDriver\OneDrive\浙江政务服务网
+    mapredout: e:\mapredout
+    templateRoot: e:\nutchBuilderRoot\templateRoot
+    buildRoot: e:\nutchBuilderRoot\buildRoot
