@@ -120,6 +120,9 @@ dependencies {
   	// https://mvnrepository.com/artifact/com.google.guava/guava
 	compile group: 'com.google.guava', name: 'guava', version: '19.0'
 	
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
+	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.8.7'
+	
 	compile 'org.springframework.data:spring-data-rest-hal-browser'
 	
 	// https://mvnrepository.com/artifact/org.apache.nutch/nutch

@@ -31,3 +31,4 @@ jobproperties/libs/
 *.class
 .vscode
 templateRoot/
+**/t.properties

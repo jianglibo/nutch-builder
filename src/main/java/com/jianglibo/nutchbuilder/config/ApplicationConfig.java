@@ -18,13 +18,18 @@ public class ApplicationConfig implements InitializingBean {
 	
 	private String templateRoot;
 	
+	private String buildRoot;
+	
 	private Path templateRootPath;
+	
+	private Path buildRootPath;
 	
 	private boolean disableCsrf;
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		this.templateRootPath = Paths.get(getTemplateRoot()).normalize().toAbsolutePath();
+		this.setBuildRootPath(Paths.get(getBuildRoot()).normalize().toAbsolutePath());
 	}
 
 	public String getOutSideBaseUrl() {
@@ -58,6 +63,22 @@ public class ApplicationConfig implements InitializingBean {
 
 	public void setDisableCsrf(boolean disableCsrf) {
 		this.disableCsrf = disableCsrf;
+	}
+
+	public String getBuildRoot() {
+		return buildRoot;
+	}
+
+	public void setBuildRoot(String buildRoot) {
+		this.buildRoot = buildRoot;
+	}
+
+	public Path getBuildRootPath() {
+		return buildRootPath;
+	}
+
+	public void setBuildRootPath(Path buildRootPath) {
+		this.buildRootPath = buildRootPath;
 	}
 
 }

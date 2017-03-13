@@ -23,6 +23,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 @SpringBootApplication
 @EnableSpringDataWebSupport
 @EnableJpaRepositories(basePackages="com.jianglibo.nutchbuilder.repository")
@@ -63,6 +67,16 @@ public class Application {
     @ConfigurationProperties(prefix="spring.datasource")
     public DataSource primaryDataSource() {
         return DataSourceBuilder.create().build();
+    }
+    
+    
+    @Bean("xmlObjectMapper")
+    public ObjectMapper xmlObjectMapper() {
+    	JacksonXmlModule module = new JacksonXmlModule();
+    	// and then configure, for example:
+//    	module.setDefaultUseWrapper();
+    	return new XmlMapper(module);
+    	// and you can also configure AnnotationIntrospectors 
     }
     
     

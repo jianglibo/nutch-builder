@@ -13,12 +13,12 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.jianglibo.nutchbuilder.TestUtil;
 import com.jianglibo.nutchbuilder.nutchalter.AntBuild.Build;
 import com.jianglibo.nutchbuilder.nutchalter.GoraProperties.StoreType;
 
 public class TestAlterGoraProperties {
 	
-	private Path defaultDest = Paths.get("e:/nutchBuilderRoot/buildRoot/a");
 	private String tplName = "nutchnewest";
 	
 	@Test
@@ -28,17 +28,17 @@ public class TestAlterGoraProperties {
 	}
 	
 	private void copyIfNotExists() throws IOException {
-		if (!Files.exists(defaultDest)) {
-			OracleCopy.copyTree(Paths.get("e:/nutchBuilderRoot/templateRoot", tplName), defaultDest);
+		if (!Files.exists(TestUtil.tProjectRoot)) {
+			OracleCopy.copyTree(Paths.get("e:/nutchBuilderRoot/templateRoot", tplName), TestUtil.tProjectRoot);
 		}
-		assertTrue("copyed directory should right", Files.exists(defaultDest.resolve("ivy")));
+		assertTrue("copyed directory should right", Files.exists(TestUtil.tProjectRoot.resolve("ivy")));
 	}
 	
 	@Test
 	public void testOracleCopy() throws IOException {
 		copyIfNotExists();
-		GoraProperties.alterGoraProperties(defaultDest, StoreType.HBaseStore);
-		List<String> lines = Files.readAllLines(defaultDest.resolve("conf/gora.properties"));
+		GoraProperties.alterGoraProperties(TestUtil.tProjectRoot, StoreType.HBaseStore);
+		List<String> lines = Files.readAllLines(TestUtil.tProjectRoot.resolve("conf/gora.properties"));
 		List<String> changed = new ArrayList<>();
 		for(String li: lines) {
 			if (GoraProperties.datastorePtn.matcher(li).find()) {
@@ -52,7 +52,7 @@ public class TestAlterGoraProperties {
 	@Test
 	public void test() throws Exception {
 		copyIfNotExists();
-		Build bd = new AntBuild.Build(defaultDest, "D:\\apache-ant-1.9.4\\bin\\ant.bat", "runtime");
+		Build bd = new AntBuild.Build(TestUtil.tProjectRoot, TestUtil.properties.getProperty("antExec"), "runtime");
 		int i = bd.call();
 		assertThat(i, equalTo(0));
 		assertTrue("log file should exists.", Files.exists(bd.getPblog()));
@@ -60,8 +60,9 @@ public class TestAlterGoraProperties {
 	
 	@Test
 	public void tRegexUrlFilterConf() throws IOException {
+		copyIfNotExists();
 		RegexUrlFilterConfFile rfcf = new RegexUrlFilterConfFile().withDefaultSkips().addAccept("+^http://www.fh.gov.cn/.*");
-		rfcf.alter(defaultDest);
+		rfcf.alter(TestUtil.tProjectRoot);
 		
 	}
 }
