@@ -10,6 +10,8 @@ public class TestUtil {
 	
 	public static Properties properties;
 	
+	public static String SEED_DIR = "hdfs://s62.host.name/user/admin/nutch/fhgov/seeds.txt";
+	
 	static {
 		try {
 			InputStream is = ClassLoader.getSystemResourceAsStream("t.properties");

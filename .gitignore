@@ -32,3 +32,4 @@ jobproperties/libs/
 .vscode
 templateRoot/
 **/t.properties
+pb.log

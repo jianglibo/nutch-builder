@@ -89,6 +89,7 @@ myapp:
     mapredout: e:\mapredout
     templateRoot: /home/nutchbuilder/templateRoot
     buildRoot: /home/nutchbuilder/buildRoot
+    unjarRoot: C:\Users\admin\AppData\Local\Temp
 ---
 spring:
     profiles: prod
@@ -139,3 +140,4 @@ myapp:
     mapredout: e:\mapredout
     templateRoot: e:\nutchBuilderRoot\templateRoot
     buildRoot: e:\nutchBuilderRoot\buildRoot
+    unjarRoot: C:\Users\admin\AppData\Local\Temp

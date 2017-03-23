@@ -28,8 +28,6 @@ import org.xml.sax.SAXException;
 public class NameValueConfiguration {
 	private static final Logger LOG = LoggerFactory.getLogger(NameValueConfiguration.class);
 
-	static final String UNKNOWN_RESOURCE = "Unknown";
-
 	private Document document;
 
 	private Path srcXmlFile;
@@ -84,15 +82,32 @@ public class NameValueConfiguration {
 		transformer.transform(source, result);
 	}
 	
+	public void deleteHbaseDefaultsForVersion() {
+		Node n = findNode("hbase.defaults.for.version");
+		if (n != null) {
+			document.getDocumentElement().removeChild(n);
+		}
+	}
+	
+	public NameValueConfiguration withVersionSkip() {
+		SetNameValue("hbase.defaults.for.version.skip", "true");
+		return this;
+	}
+	
 	public void SetNameValue(String name, String value) {
 		Node prop = findNode(name);
+		if (prop == null) {
+			LOG.error("unknown setting name: {}", name);
+			return;
+		}
 		NodeList fields = prop.getChildNodes();
+		
 		for (int j = 0; j < fields.getLength(); j++) {
 			Node fieldNode = fields.item(j);
 			if (!(fieldNode instanceof Element))
 				continue;
 			Element field = (Element) fieldNode;
-			if ("value".equals(field.getTagName()) && field.hasChildNodes()) {
+			if ("value".equals(field.getTagName())) {
 				field.setTextContent(value);
 				break;
 			}
@@ -159,7 +174,7 @@ public class NameValueConfiguration {
 				if (value != null) {
 					properties.setProperty(attr, value);
 				} else {
-					LOG.error("count null value, key: {}", attr);
+//					LOG.error("count null value, key: {}", attr);
 				}
 			}
 		} catch (DOMException e) {
