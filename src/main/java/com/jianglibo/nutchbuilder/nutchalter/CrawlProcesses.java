@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,11 @@ import com.jianglibo.nutchbuilder.util.DirectoryUtil;
 
 public class CrawlProcesses {
 
-	private static Pattern unjarPtn = Pattern.compile(".*fs\\.FileUtil: Failed.*\\[([^\\]]+)\\].*");
+	private static Pattern unjarPtn = Pattern.compile(".*WARN fs\\.FileUtil: Failed.*\\[([^\\]]+)\\].*");
+	
+	private static Pattern errorLinePtn = Pattern.compile("^\\d{2}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2} ERROR .*");
+	
+	private static Pattern lastexitPtn = Pattern.compile(".*LASTEXITCODE:(.+):EDOCTIXETSAL.*");
 	
 	private static Logger log = LoggerFactory.getLogger(CrawlProcesses.class);
 	
@@ -55,6 +60,10 @@ public class CrawlProcesses {
 		
 		private Path unjarPath;
 		
+		private int exitCode;
+		
+		private final List<String> errorLines = new ArrayList<>();
+		
 		public CrawlStepProcess(Path projectRoot, String...cmds) {
 			this.projectRoot = projectRoot;
 			this.pblog = projectRoot.resolve("pb.log");
@@ -74,8 +83,38 @@ public class CrawlProcesses {
 			 log.info("starting invoking cmd: {}", String.join(" ", cmds));
 			 Process p = pb.start();
 			 p.waitFor();
-			 deleteUnjarIfNotDeleted();
+			 postExecute();
 			 return p.exitValue();
+		}
+		
+		private void postExecute() {
+			deleteUnjarIfNotDeleted();
+			detectErrors();
+			detectExitCode();
+		}
+		
+		
+		private void detectExitCode() {
+			try {
+				Optional<String> maybeLastExitcode = Files.lines(pblog).filter(line -> lastexitPtn.matcher(line).matches()).findFirst();
+				if (maybeLastExitcode.isPresent()) {
+					Matcher m = lastexitPtn.matcher(maybeLastExitcode.get());
+					if (m.matches()) {
+						setExitCode(Integer.valueOf(m.group(1)));
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+		private void detectErrors() {
+			try {
+				errorLines.addAll(Files.lines(pblog).filter(line -> errorLinePtn.matcher(line).matches()).collect(Collectors.toList()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		private void deleteUnjarIfNotDeleted() {
@@ -104,6 +143,18 @@ public class CrawlProcesses {
 
 		public Path getUnjarPath() {
 			return unjarPath;
+		}
+
+		public List<String> getErrorLines() {
+			return errorLines;
+		}
+
+		public int getExitCode() {
+			return exitCode;
+		}
+
+		public void setExitCode(int exitCode) {
+			this.exitCode = exitCode;
 		}
 	}
 	

@@ -73,8 +73,11 @@ public class NutchJobOptionBuilder {
 			if (!pairOptions.getPmap().containsKey("-crawlId")) {
 				throw new RuntimeException("crawlId jobparameter is required!");
 			}
-			List<String> all = new ArrayList<>(orphanOptions.toStringList());
-			all.addAll(javaDoptions.toStringList());
+			List<String> all = new ArrayList<>();
+			
+			// the order does big matters.
+			all.addAll(javaDoptions.toCommaSeparatedString());
+			all.addAll(orphanOptions.toStringList());
 			all.addAll(pairOptions.toStringList());
 			return all;
 		}
@@ -166,8 +169,14 @@ public class NutchJobOptionBuilder {
 			addJavaDOption(joSkipping, startSkipping);
 			return this;
 		}
-
-		public ParseJobOptionBuilder skipRecords(long skipRecords) {
+		
+		/**
+		 * enable the skipping of records for the parsing so that a dodgy document so that it does not fail the full task.
+		 * default is: -D mapred.skip.attempts.to.start.skipping=2 -D mapred.skip.map.max.skip.records=1
+		 * @param skipRecords
+		 * @return
+		 */
+		public ParseJobOptionBuilder skipRecords(int skipRecords) {
 			addJavaDOption(joSkipRecords, skipRecords);
 			return this;
 		}
@@ -281,6 +290,14 @@ public class NutchJobOptionBuilder {
 		
 		protected void addJavaDOption(String key, Object value) {
 			jdos.add(new JavaDoption(key, String.valueOf(value)));
+		}
+		
+		public List<String> toCommaSeparatedString() {
+			List<String> l = new ArrayList<>();
+			if (!jdos.isEmpty()) {
+				l.add("NOITPOD-" + jdos.stream().map(jdo -> jdo.getKey() + "=" + jdo.getValue()).collect(Collectors.joining(",")));
+			}
+			return l;
 		}
 		
 		public List<String> toPowershellMulitpleParams() {
