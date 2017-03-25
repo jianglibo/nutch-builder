@@ -10,7 +10,8 @@ public class TestUtil {
 	
 	public static Properties properties;
 	
-	public static String SEED_DIR = "hdfs://s62.host.name/user/admin/nutch/fhgov/seeds.txt";
+	public static String SEED_DIR = "hdfs://s62.host.name/user/" + System.getProperty("user.name") + "admin/nutch/fhgov/seeds.txt";
+	public static String HDFS_USERHOME = "hdfs://s62.host.name/user/" + System.getProperty("user.name") + "/";
 	
 	static {
 		try {

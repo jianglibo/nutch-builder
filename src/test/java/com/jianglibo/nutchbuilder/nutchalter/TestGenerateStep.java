@@ -15,7 +15,7 @@ import com.jianglibo.nutchbuilder.nutchalter.CrawlProcesses.CrawlStepProcess;
 public class TestGenerateStep extends StepBase {
 	
 	@Test
-	public void tGenerateOk() throws Exception {
+	public void tGenerate() throws Exception {
 		List<String> generateOptions = new NutchJobOptionBuilder("test_crawl", 3).withGenerateParameterBuilder(batchId).and().buildStringList();
 		CrawlStepProcess csp = CrawlProcesses.newStep(neighborProjectRoot, generateOptions);
 		csp.call();
