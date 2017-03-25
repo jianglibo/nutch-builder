@@ -1,2 +1,8 @@
 antExec=G:/apache-ant-1.9.6/bin/ant.bat
 tProjectRoot=e:/nutchBuilderRoot/buildRoot/a
+hdfsHost=s110.host.name
+hdfsPort=
+hadoopExecutable=G:/hadoop-2.6.2/bin/hadoop.cmd
+hbaseRestHost: s110.host.name
+hbaseRestPort: 8080
+hbaseRestProtocol: http

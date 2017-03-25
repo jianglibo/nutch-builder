@@ -8,7 +8,9 @@ import java.nio.file.StandardCopyOption;
 
 import org.junit.BeforeClass;
 
-public class StepBase {
+import com.jianglibo.nutchbuilder.Tbase;
+
+public class StepBase extends Tbase {
 
 	protected static Path neighborProjectRoot = Paths.get("..", "nutch");
 	
@@ -23,4 +25,6 @@ public class StepBase {
 		Files.copy(neighborProjectRoot.resolve("src/bin/crawl.ps1"), neighborProjectRoot.resolve("runtime/deploy/bin/crawl.ps1"), StandardCopyOption.REPLACE_EXISTING);
 		Files.copy(neighborProjectRoot.resolve("src/bin/nutch.ps1"), neighborProjectRoot.resolve("runtime/deploy/bin/nutch.ps1"), StandardCopyOption.REPLACE_EXISTING);
 	}
+	
+	
 }

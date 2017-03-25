@@ -20,7 +20,7 @@ public class TestInjectStep extends StepBase {
 	@Test
 	public void tInject() throws Exception {
 //		String batchId = NutchJobOptionBuilder.getRandomBatchId();
-		List<String> injectOptions = new NutchJobOptionBuilder("test_crawl", 1).withInjectJobParameterBuilder().seedDir(TestUtil.SEED_DIR).and().buildStringList();
+		List<String> injectOptions = new NutchJobOptionBuilder("test_crawl", 1).withInjectJobParameterBuilder().seedDir(testUtil.SEED_DIR).and().buildStringList();
 		CrawlStepProcess csp = CrawlProcesses.newStep(neighborProjectRoot, injectOptions);
 		csp.call();
 		int exitCode = csp.getExitCode();

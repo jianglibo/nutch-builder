@@ -24,12 +24,29 @@ public class ApplicationConfig implements InitializingBean {
 	
 	private Path buildRootPath;
 	
+	private String hdfsHost;
+	
+	private String hdfsPort;
+	
+	private String antExec;
+	
+	private String tProjectRoot;
+	
+	private String hadoopExecutable;
+	
+	private String hbaseRestHost;
+	private int hbaseRestPort;
+	private String hbaseRestProtocol;
+	
 	private boolean disableCsrf;
+	
+	private String hbaseRestPrefix;
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		this.templateRootPath = Paths.get(getTemplateRoot()).normalize().toAbsolutePath();
 		this.setBuildRootPath(Paths.get(getBuildRoot()).normalize().toAbsolutePath());
+		this.setHbaseRestPrefix(String.format("%s://%s:%s", getHbaseRestProtocol(), getHbaseRestHost(), getHbaseRestPort()));
 	}
 
 	public String getOutSideBaseUrl() {
@@ -81,4 +98,81 @@ public class ApplicationConfig implements InitializingBean {
 		this.buildRootPath = buildRootPath;
 	}
 
+	public String getHbaseRestHost() {
+		return hbaseRestHost;
+	}
+
+	public void setHbaseRestHost(String hbaseRestHost) {
+		this.hbaseRestHost = hbaseRestHost;
+	}
+
+	public int getHbaseRestPort() {
+		return hbaseRestPort;
+	}
+
+	public void setHbaseRestPort(int hbaseRestPort) {
+		this.hbaseRestPort = hbaseRestPort;
+	}
+
+	public void setTemplateRootPath(Path templateRootPath) {
+		this.templateRootPath = templateRootPath;
+	}
+
+	public String getHbaseRestProtocol() {
+		return hbaseRestProtocol;
+	}
+
+	public void setHbaseRestProtocol(String hbaseRestProtocol) {
+		this.hbaseRestProtocol = hbaseRestProtocol;
+	}
+
+	public String getHbaseRestPrefix() {
+		return hbaseRestPrefix;
+	}
+
+	public void setHbaseRestPrefix(String hbaseRestPrefix) {
+		this.hbaseRestPrefix = hbaseRestPrefix;
+	}
+
+	public String getHadoopExecutable() {
+		return hadoopExecutable;
+	}
+
+	public void setHadoopExecutable(String hadoopExecutable) {
+		this.hadoopExecutable = hadoopExecutable;
+	}
+
+	public String getHdfsHost() {
+		return hdfsHost;
+	}
+
+	public void setHdfsHost(String hdfsHost) {
+		this.hdfsHost = hdfsHost;
+	}
+
+	public String getHdfsPort() {
+		return hdfsPort;
+	}
+
+	public void setHdfsPort(String hdfsPort) {
+		this.hdfsPort = hdfsPort;
+	}
+
+	public String getAntExec() {
+		return antExec;
+	}
+
+	public void setAntExec(String antExec) {
+		this.antExec = antExec;
+	}
+
+	public String gettProjectRoot() {
+		return tProjectRoot;
+	}
+
+	public void settProjectRoot(String tProjectRoot) {
+		this.tProjectRoot = tProjectRoot;
+	}
+	
+	
 }

@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jianglibo.nutchbuilder.config.ApplicationConfig;
 import com.jianglibo.nutchbuilder.repository.BootUserRepository;
 import com.jianglibo.nutchbuilder.repository.RoleRepository;
 
@@ -28,9 +29,15 @@ import com.jianglibo.nutchbuilder.repository.RoleRepository;
 public abstract class Tbase extends M3958TsBase {
 
     protected MockMvc mvc;
+    
+    @Autowired
+    protected TestUtil testUtil;
 
     @Autowired
     protected WebApplicationContext context;
+    
+    @Autowired
+    protected ApplicationConfig applicationConfig;
 
     @Autowired
     protected BootUserRepository personRepo;
