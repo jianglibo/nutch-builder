@@ -123,7 +123,7 @@ public class TestAlterGoraProperties extends Tbase {
 	public void tRegexUrlFilterConf() throws IOException {
 		copyIfNotExists();
 		RegexUrlFilterConfFile rfcf = new RegexUrlFilterConfFile().withDefaultSkips().addAccept("+^http://www.fh.gov.cn/.*");
-		rfcf.alter(getTprojectRoot());
+		rfcf.doAlter(getTprojectRoot());
 		
 	}
 }

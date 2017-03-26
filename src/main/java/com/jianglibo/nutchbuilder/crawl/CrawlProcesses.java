@@ -1,10 +1,14 @@
-package com.jianglibo.nutchbuilder.nutchalter;
+package com.jianglibo.nutchbuilder.crawl;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +43,7 @@ public class CrawlProcesses {
 		}
 	}
 	
-	protected static CrawlStepProcess newStep(Path projectRoot, List<String> optlist) {
+	public static CrawlStepProcess newStep(Path projectRoot, List<String> optlist) {
 		List<String> cmdList = new ArrayList<>();
 		cmdList.add("powershell");
 		cmdList.add("-F");
@@ -65,8 +69,10 @@ public class CrawlProcesses {
 		private final List<String> errorLines = new ArrayList<>();
 		
 		public CrawlStepProcess(Path projectRoot, String...cmds) {
+			String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("uuuuMMddHHmmss"));
+			projectRoot = projectRoot.toAbsolutePath().normalize();
 			this.projectRoot = projectRoot;
-			this.pblog = projectRoot.resolve("pb.log");
+			this.pblog = projectRoot.resolve("logs").resolve("step-" + now + ".log");
 			this.cmds = cmds;
 		}
 
@@ -74,12 +80,12 @@ public class CrawlProcesses {
 		public Integer call() throws Exception {
 			 ProcessBuilder pb =
 					   new ProcessBuilder(cmds);
-			 if (Files.exists(pblog)) {
-				 Files.delete(pblog);
-			 }
 			 pb.directory(projectRoot.toFile());
 			 pb.redirectErrorStream(true);
-			 pb.redirectOutput(Redirect.appendTo(pblog.toFile()));
+			 if (!Files.exists(pblog.getParent())) {
+				 Files.createDirectories(pblog.getParent());
+			 }
+			 pb.redirectOutput(Redirect.to(pblog.toFile()));
 			 log.info("starting invoking cmd: {}", String.join(" ", cmds));
 			 Process p = pb.start();
 			 p.waitFor();
@@ -93,43 +99,48 @@ public class CrawlProcesses {
 			detectExitCode();
 		}
 		
-		
 		private void detectExitCode() {
+			Optional<String> maybeLastExitcode;
 			try {
-				Optional<String> maybeLastExitcode = Files.lines(pblog).filter(line -> lastexitPtn.matcher(line).matches()).findFirst();
-				if (maybeLastExitcode.isPresent()) {
-					Matcher m = lastexitPtn.matcher(maybeLastExitcode.get());
-					if (m.matches()) {
-						setExitCode(Integer.valueOf(m.group(1)));
-					}
-				}
+				maybeLastExitcode = Files.lines(pblog, Charset.defaultCharset()).filter(line -> lastexitPtn.matcher(line).matches()).findFirst();
 			} catch (IOException e) {
-				e.printStackTrace();
+				maybeLastExitcode = Optional.empty();
 			}
-			
+			if (maybeLastExitcode.isPresent()) {
+				Matcher m = lastexitPtn.matcher(maybeLastExitcode.get());
+				if (m.matches()) {
+					setExitCode(Integer.valueOf(m.group(1)));
+				}
+			}
 		}
 
 		private void detectErrors() {
 			try {
-				errorLines.addAll(Files.lines(pblog).filter(line -> errorLinePtn.matcher(line).matches()).collect(Collectors.toList()));
-			} catch (Exception e) {
-				e.printStackTrace();
+				errorLines.addAll(Files.lines(pblog, Charset.defaultCharset()).filter(line -> errorLinePtn.matcher(line).matches()).collect(Collectors.toList()));
+			} catch (IOException e) {
+				log.info("read {} with {} failed.", pblog.toString(), Charset.defaultCharset().name());
 			}
 		}
 		
 		private void deleteUnjarIfNotDeleted() {
+			Optional<String> mayBeMatched;
 			try {
-				Optional<String> mayBeMatched = Files.lines(pblog).filter(line -> unjarPtn.matcher(line).matches()).findFirst();
-				if (mayBeMatched.isPresent()) {
-					Matcher m = unjarPtn.matcher(mayBeMatched.get());
-					if (m.matches()) {
-						Path jarp = Paths.get(m.group(1));
-						unjarPath = DirectoryUtil.findMiddlePathStartsWith(jarp, "hadoop-unjar");
+				mayBeMatched = Files.lines(pblog, Charset.defaultCharset()).filter(line -> unjarPtn.matcher(line).matches()).findFirst();
+			} catch (IOException e1) {
+				mayBeMatched = Optional.empty();
+			}
+
+			if (mayBeMatched.isPresent()) {
+				Matcher m = unjarPtn.matcher(mayBeMatched.get());
+				if (m.matches()) {
+					Path jarp = Paths.get(m.group(1));
+					unjarPath = DirectoryUtil.findMiddlePathStartsWith(jarp, "hadoop-unjar");
+					try {
 						DirectoryUtil.deleteRecursiveIgnoreFailed(unjarPath);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
 					}
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 

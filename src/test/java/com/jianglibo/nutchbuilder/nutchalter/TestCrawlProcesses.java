@@ -9,8 +9,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.jianglibo.nutchbuilder.crawl.CrawlProcesses;
 import com.jianglibo.nutchbuilder.crawl.NutchJobOptionBuilder;
-import com.jianglibo.nutchbuilder.nutchalter.CrawlProcesses.CrawlStepProcess;
+import com.jianglibo.nutchbuilder.crawl.CrawlProcesses.CrawlStepProcess;
 
 public class TestCrawlProcesses extends StepBase {
 	

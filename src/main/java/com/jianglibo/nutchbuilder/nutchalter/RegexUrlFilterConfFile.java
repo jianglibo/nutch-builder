@@ -8,9 +8,11 @@ import java.util.List;
 
 public class RegexUrlFilterConfFile {
 	
-	private List<String> linesToAppend = new ArrayList<>();
+	private List<String> acceptLines = new ArrayList<>();
 	
-	public void alter(Path projectRoot) throws IOException {
+	private List<String> skipLines = new ArrayList<>();
+	
+	public void doAlter(Path projectRoot) throws IOException {
 		Path regexUrlfilter = projectRoot.resolve("conf/regex-urlfilter.txt");
 		List<String> originLines = Files.readAllLines(regexUrlfilter);
 		List<String> newLines = new ArrayList<>();
@@ -18,29 +20,43 @@ public class RegexUrlFilterConfFile {
 			if (ol.trim().startsWith("#")) {
 				newLines.add(ol);
 			} else {
-				if (linesToAppend.contains(ol.trim())) {
-					linesToAppend.remove(ol.trim());
+				if (skipLines.contains(ol.trim())) { // if already exists, take away from acceptsLines.
+					skipLines.remove(ol.trim());
+					newLines.add(ol);
+				}else if(acceptLines.contains(ol.trim())) {
+					acceptLines.remove(ol.trim());
 					newLines.add(ol);
 				} else {
 					newLines.add("#" + ol);
 				}
 			}
 		}
-		newLines.addAll(linesToAppend);
+		newLines.addAll(skipLines);
+		newLines.addAll(acceptLines);
 		Files.write(regexUrlfilter, newLines);
 	}
 
 	public RegexUrlFilterConfFile withDefaultSkips() {
-		linesToAppend.add("-^(file|ftp|mailto):");
-		linesToAppend.add("-\\.(gif|GIF|jpg|JPG|png|PNG|ico|ICO|css|CSS|sit|SIT|eps|EPS|wmf|WMF|zip|ZIP|ppt|PPT|mpg|MPG|xls|XLS|gz|GZ|rpm|RPM|tgz|TGZ|mov|MOV|exe|EXE|jpeg|JPEG|bmp|BMP|js|JS)$");
-		linesToAppend.add("-[?*!@=]");
-		linesToAppend.add("-.*(/[^/]+)/[^/]+\\1/[^/]+\\1/");
+		skipLines.add("-^(file|ftp|mailto):");
+		skipLines.add("-\\.(gif|GIF|jpg|JPG|png|PNG|ico|ICO|css|CSS|sit|SIT|eps|EPS|wmf|WMF|zip|ZIP|ppt|PPT|mpg|MPG|xls|XLS|gz|GZ|rpm|RPM|tgz|TGZ|mov|MOV|exe|EXE|jpeg|JPEG|bmp|BMP|js|JS)$");
+		skipLines.add("-[?*!@=]");
+		skipLines.add("-.*(/[^/]+)/[^/]+\\1/[^/]+\\1/");
 		return this;
 	}
 	
 	public RegexUrlFilterConfFile addAccept(String acceptLine) {
-		linesToAppend.add(acceptLine);
+		if (!acceptLine.startsWith("+")) {
+			acceptLine = "+" + acceptLine;
+		}
+		acceptLines.add(acceptLine);
 		return this;
 	}
 	
+	public RegexUrlFilterConfFile addSkip(String skipLine) {
+		if (!skipLine.startsWith("-")) {
+			skipLine = "-" + skipLine;
+		}
+		skipLines.add(skipLine);
+		return this;
+	}
 }

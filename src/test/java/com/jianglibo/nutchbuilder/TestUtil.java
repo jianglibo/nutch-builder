@@ -41,12 +41,10 @@ public class TestUtil implements InitializingBean {
 //	}
 //	
 //	public static Path tProjectRoot = Paths.get("e:/nutchBuilderRoot/buildRoot/a");
-	
-	
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		SEED_DIR = String.format("hdfs://%s%s/user/%s/nutch/fhgov/seeds.txt", applicationConfig.getHdfsHost(), applicationConfig.getHdfsPort(), System.getProperty("user.name"));
+		SEED_DIR = String.format("hdfs://%s%s/user/%s/nutch/test_seeddir", applicationConfig.getHdfsHost(), applicationConfig.getHdfsPort(), System.getProperty("user.name"));
 		HDFS_USERHOME = String.format("hdfs://%s%s/user/%s", applicationConfig.getHdfsHost(), applicationConfig.getHdfsPort(), System.getProperty("user.name"));
 		HADOOP_EXECUTABLE = applicationConfig.getHadoopExecutable();
 		HDFS_USER_TEST_FOLDER = HDFS_USERHOME + "/fort";

@@ -3,6 +3,8 @@ package com.jianglibo.nutchbuilder.hbaserest;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import com.jianglibo.nutchbuilder.hbaserest.HbaseAllTables.HbaseTableName;
 
 @Component
 public class CommonHbaseInformationRetriver {
+	
+	private static Logger log = LoggerFactory.getLogger(CommonHbaseInformationRetriver.class);
 
 	@Autowired
 	private RestTemplate hbaseRestTemplate;
@@ -37,20 +41,19 @@ public class CommonHbaseInformationRetriver {
 			ResponseEntity<Map> rs = hbaseRestTemplate.getForEntity(getTableSchemaUrl(table), Map.class);
 			return new HbaseTableSchema(rs.getBody());
 		} catch (RestClientException e) {
-			e.printStackTrace();
+			log.info("{} not found. error message is: {}", table, e.getMessage());
+			return null;
 		}
-		return null;
 	}
 	
 	public boolean deleteTable(String table) {
 		try {
 			hbaseRestTemplate.delete(getTableSchemaUrl(table));
+			return true;
 		} catch (RestClientException e) {
-			e.printStackTrace();
+			log.info("{} not found. error message is: {}", table, e.getMessage());
 			return false;
 		}
-		return true;
-		
 	}
 	
 	public HttpStatus createTable(String table, String body) {

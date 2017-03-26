@@ -26,9 +26,13 @@ public class ApplicationConfig implements InitializingBean {
 	
 	private String hdfsHost;
 	
+	private String zkQuoram;
+	
 	private String hdfsPort;
 	
 	private String antExec;
+	
+	private String hdfsFullUrlNoLastSlash;
 	
 	private String tProjectRoot;
 	
@@ -47,6 +51,12 @@ public class ApplicationConfig implements InitializingBean {
 		this.templateRootPath = Paths.get(getTemplateRoot()).normalize().toAbsolutePath();
 		this.setBuildRootPath(Paths.get(getBuildRoot()).normalize().toAbsolutePath());
 		this.setHbaseRestPrefix(String.format("%s://%s:%s", getHbaseRestProtocol(), getHbaseRestHost(), getHbaseRestPort()));
+		if (getHdfsPort() == null || getHdfsPort().trim().isEmpty()) {
+			this.setHdfsFullUrlNoLastSlash("hdfs://" + getHdfsHost());
+		} else {
+			this.setHdfsFullUrlNoLastSlash("hdfs://" + getHdfsHost() + ":" + getHdfsPort());
+		}
+		
 	}
 
 	public String getOutSideBaseUrl() {
@@ -172,6 +182,22 @@ public class ApplicationConfig implements InitializingBean {
 
 	public void settProjectRoot(String tProjectRoot) {
 		this.tProjectRoot = tProjectRoot;
+	}
+
+	public String getHdfsFullUrlNoLastSlash() {
+		return hdfsFullUrlNoLastSlash;
+	}
+
+	public void setHdfsFullUrlNoLastSlash(String hdfsFullUrlNoLastSlash) {
+		this.hdfsFullUrlNoLastSlash = hdfsFullUrlNoLastSlash;
+	}
+
+	public String getZkQuoram() {
+		return zkQuoram;
+	}
+
+	public void setZkQuoram(String zkQuoram) {
+		this.zkQuoram = zkQuoram;
 	}
 	
 	

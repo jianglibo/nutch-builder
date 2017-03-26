@@ -97,8 +97,7 @@ public class NameValueConfiguration {
 	public void SetNameValue(String name, String value) {
 		Node prop = findNode(name);
 		if (prop == null) {
-			LOG.error("unknown setting name: {}", name);
-			return;
+			prop = createNode(name, value);
 		}
 		NodeList fields = prop.getChildNodes();
 		
@@ -112,6 +111,23 @@ public class NameValueConfiguration {
 				break;
 			}
 		}
+	}
+
+//	  <property>
+//	  <name>hbase.rootdir</name>
+//	  <value>hdfs://nn.intranet.fh.gov.cn:8020/hbase</value>
+//	</property>
+
+	private Node createNode(String name, String value) {
+		Element pr = document.createElement("property");
+		Element ne = document.createElement("name");
+		ne.setTextContent(name);
+		Element ve = document.createElement("name");
+		ve.setTextContent(value);
+		pr.appendChild(ne);
+		pr.appendChild(ve);
+		document.getDocumentElement().appendChild(pr);
+		return pr;
 	}
 	
 	private Node findNode(String name) {

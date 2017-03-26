@@ -32,10 +32,12 @@ public class HadoopFs implements InitializingBean {
 	 * @param localPaths
 	 * @return
 	 */
-	public HadoopFsResult put(String hdfsTarget,Path localPath, Path...morePaths) {
+	public HadoopFsResult put(String hdfsTarget,Path...localPaths) {
+		if (localPaths.length == 0) {
+			return null;
+		}
 		HfsCmdBuilder hc = new HfsCmdBuilder("put");
-		hc.addItems(localPath.normalize().toAbsolutePath().toString());
-		for(Path lp : morePaths) {
+		for(Path lp : localPaths) {
 			hc.addItems(lp.normalize().toAbsolutePath().toString());
 		}
 		hc.addItems(hdfsTarget);
