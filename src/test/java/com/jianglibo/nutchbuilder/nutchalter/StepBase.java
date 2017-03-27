@@ -14,9 +14,13 @@ import com.jianglibo.nutchbuilder.util.HadoopFs;
 
 public class StepBase extends Tbase {
 
-	protected static Path neighborProjectRoot = Paths.get("..", "nutch").toAbsolutePath().normalize();
+	public static Path neighborProjectRoot = Paths.get("..", "nutch").toAbsolutePath().normalize();
 	
 	protected String batchId = "193828973-26276356376";
+	
+	public static String testCrawlId = "test_crawl";
+	
+	public static String testHtableName = testCrawlId + "_webpage";
 	
 	@Autowired
 	protected HadoopFs hadoopFs;

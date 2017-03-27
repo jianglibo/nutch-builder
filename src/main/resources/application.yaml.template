@@ -149,3 +149,4 @@ myapp:
     hdfsPort: 
     antExec: G:/apache-ant-1.9.6/bin/ant.bat
     tProjectRoot: e:/nutchBuilderRoot/buildRoot/a
+	zkQuoram: 

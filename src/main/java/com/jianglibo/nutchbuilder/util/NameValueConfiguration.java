@@ -122,7 +122,7 @@ public class NameValueConfiguration {
 		Element pr = document.createElement("property");
 		Element ne = document.createElement("name");
 		ne.setTextContent(name);
-		Element ve = document.createElement("name");
+		Element ve = document.createElement("value");
 		ve.setTextContent(value);
 		pr.appendChild(ne);
 		pr.appendChild(ve);

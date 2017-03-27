@@ -17,7 +17,7 @@ public class TestGenerateStep extends StepBase {
 	
 	@Test
 	public void tGenerate() throws Exception {
-		List<String> generateOptions = new NutchJobOptionBuilder("test_crawl", 3).withGenerateParameterBuilder(batchId).and().buildStringList();
+		List<String> generateOptions = new NutchJobOptionBuilder(testCrawlId, 3).withGenerateParameterBuilder(batchId).and().buildStringList();
 		CrawlStepProcess csp = CrawlProcesses.newStep(neighborProjectRoot, generateOptions);
 		csp.call();
 		int exitCode = csp.getExitCode();
@@ -26,7 +26,7 @@ public class TestGenerateStep extends StepBase {
 		assertThat("some errors should be existed", csp.getErrorLines().size(), equalTo(0));
 		assertFalse(Files.exists(csp.getUnjarPath()));
 		
-		generateOptions = new NutchJobOptionBuilder("test_crawl", 3).withGenerateParameterBuilder(batchId).and().buildStringList();
+		generateOptions = new NutchJobOptionBuilder(testCrawlId, 3).withGenerateParameterBuilder(batchId).and().buildStringList();
 		csp = CrawlProcesses.newStep(neighborProjectRoot, generateOptions);
 		csp.call();
 		exitCode = csp.getExitCode();

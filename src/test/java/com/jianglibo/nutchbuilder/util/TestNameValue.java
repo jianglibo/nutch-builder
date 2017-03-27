@@ -13,9 +13,10 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import com.jianglibo.nutchbuilder.Tbase;
-import com.jianglibo.nutchbuilder.TestUtil;
 
 public class TestNameValue extends Tbase {
+	
+	
 	
 	@Test
 	public void t() throws IOException, TransformerException, SAXException {

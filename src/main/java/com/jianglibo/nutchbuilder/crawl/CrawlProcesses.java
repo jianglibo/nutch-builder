@@ -68,6 +68,8 @@ public class CrawlProcesses {
 		
 		private final List<String> errorLines = new ArrayList<>();
 		
+		private List<String> allLines = new ArrayList<>();
+		
 		public CrawlStepProcess(Path projectRoot, String...cmds) {
 			String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("uuuuMMddHHmmss"));
 			projectRoot = projectRoot.toAbsolutePath().normalize();
@@ -94,18 +96,29 @@ public class CrawlProcesses {
 		}
 		
 		private void postExecute() {
-			deleteUnjarIfNotDeleted();
-			detectErrors();
-			detectExitCode();
+			allLines = readAllLines();
+			if (!allLines.isEmpty()) {
+				deleteUnjarIfNotDeleted();
+				detectErrors();
+				detectExitCode();
+			}
+		}
+		
+		public List<String> readAllLines() {
+			try {
+				return Files.readAllLines(pblog);
+			} catch (IOException e) {
+				try {
+					return Files.readAllLines(pblog, Charset.defaultCharset());
+				} catch (IOException e1) {
+					log.error("cannot parse log file {}", pblog.toString());
+				}
+			}
+			return new ArrayList<>();
 		}
 		
 		private void detectExitCode() {
-			Optional<String> maybeLastExitcode;
-			try {
-				maybeLastExitcode = Files.lines(pblog, Charset.defaultCharset()).filter(line -> lastexitPtn.matcher(line).matches()).findFirst();
-			} catch (IOException e) {
-				maybeLastExitcode = Optional.empty();
-			}
+			Optional<String> maybeLastExitcode = allLines.stream().filter(line -> lastexitPtn.matcher(line).matches()).findFirst();
 			if (maybeLastExitcode.isPresent()) {
 				Matcher m = lastexitPtn.matcher(maybeLastExitcode.get());
 				if (m.matches()) {
@@ -115,21 +128,11 @@ public class CrawlProcesses {
 		}
 
 		private void detectErrors() {
-			try {
-				errorLines.addAll(Files.lines(pblog, Charset.defaultCharset()).filter(line -> errorLinePtn.matcher(line).matches()).collect(Collectors.toList()));
-			} catch (IOException e) {
-				log.info("read {} with {} failed.", pblog.toString(), Charset.defaultCharset().name());
-			}
+			errorLines.addAll(allLines.stream().filter(line -> errorLinePtn.matcher(line).matches()).collect(Collectors.toList()));
 		}
 		
 		private void deleteUnjarIfNotDeleted() {
-			Optional<String> mayBeMatched;
-			try {
-				mayBeMatched = Files.lines(pblog, Charset.defaultCharset()).filter(line -> unjarPtn.matcher(line).matches()).findFirst();
-			} catch (IOException e1) {
-				mayBeMatched = Optional.empty();
-			}
-
+			Optional<String> mayBeMatched = allLines.stream().filter(line -> unjarPtn.matcher(line).matches()).findFirst();
 			if (mayBeMatched.isPresent()) {
 				Matcher m = unjarPtn.matcher(mayBeMatched.get());
 				if (m.matches()) {
@@ -138,7 +141,7 @@ public class CrawlProcesses {
 					try {
 						DirectoryUtil.deleteRecursiveIgnoreFailed(unjarPath);
 					} catch (FileNotFoundException e) {
-						e.printStackTrace();
+						log.error("cannot unjar folder {}", unjarPath.toString());
 					}
 				}
 			}
