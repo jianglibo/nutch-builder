@@ -39,7 +39,7 @@ public class StepBase extends Tbase {
 		copyNeighborScript();
 	}
 
-	private static void copyNeighborScript() throws IOException {
+	protected static void copyNeighborScript() throws IOException {
 		try {
 			Files.copy(neighborProjectRoot.resolve("src/bin/crawl.ps1"), neighborProjectRoot.resolve("runtime/deploy/bin/crawl.ps1"), StandardCopyOption.REPLACE_EXISTING);
 			Files.copy(neighborProjectRoot.resolve("src/bin/nutch.ps1"), neighborProjectRoot.resolve("runtime/deploy/bin/nutch.ps1"), StandardCopyOption.REPLACE_EXISTING);

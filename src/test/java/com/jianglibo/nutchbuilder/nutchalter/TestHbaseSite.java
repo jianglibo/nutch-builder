@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.jianglibo.nutchbuilder.Tbase;
-import com.jianglibo.nutchbuilder.exception.HbaseSiteXmlException;
+import com.jianglibo.nutchbuilder.exception.NutchConfigXmlException;
 import com.jianglibo.nutchbuilder.util.NameValueConfiguration;
 
 public class TestHbaseSite extends Tbase {
@@ -32,7 +32,7 @@ public class TestHbaseSite extends Tbase {
 	
 	
 	@Test
-	public void t() throws JsonParseException, JsonMappingException, IOException, TransformerException, SAXException, HbaseSiteXmlException {
+	public void t() throws JsonParseException, JsonMappingException, IOException, TransformerException, SAXException, NutchConfigXmlException {
 		tp = Files.createTempFile("hbasesitetest", "xml");
 		
 		HbaseSite hs = new HbaseSite().withRootDir( applicationConfig.getHdfsFullUrlNoLastSlash() + "/user/hbase").withZkQuorum(applicationConfig.getZkQuoram());
@@ -45,7 +45,7 @@ public class TestHbaseSite extends Tbase {
 	}
 	
 	@Test
-	public void tFromEnv() throws IOException, HbaseSiteXmlException {
+	public void tFromEnv() throws IOException, NutchConfigXmlException {
 		tp = Files.createTempFile("hbasesitetest", "xml");
 		new HbaseSite().fromHbaseHomeEnv(tp);
 		Files.lines(tp).forEach(System.out::println);

@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,7 +24,8 @@ import com.jianglibo.nutchbuilder.hbaserest.HbaseTableSchema;
 public class TestInjectStep extends StepBase {
 	
 	@Before
-	public void b() {
+	public void b() throws IOException {
+		copyNeighborScript();
 		deleteSeedDir();
 	}
 	
@@ -39,8 +41,26 @@ public class TestInjectStep extends StepBase {
 		hadoopFs.mkdir(testUtil.SEED_DIR, true);
 		hadoopFs.put(testUtil.SEED_DIR, sfs);
 		
+		// alter nutch-site.xml
+		Path nutchSitePath = neighborProjectRoot.resolve("conf").resolve("nutch-site.xml");
+		new NutchSite()
+		.withAdaptiveScheduleClass()
+		.withAgentName("fhgov")
+		.withDefaultPlugins()
+		.withFetchInterval(900)
+		.withFetchThreads(10)
+		.withHbase()
+		.withPairs("db.fetch.schedule.adaptive.inc_rate=0.4",
+				"db.fetch.schedule.adaptive.dec_rate=0.2",
+				"db.fetch.schedule.adaptive.min_interval=60",
+				"db.fetch.schedule.adaptive.max_interval=31536000",
+				"db.fetch.schedule.adaptive.sync_delta=true",
+				"db.fetch.schedule.adaptive.sync_delta_rate=0.3",
+				"db.update.additions.allowed=true").persist(nutchSitePath, nutchSitePath);
+		
 		// alter regex-urlfilter.txt
 		new RegexUrlFilterConfFile().withDefaultSkips().addAccept("+^http://www.jianglibo.com/.*").addAccept("^http://jianglibo.com/.*").doAlter(neighborProjectRoot);
+		
 		// alter hbase-site.xml
 		new HbaseSite().fromHbaseHomeEnv(neighborProjectRoot.resolve("conf").resolve("hbase-site.xml"));
 		
@@ -56,7 +76,7 @@ public class TestInjectStep extends StepBase {
 		
 		hts = chir.getTableSchema(testHtableName);
 		
-		assertNotNull(testHtableName + "table should exists.", hts);
+		assertNotNull(testHtableName + " table should exists.", hts);
 
 		List<String> injectOptions = new NutchJobOptionBuilder(testCrawlId, 1).withInjectJobParameterBuilder().seedDir("/notexistfolder").and().buildStringList();
 		csp = CrawlProcesses.newStep(neighborProjectRoot, injectOptions);

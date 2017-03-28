@@ -1,6 +1,15 @@
 package com.jianglibo.nutchbuilder.nutchalter;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Properties;
+
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
+
+import com.jianglibo.nutchbuilder.exception.NutchConfigXmlException;
+import com.jianglibo.nutchbuilder.util.NameValueConfiguration;
 
 public class NutchSite {
 	private final Properties properties = new Properties();
@@ -49,6 +58,23 @@ public class NutchSite {
 		}
 		return this;
 	}
+	
+	public void persist(Path resultXml, Path templateXml) throws NutchConfigXmlException {
+		try {
+			NameValueConfiguration nvc = new NameValueConfiguration(templateXml);
+			this.getProperties().forEach((k, v) -> {
+				nvc.SetNameValue((String)k, (String)v);
+			});
+			nvc.writeTo(resultXml);
+		} catch (IOException e) {
+			throw new NutchConfigXmlException("nutchSite", String.format("possible causes: template not exists %s,  target not exists %s", templateXml.toString(), resultXml.toString()));
+		} catch (SAXException e) {
+			throw new NutchConfigXmlException("nutchSite", String.format("template is malformed %s", templateXml.toString()));
+		} catch (TransformerException e) {
+			throw new NutchConfigXmlException("nutchSite", String.format("template is malformed %s", templateXml.toString()));
+		}
+	}
+	
 
 	public Properties getProperties() {
 		return properties;

@@ -78,48 +78,6 @@ public class TestAlterGoraProperties extends Tbase {
 	}
 	
 	@Test
-	public void testNutchSite() throws IOException, SAXException, TransformerException {
-		NutchSite ns = new NutchSite();
-		ns.withAdaptiveScheduleClass()
-			.withAgentName("fhgov")
-			.withDefaultPlugins()
-			.withFetchInterval(900)
-			.withFetchThreads(10)
-			.withHbase()
-			.withPairs("db.fetch.schedule.adaptive.inc_rate=0.4",
-					"db.fetch.schedule.adaptive.dec_rate=0.2",
-					"db.fetch.schedule.adaptive.min_interval=60",
-					"db.fetch.schedule.adaptive.max_interval=31536000",
-					"db.fetch.schedule.adaptive.sync_delta=true",
-					"db.fetch.schedule.adaptive.sync_delta_rate=0.3",
-					"db.update.additions.allowed=true");
-		NameValueConfiguration nvc = new NameValueConfiguration(getTprojectRoot().resolve("conf/nutch-default.xml"));
-		ns.getProperties().forEach((k, v) -> {
-			nvc.SetNameValue((String)k, (String)v);
-		});
-		
-		nvc.writeTo(getTprojectRoot().resolve("conf/nutch-site.xml"));
-		
-		NameValueConfiguration nvc1 = new NameValueConfiguration(getTprojectRoot().resolve("conf/nutch-site.xml"));
-		assertThat(nvc1.getProperties().get("http.agent.name"), equalTo("fhgov"));
-	}
-	
-	@Test
-	public void testHbaseSite() throws IOException, SAXException, TransformerException {
-		HbaseSite hs = new HbaseSite().withRootDir("hdfs://s62.host.name:/user/hbase").withZkQuorum("s62.host.name,s63.host.name,s64.host.name,s65.host.name,s66.host.name");
-		NameValueConfiguration nvc = new NameValueConfiguration(getTprojectRoot().resolve("conf/hbase-default-1.2.4.xml"));
-		hs.getProperties().forEach((k, v) -> {
-			nvc.SetNameValue((String)k, (String)v);
-		});
-		nvc.withVersionSkip();
-		nvc.writeTo(getTprojectRoot().resolve("conf/hbase-site.xml"));
-		NameValueConfiguration nvc1 = new NameValueConfiguration(getTprojectRoot().resolve("conf/hbase-site.xml"));
-		assertThat(nvc1.getProperties().get("hbase.rootdir"), equalTo("hdfs://s62.host.name:/user/hbase"));
-		assertThat(nvc1.getProperties().get("hbase.zookeeper.quorum"), equalTo("s62.host.name,s63.host.name,s64.host.name,s65.host.name,s66.host.name"));
-
-	}
-	
-	@Test
 	public void tRegexUrlFilterConf() throws IOException {
 		copyIfNotExists();
 		RegexUrlFilterConfFile rfcf = new RegexUrlFilterConfFile().withDefaultSkips().addAccept("+^http://www.fh.gov.cn/.*");

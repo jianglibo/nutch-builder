@@ -12,6 +12,7 @@ public class TestCrawlLoop extends StepBase {
 	
 	@Before
 	public void b() throws Exception {
+		copyNeighborScript();
 		chir.deleteTable(testHtableName);
 		injectTestSeedDir();
 	}
@@ -33,7 +34,6 @@ public class TestCrawlLoop extends StepBase {
 			assertThat("updatedb should always return 0", csp.getExitCode(), equalTo(0));
 			i++;
 		}
-		
 		assertThat("the loop count should be right.", i, equalTo(10));
 	}
 }

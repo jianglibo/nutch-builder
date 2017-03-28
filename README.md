@@ -48,3 +48,8 @@ scan table
 
 ## classLoader leak
 https://www.dynatrace.com/resources/ebooks/javabook/class-loader-issues/
+
+## hbase rest
+Foreground: bin/hbase rest start -p <port>
+Background: bin/hbase-daemon.sh start rest -p <port>
+ 
