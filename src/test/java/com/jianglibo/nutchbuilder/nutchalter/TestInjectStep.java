@@ -14,25 +14,17 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jianglibo.nutchbuilder.crawl.CrawlProcesses;
 import com.jianglibo.nutchbuilder.crawl.NutchJobOptionBuilder;
 import com.jianglibo.nutchbuilder.crawl.CrawlProcesses.CrawlStepProcess;
-import com.jianglibo.nutchbuilder.hbaserest.CommonHbaseInformationRetriver;
 import com.jianglibo.nutchbuilder.hbaserest.HbaseTableSchema;
-import com.jianglibo.nutchbuilder.util.HadoopFs.RM_OPTS;
 
 public class TestInjectStep extends StepBase {
 	
-	@Autowired
-	private CommonHbaseInformationRetriver chir;
-	
-	
 	@Before
 	public void b() {
-		hadoopFs.rm(testUtil.SEED_DIR, RM_OPTS.RECURSIVE, RM_OPTS.IGNORE_NOT_EXIST, RM_OPTS.SKIP_TRASH);
-		chir.deleteTable(testHtableName);
+		deleteSeedDir();
 	}
 	
 	@Test
@@ -48,19 +40,15 @@ public class TestInjectStep extends StepBase {
 		hadoopFs.put(testUtil.SEED_DIR, sfs);
 		
 		// alter regex-urlfilter.txt
-		new RegexUrlFilterConfFile().withDefaultSkips().addAccept("+^http://www.jianglibo.com/.*").doAlter(neighborProjectRoot);
-		
+		new RegexUrlFilterConfFile().withDefaultSkips().addAccept("+^http://www.jianglibo.com/.*").addAccept("^http://jianglibo.com/.*").doAlter(neighborProjectRoot);
 		// alter hbase-site.xml
-		
 		new HbaseSite().fromHbaseHomeEnv(neighborProjectRoot.resolve("conf").resolve("hbase-site.xml"));
 		
 		// build project.
 		 new AntBuild.Build(neighborProjectRoot, applicationConfig.getAntExec(),"clean").call();
 		 new AntBuild.Build(neighborProjectRoot, applicationConfig.getAntExec(),"runtime").call();
 		
-		List<String> injectOptions = new NutchJobOptionBuilder(testCrawlId, 1).withInjectJobParameterBuilder().seedDir(testUtil.SEED_DIR).and().buildStringList();
-		CrawlStepProcess csp = CrawlProcesses.newStep(neighborProjectRoot, injectOptions);
-		csp.call();
+		CrawlStepProcess csp = injectTestSeedDir();
 		int exitCode = csp.getExitCode();
 		assertThat("exitCode should be 0", exitCode, equalTo(0));
 		assertThat("no error should be existed", csp.getErrorLines().size(), equalTo(0));
@@ -70,7 +58,7 @@ public class TestInjectStep extends StepBase {
 		
 		assertNotNull(testHtableName + "table should exists.", hts);
 
-		injectOptions = new NutchJobOptionBuilder(testCrawlId, 1).withInjectJobParameterBuilder().seedDir("/notexistfolder").and().buildStringList();
+		List<String> injectOptions = new NutchJobOptionBuilder(testCrawlId, 1).withInjectJobParameterBuilder().seedDir("/notexistfolder").and().buildStringList();
 		csp = CrawlProcesses.newStep(neighborProjectRoot, injectOptions);
 		csp.call();
 		exitCode = csp.getExitCode();

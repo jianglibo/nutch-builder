@@ -62,5 +62,11 @@ public class CommonHbaseInformationRetriver {
 	}
 	
 //	Invoke-WebRequest -Uri http://s110.host.name:8080/US_POPULATION1/schema -Headers @{Accept="application/json"} -ContentType "application/json" -Method Post -Body '{"name":"US_POPULATION1","ColumnSchema":[{"name":"0","BLOOMFILTER":"ROW","VERSIONS":"1","IN_MEMORY":"false","KEEP_DELETED_CELLS":"FALSE","DATA_BLOCK_ENCODING":"FAST_DIFF","TTL":"2147483647","COMPRESSION":"NONE","MIN_VERSIONS":"0","BLOCKCACHE":"true","BLOCKSIZE":"65536","REPLICATION_SCOPE":"0"}],"IS_META":"false","coprocessor$5":"|org.apache.phoenix.hbase.index.Indexer|805306366|org.apache.hadoop.hbase.index.codec.class=org.apache.phoenix.index.PhoenixIndexCodec,index.builder=org.apache.phoenix.index.PhoenixIndexBuilder","coprocessor$3":"|org.apache.phoenix.coprocessor.GroupedAggregateRegionObserver|805306366|","coprocessor$4":"|org.apache.phoenix.coprocessor.ServerCachingEndpointImpl|805306366|","coprocessor$1":"|org.apache.phoenix.coprocessor.ScanRegionObserver|805306366|","coprocessor$2":"|org.apache.phoenix.coprocessor.UngroupedAggregateRegionObserver|805306366|"}'
+/*
+ $r = Invoke-WebRequest -Uri http://s62.host.name:8081/test_crawl_webpage/scanner/ -Method Put -Headers @{Accept="application/json"} -Body '{"batch": 10}' -ContentType "application/json" -SessionVariable sv
+ Invoke-WebRequest -Uri $r.Headers.Location -Headers @{Accept="text/xml"} -WebSession $sv
+ 
+ 
+ */
 	
 }

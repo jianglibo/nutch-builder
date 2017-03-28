@@ -33,6 +33,16 @@ public class CrawlProcesses {
 	
 	private static Logger log = LoggerFactory.getLogger(CrawlProcesses.class);
 	
+	private static Charset cachedCharset = null;
+	
+	private static synchronized Charset getCachedCharset(Charset detected) {
+		if (detected != null) {
+			cachedCharset = detected;
+		}
+		return cachedCharset;
+	}
+
+	
 	private Path unjarRoot;
 	
 	@Value("${myapp.unjarRoot}")
@@ -104,14 +114,24 @@ public class CrawlProcesses {
 			}
 		}
 		
+		
 		public List<String> readAllLines() {
-			try {
-				return Files.readAllLines(pblog);
-			} catch (IOException e) {
+			Charset cs = getCachedCharset(null);
+			if ( cs != null) {
 				try {
-					return Files.readAllLines(pblog, Charset.defaultCharset());
-				} catch (IOException e1) {
-					log.error("cannot parse log file {}", pblog.toString());
+					return Files.readAllLines(pblog, cs);
+				} catch (IOException e) {
+					log.error("cannot parse log file {} by {} charseter set", pblog.toString(), cs.name());
+				}
+			}
+			
+			for(Charset cs1 : Charset.availableCharsets().values()) {
+				try {
+					List<String> lines = Files.readAllLines(pblog, cs1);
+					getCachedCharset(cs1);
+					return lines;
+				} catch (Exception e) {
+					log.error("cannot parse log file {} by {} charseter set", pblog.toString(), cs1.name());
 				}
 			}
 			return new ArrayList<>();

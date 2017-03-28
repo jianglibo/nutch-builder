@@ -45,8 +45,8 @@ public class NutchJobOptionBuilder {
 		}
 		
 		
-		public UpdateDbJobOptionBuilder withUpdateDbParameterBuilder() {
-			return new UpdateDbJobOptionBuilder();
+		public UpdateDbJobOptionBuilder withUpdateDbParameterBuilder(String batchId) {
+			return new UpdateDbJobOptionBuilder(batchId);
 		}
 		
 		protected void addJavaDOption(String value) {
@@ -139,8 +139,10 @@ public class NutchJobOptionBuilder {
 
 	public class UpdateDbJobOptionBuilder {
 	
-		public UpdateDbJobOptionBuilder() {
+		public UpdateDbJobOptionBuilder(String batchId) {
 			addCommand("updatedb");
+			addOrphanOtion(10, batchId);
+			addDefaultCommons();
 		}
 		
 		public NutchJobOptionBuilder and() {
@@ -151,14 +153,15 @@ public class NutchJobOptionBuilder {
 	
 	public class ParseJobOptionBuilder {
 		
-		private static final String joSkipping = "mapred.skip.attempts.to.start.skipping";
-		private static final String joSkipRecords = "mapred.skip.map.max.skip.records";
+		private static final String joSkippingDoption = "mapred.skip.attempts.to.start.skipping";
+		private static final String joSkipRecordsDoption = "mapred.skip.map.max.skip.records";
 		
 		public ParseJobOptionBuilder(String batchId) {
 			addCommand("parse");
-			addJavaDOption(joSkipping, 2);
-			addJavaDOption(joSkipRecords, 1);
+			addJavaDOption(joSkippingDoption, 2);
+			addJavaDOption(joSkipRecordsDoption, 1);
 			addOrphanOtion(10, batchId);
+			addDefaultCommons();
 		}
 		
 		public NutchJobOptionBuilder and() {
@@ -166,7 +169,7 @@ public class NutchJobOptionBuilder {
 		}
 
 		public ParseJobOptionBuilder startSkipping(int startSkipping) {
-			addJavaDOption(joSkipping, startSkipping);
+			addJavaDOption(joSkippingDoption, startSkipping);
 			return this;
 		}
 		
@@ -177,17 +180,21 @@ public class NutchJobOptionBuilder {
 		 * @return
 		 */
 		public ParseJobOptionBuilder skipRecords(int skipRecords) {
-			addJavaDOption(joSkipRecords, skipRecords);
+			addJavaDOption(joSkipRecordsDoption, skipRecords);
 			return this;
 		}
 	}
 	
 	public class FetchJobOptionBuilder {
+		
+		private static final String timeLimitFetchDoption = "fetcher.timelimit.mins";
+		
 		public FetchJobOptionBuilder(String batchId) {
 			addCommand("fetch");
-			addParameter("-timeLimitFetch", 180);
+			addJavaDOption(timeLimitFetchDoption, 180);
 			addParameter("-threads", 50);
 			addOrphanOtion(10, batchId);
+			addDefaultCommons();
 		}
 		
 		public NutchJobOptionBuilder and() {
@@ -195,7 +202,7 @@ public class NutchJobOptionBuilder {
 		}
 		
 		public FetchJobOptionBuilder timeLimitFetch(int timeLimitFetch) {
-			addParameter("-timeLimitFetch", timeLimitFetch);
+			addJavaDOption(timeLimitFetchDoption, timeLimitFetch);
 			return this;
 		}
 		
