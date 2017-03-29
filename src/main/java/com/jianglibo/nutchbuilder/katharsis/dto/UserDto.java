@@ -1,15 +1,20 @@
 package com.jianglibo.nutchbuilder.katharsis.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jianglibo.nutchbuilder.domain.BootUser;
+import com.jianglibo.nutchbuilder.domain.BootUser.Gender;
 
 import io.katharsis.resource.annotations.JsonApiId;
 import io.katharsis.resource.annotations.JsonApiResource;
+import io.katharsis.resource.annotations.JsonApiToMany;
 
 @JsonApiResource(type = "users")
-public class UserDto {
+public class UserDto implements Dto<UserDto, BootUser> {
 	
 	@JsonApiId
 	private Long id;
@@ -43,7 +48,18 @@ public class UserDto {
 
     private boolean enabled;
     
+    @JsonApiToMany()
+    private List<RoleDto> roles = new ArrayList<>();
     
+    public List<RoleDto> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RoleDto> roles) {
+		this.roles = roles;
+	}
+
+	@Override
     public UserDto fromEntity(BootUser bu) {
     	setAccountNonExpired(bu.isAccountNonExpired());
     	setAccountNonLocked(bu.isAccountNonLocked());
@@ -59,6 +75,7 @@ public class UserDto {
     	setMobileVerified(bu.isMobileVerified());
     	setName(bu.getName());
     	setPassword(bu.getPassword());
+    	setRoles(new RoleDto().batchConvert(bu.getRoles()));
     	return this;
     }
 
@@ -173,6 +190,23 @@ public class UserDto {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-    
-    
+
+	@Override
+	public BootUser patch(BootUser entity) {
+		entity.setAccountNonExpired(isAccountNonExpired());
+		entity.setAccountNonLocked(isAccountNonLocked());
+		entity.setAvatar(getAvatar());
+		entity.setCredentialsNonExpired(isCredentialsNonExpired());
+		entity.setDisplayName(getDisplayName());
+		entity.setEmail(getEmail());
+		entity.setEmailVerified(isEmailVerified());
+		entity.setEnabled(isEnabled());
+		entity.setGender(Gender.valueOf(getGender()));
+		entity.setId(getId());
+		entity.setMobile(getMobile());
+		entity.setMobileVerified(isMobileVerified());
+		entity.setName(getName());
+		entity.setPassword(getPassword());
+		return entity;
+	}
 }

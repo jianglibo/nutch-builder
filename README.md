@@ -62,4 +62,4 @@ $r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/users -Headers @{Accep
 
 $r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/users/1 -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -ContentType "application/vnd.api+json;charset=UTF-8" -Body '{"data": {"attributes": {"ab": 5}, "type": "users"}}' -Method Patch
 
- 
+http://localhost:88/jsonapi/roles/?page[offset]=0&page[limit]=10&sort=name,-id&filter[name][EQ]=Super%20task

@@ -46,8 +46,8 @@ public class ProjectRepositoryImpl  extends ResourceRepositoryBase<Project, Long
 	public synchronized ProjectList findAll(QuerySpec querySpec) {
 		ProjectList list = new ProjectList();
 		list.addAll(projects.values());
-		list.setMeta(new ProjectListMeta((long)list.size()));
-		list.setLinks(new ProjectListLinks());
+		list.setMeta(new DtoListMeta((long)projects.size()));
+		list.setLinks(new DtoListLinks());
 		querySpec.apply(projects.values(), list);
 		return list;
 	}
