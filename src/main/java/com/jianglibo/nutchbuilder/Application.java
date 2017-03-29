@@ -1,11 +1,15 @@
 package com.jianglibo.nutchbuilder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -13,6 +17,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
@@ -21,11 +26,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.jianglibo.nutchbuilder.config.KatharsisModuleConfig;
+
+import io.katharsis.resource.registry.RegistryEntry;
+import io.katharsis.resource.registry.ResourceRegistry;
+import io.katharsis.spring.boot.v3.KatharsisConfigV3;
 
 @SpringBootApplication
 @EnableSpringDataWebSupport
@@ -35,6 +46,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 @EnableAsync
 @EnableScheduling
 @EnableAspectJAutoProxy
+@Import({ KatharsisConfigV3.class, KatharsisModuleConfig.class })
 public class Application {
 
     public static void main(String[] args) {
@@ -62,6 +74,9 @@ public class Application {
 //    	return rbm;
 //    }
     
+
+	
+	
     @Bean
     @Primary
     @ConfigurationProperties(prefix="spring.datasource")

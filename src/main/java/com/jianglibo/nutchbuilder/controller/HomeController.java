@@ -1,7 +1,9 @@
 package com.jianglibo.nutchbuilder.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.jianglibo.nutchbuilder.model.MenuItem;
 import com.jianglibo.nutchbuilder.model.MenuItems;
 import com.jianglibo.nutchbuilder.util.SecurityUtil;
+
+import io.katharsis.resource.registry.RegistryEntry;
+import io.katharsis.resource.registry.ResourceRegistry;
 
 @Controller
 @RequestMapping("/")

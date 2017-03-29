@@ -52,4 +52,14 @@ https://www.dynatrace.com/resources/ebooks/javabook/class-loader-issues/
 ## hbase rest
 Foreground: bin/hbase rest start -p <port>
 Background: bin/hbase-daemon.sh start rest -p <port>
+
+## katharsis rest
+Invoke-WebRequest -Uri http://localhost:8080/jsonapi/users -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -Method Get
+([System.Text.Encoding]::UTF8).GetString($r.Content)
+Invoke-WebRequest -Uri http://localhost:8080/jsonapi/users -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -Method Put
+
+$r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/users -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -ContentType "application/vnd.api+json;charset=UTF-8" -Body '{"data": {"attributes": {"ab": 5}, "type": "users"}}' -Method Post
+
+$r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/users/1 -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -ContentType "application/vnd.api+json;charset=UTF-8" -Body '{"data": {"attributes": {"ab": 5}, "type": "users"}}' -Method Patch
+
  

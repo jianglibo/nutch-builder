@@ -149,4 +149,11 @@ myapp:
     hdfsPort: 
     antExec: G:/apache-ant-1.9.6/bin/ant.bat
     tProjectRoot: e:/nutchBuilderRoot/buildRoot/a
-	zkQuoram: 
+    zkQuoram: s62.host.name,s63.host.name,s64.host.name,s65.host.name,s66.host.name
+katharsis:
+    resourcePackage: io.katharsis.example.springboot.simple.domain
+    domainName: http://localhost:8080
+    pathPrefix: /jsonapi
+    default-page-limit:
+    jpa:
+      enabled: false

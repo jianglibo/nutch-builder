@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 
+
 @MappedSuperclass
 //@EntityListeners(value = {EntityChangeListener.class})
 public abstract class BaseEntity implements Serializable {

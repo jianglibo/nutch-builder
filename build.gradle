@@ -125,6 +125,19 @@ dependencies {
 	
 	compile 'org.springframework.data:spring-data-rest-hal-browser'
 	
+	// https://mvnrepository.com/artifact/io.katharsis/katharsis-core
+	compile group: 'io.katharsis', name: 'katharsis-core', version: '3.0.0'
+	
+	// https://mvnrepository.com/artifact/io.katharsis/katharsis-spring
+	compile group: 'io.katharsis', name: 'katharsis-spring', version: '3.0.0'
+	
+	// https://mvnrepository.com/artifact/io.katharsis/katharsis-brave
+	compile group: 'io.katharsis', name: 'katharsis-brave', version: '3.0.0'
+	
+	// https://mvnrepository.com/artifact/io.zipkin.brave/brave-apache-http-interceptors
+	compile group: 'io.zipkin.brave', name: 'brave-apache-http-interceptors', version: '4.0.6'
+	
+	
 	// https://mvnrepository.com/artifact/org.apache.nutch/nutch
 	// compile group: 'org.apache.nutch', name: 'nutch', version: '2.3.1'
     testCompile("org.springframework.boot:spring-boot-starter-test")

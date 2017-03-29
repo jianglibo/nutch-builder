@@ -12,7 +12,7 @@ public class RegexUrlFilterConfFile {
 	
 	private List<String> skipLines = new ArrayList<>();
 	
-	public void doAlter(Path projectRoot) throws IOException {
+	public void persist(Path projectRoot) throws IOException {
 		Path regexUrlfilter = projectRoot.resolve("conf/regex-urlfilter.txt");
 		List<String> originLines = Files.readAllLines(regexUrlfilter);
 		List<String> newLines = new ArrayList<>();

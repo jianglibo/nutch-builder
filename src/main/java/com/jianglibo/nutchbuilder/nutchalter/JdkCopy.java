@@ -41,7 +41,7 @@ import java.util.*;
  * Sample code that copies files in a similar manner to the cp(1) program.
  */
 
-public class OracleCopy {
+public class JdkCopy {
 
     /**
      * Returns {@code true} if okay to overwrite a  file ("cp -i")

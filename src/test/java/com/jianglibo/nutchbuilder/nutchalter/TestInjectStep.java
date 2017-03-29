@@ -59,7 +59,7 @@ public class TestInjectStep extends StepBase {
 				"db.update.additions.allowed=true").persist(nutchSitePath, nutchSitePath);
 		
 		// alter regex-urlfilter.txt
-		new RegexUrlFilterConfFile().withDefaultSkips().addAccept("+^http://www.jianglibo.com/.*").addAccept("^http://jianglibo.com/.*").doAlter(neighborProjectRoot);
+		new RegexUrlFilterConfFile().withDefaultSkips().addAccept("+^http://www.jianglibo.com/.*").addAccept("^http://jianglibo.com/.*").persist(neighborProjectRoot);
 		
 		// alter hbase-site.xml
 		new HbaseSite().fromHbaseHomeEnv(neighborProjectRoot.resolve("conf").resolve("hbase-site.xml"));

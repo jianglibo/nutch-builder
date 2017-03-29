@@ -36,7 +36,7 @@ public class TestAlterGoraProperties extends Tbase {
 	
 	private void copyIfNotExists() throws IOException {
 		if (!Files.exists(getTprojectRoot())) {
-			OracleCopy.copyTree(Paths.get("e:/nutchBuilderRoot/templateRoot", tplName), getTprojectRoot());
+			JdkCopy.copyTree(Paths.get("e:/nutchBuilderRoot/templateRoot", tplName), getTprojectRoot());
 		}
 		assertTrue("copyed directory should right", Files.exists(getTprojectRoot().resolve("ivy")));
 	}
@@ -63,15 +63,7 @@ public class TestAlterGoraProperties extends Tbase {
 		assertThat("should be contented with", changed.get(0), equalTo("gora.datastore.default=org.apache.gora.hbase.store.HBaseStore"));
 	}
 	
-	@Test
-	public void testBuild() throws Exception {
-		Assume.assumeFalse(skipBuildTest);
-		copyIfNotExists();
-		Build bd = new AntBuild.Build(getTprojectRoot(), applicationConfig.getAntExec(), "runtime");
-		int i = bd.call();
-		assertThat(i, equalTo(0));
-		assertTrue("log file should exists.", Files.exists(bd.getPblog()));
-	}
+
 	
 	private Path getTprojectRoot() {
 		return Paths.get(applicationConfig.gettProjectRoot());
@@ -81,7 +73,7 @@ public class TestAlterGoraProperties extends Tbase {
 	public void tRegexUrlFilterConf() throws IOException {
 		copyIfNotExists();
 		RegexUrlFilterConfFile rfcf = new RegexUrlFilterConfFile().withDefaultSkips().addAccept("+^http://www.fh.gov.cn/.*");
-		rfcf.doAlter(getTprojectRoot());
+		rfcf.persist(getTprojectRoot());
 		
 	}
 }
