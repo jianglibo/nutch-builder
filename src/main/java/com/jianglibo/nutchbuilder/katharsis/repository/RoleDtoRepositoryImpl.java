@@ -26,16 +26,17 @@ public class RoleDtoRepositoryImpl  extends ResourceRepositoryBase<RoleDto, Long
 		super(RoleDto.class);
 		this.roleRepository = roleRepository;
 	}
-
+//	$r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/roles/32768 -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -Method Delete
 	@Override
 	public void delete(Long id) {
 		roleRepository.delete(id);
 	}
 
+//	$r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/roles -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -ContentType "application/vnd.api+json;charset=UTF-8" -Body '{"data": {"attributes": {"name": "test"}, "type": "roles"}}' -Method Post
 	@Override
 	public <S extends RoleDto> S save(S roleDto) {
 		Role role;
-		if (roleDto.getId() == null) {
+		if (roleDto.getId() != null) {
 			role = roleRepository.findOne(roleDto.getId());
 		} else {
 			role = new Role();

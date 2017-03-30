@@ -14,7 +14,7 @@ import com.jianglibo.nutchbuilder.domain.Role;
  * @author jianglibo@gmail.com
  *
  */
-public class RoleRepositoryImpl extends SimpleJpaRepository<Role, Long> implements RoleRepositoryCustom {
+public class RoleRepositoryImpl extends DistinctSimpleJpaRepository<Role> implements RoleRepositoryCustom {
 
 //	private final JpaEntityInformation<Role, ?> entityInformation;
     

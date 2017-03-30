@@ -5,12 +5,17 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -24,11 +29,17 @@ import com.jianglibo.nutchbuilder.repository.RoleRepository;
  * @author jianglibo@gmail.com
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest({ "appmisc.in-testing=true"})
+@RunWith(SpringRunner.class)
+@SpringBootTest(properties = { "appmisc.in-testing=true"}, webEnvironment = WebEnvironment.DEFINED_PORT)
 public abstract class Tbase extends M3958TsBase {
 
     protected MockMvc mvc;
+    
+    @LocalServerPort
+    protected int localServerPort;
+    
+	@Autowired
+	protected TestRestTemplate restTemplate;
     
     @Autowired
     protected TestUtil testUtil;
@@ -54,6 +65,15 @@ public abstract class Tbase extends M3958TsBase {
     public ObjectMapper getObjectMapper() {
         return objectMapper;
     }
+    
+	@TestConfiguration
+	static class Config {
+		// does't work
+		@Bean
+		public TestRestTemplate testTemplate(@LocalServerPort int port) {
+			return new TestRestTemplate();
+		}
+	}
 
     @Before
     public void before() {

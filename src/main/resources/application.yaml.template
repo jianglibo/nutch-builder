@@ -154,6 +154,6 @@ katharsis:
     resourcePackage: io.katharsis.example.springboot.simple.domain
     domainName: http://localhost:8080
     pathPrefix: /jsonapi
-    default-page-limit:
+    default-page-limit: 20
     jpa:
       enabled: false

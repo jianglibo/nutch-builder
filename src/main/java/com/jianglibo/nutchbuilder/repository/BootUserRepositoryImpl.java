@@ -11,7 +11,7 @@ import com.jianglibo.nutchbuilder.domain.BootUser;
  * @author jianglibo@gmail.com
  *
  */
-public class BootUserRepositoryImpl extends SimpleJpaRepository<BootUser, Long> implements BootUserRepositoryCustom {
+public class BootUserRepositoryImpl extends DistinctSimpleJpaRepository<BootUser> implements BootUserRepositoryCustom {
 
 //	private final JpaEntityInformation<BootUser, ?> entityInformation;
     
