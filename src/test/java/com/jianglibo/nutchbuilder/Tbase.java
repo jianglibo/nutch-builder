@@ -35,9 +35,6 @@ public abstract class Tbase extends M3958TsBase {
 
     protected MockMvc mvc;
     
-    @LocalServerPort
-    protected int localServerPort;
-    
 	@Autowired
 	protected TestRestTemplate restTemplate;
     
@@ -70,7 +67,7 @@ public abstract class Tbase extends M3958TsBase {
 	static class Config {
 		// does't work
 		@Bean
-		public TestRestTemplate testTemplate(@LocalServerPort int port) {
+		public TestRestTemplate testTemplate() {
 			return new TestRestTemplate();
 		}
 	}

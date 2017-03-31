@@ -6,13 +6,15 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import com.jianglibo.nutchbuilder.domain.LoginAttempt;
 
-public class LoginAttemptRepositoryImpl extends SimpleJpaRepository<LoginAttempt, Long>  implements LoginAttemptRepositoryCustom, ApplicationContextAware {
+import io.katharsis.queryspec.QuerySpec;
+
+public class LoginAttemptRepositoryImpl extends DistinctSimpleJpaRepository<LoginAttempt>  implements  ApplicationContextAware {
 
     @SuppressWarnings("unused")
     private EntityManager entityManager;
@@ -35,4 +37,9 @@ public class LoginAttemptRepositoryImpl extends SimpleJpaRepository<LoginAttempt
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
     }
+
+	@Override
+	protected Specification<LoginAttempt> createSpecification(QuerySpec querySpec) {
+		return null;
+	}
 }

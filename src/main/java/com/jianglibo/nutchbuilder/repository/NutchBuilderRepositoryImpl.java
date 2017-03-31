@@ -4,15 +4,17 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.data.jpa.domain.Specification;
 
 import com.jianglibo.nutchbuilder.domain.NutchBuilder;
+
+import io.katharsis.queryspec.QuerySpec;
 
 /**
  * @author jianglibo@gmail.com
  *
  */
-public class NutchBuilderRepositoryImpl extends SimpleJpaRepository<NutchBuilder, Long> implements NutchBuilderRepositoryCustom {
+public class NutchBuilderRepositoryImpl extends DistinctSimpleJpaRepository<NutchBuilder> {
 
     
     @Autowired
@@ -28,5 +30,11 @@ public class NutchBuilderRepositoryImpl extends SimpleJpaRepository<NutchBuilder
     public <S extends NutchBuilder> S save(S entity) {
         return super.save(entity);
     }
+
+	@Override
+	protected Specification<NutchBuilder> createSpecification(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

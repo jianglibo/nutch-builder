@@ -75,7 +75,7 @@ public class UserDto implements Dto<UserDto, BootUser> {
     	setMobileVerified(bu.isMobileVerified());
     	setName(bu.getName());
     	setPassword(bu.getPassword());
-    	setRoles(new RoleDto().batchConvert(bu.getRoles()));
+    	setRoles((List<RoleDto>) Dto.convertToDto(RoleDto.class, bu.getRoles()));
     	return this;
     }
 

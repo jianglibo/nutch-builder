@@ -9,10 +9,16 @@ public interface Dto<T, E> {
 	
 	E patch(E entity);
 	
-	default List<T> batchConvert(Iterable<E> entities) {
-		List<T> dtos = new ArrayList<>();
+	static <D extends Dto<D, E>, E> List<D> convertToDto(Class<D> dtoClass, Iterable<E> entities) {
+		List<D> dtos = new ArrayList<>();
 		for(E entity : entities) {
-			dtos.add(fromEntity(entity));
+			D dto;
+			try {
+				dto = dtoClass.newInstance();
+				dtos.add(dto.fromEntity(entity));
+			} catch (InstantiationException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
 		}
 		return dtos;
 	}

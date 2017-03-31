@@ -4,15 +4,17 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.data.jpa.domain.Specification;
 
 import com.jianglibo.nutchbuilder.domain.SourceFile;
+
+import io.katharsis.queryspec.QuerySpec;
 
 /**
  * @author jianglibo@gmail.com
  *
  */
-public class SourceFileRepositoryImpl extends SimpleJpaRepository<SourceFile, Long> implements SourceFileRepositoryCustom {
+public class SourceFileRepositoryImpl extends DistinctSimpleJpaRepository<SourceFile> {
 
     
     @Autowired
@@ -28,5 +30,10 @@ public class SourceFileRepositoryImpl extends SimpleJpaRepository<SourceFile, Lo
     public <S extends SourceFile> S save(S entity) {
         return super.save(entity);
     }
+
+	@Override
+	protected Specification<SourceFile> createSpecification(QuerySpec querySpec) {
+		return null;
+	}
 
 }

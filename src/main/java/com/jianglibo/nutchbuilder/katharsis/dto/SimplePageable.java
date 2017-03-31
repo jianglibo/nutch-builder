@@ -11,43 +11,41 @@ import io.katharsis.queryspec.Direction;
 import io.katharsis.queryspec.QuerySpec;
 
 public class SimplePageable implements Pageable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
-	private Sort sort = null;
+	private final Sort sort;
+	private final int perPage;
+	private final int curPage;
 	
-	private final QuerySpec querySpec;
+	private final int offset;
 	
-	private final Long total;
-	
-	public SimplePageable(QuerySpec querySpec, Long total) {
-		this.querySpec = querySpec;
-		this.total = total;
+	public SimplePageable(QuerySpec querySpec) {
+		this.perPage = querySpec.getLimit().intValue();
+		this.offset = (int)querySpec.getOffset();
+		this.curPage = (int) Math.ceil(querySpec.getOffset() / querySpec.getLimit());
 		List<Order> orders = querySpec.getSort().stream().map(sc -> {
 			return new Order(sc.getDirection() == Direction.ASC ? Sort.Direction.ASC : Sort.Direction.DESC, sc.getAttributePath().get(0));
 		}).collect(Collectors.toList());
 		if (!orders.isEmpty()) {
 			sort = new Sort(orders);
+		} else {
+			sort = null;
 		}
 	}
 
 
 	@Override
 	public int getPageNumber() {
-		return (int) Math.ceil(total / querySpec.getLimit());
+		return curPage;
 	}
 
 	@Override
 	public int getPageSize() {
-		return querySpec.getLimit().intValue();
+		return perPage;
 	}
 
 	@Override
 	public int getOffset() {
-		return (int) querySpec.getOffset();
+		return offset;
 	}
 
 	@Override

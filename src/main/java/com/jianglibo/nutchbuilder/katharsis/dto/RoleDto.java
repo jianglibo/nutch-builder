@@ -1,5 +1,7 @@
 package com.jianglibo.nutchbuilder.katharsis.dto;
 
+import java.util.Date;
+
 import com.jianglibo.nutchbuilder.domain.Role;
 
 import io.katharsis.resource.annotations.JsonApiId;
@@ -13,10 +15,13 @@ public class RoleDto implements Dto<RoleDto, Role>{
 	
 	private String name;
 	
+	private Date createdAt;
+	
 	@Override
 	public RoleDto fromEntity(Role role) {
 		setId(role.getId());
 		setName(role.getName());
+		setCreatedAt(role.getCreatedAt());
 		return this;
 	}
 
@@ -40,5 +45,13 @@ public class RoleDto implements Dto<RoleDto, Role>{
 	public Role patch(Role entity) {
 		entity.setName(getName());
 		return entity;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 }

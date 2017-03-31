@@ -1,7 +1,6 @@
 package com.jianglibo.nutchbuilder.katharsis.repository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.data.domain.Example;
@@ -10,11 +9,8 @@ import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
 import org.springframework.stereotype.Component;
 
 import com.jianglibo.nutchbuilder.domain.BootUser;
-import com.jianglibo.nutchbuilder.domain.Role;
-import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
-import com.jianglibo.nutchbuilder.katharsis.dto.SimplePageable;
+import com.jianglibo.nutchbuilder.katharsis.dto.Dto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
-import com.jianglibo.nutchbuilder.katharsis.repository.RoleDtoRepository.RoleDtoList;
 import com.jianglibo.nutchbuilder.repository.BootUserRepository;
 
 import io.katharsis.queryspec.FilterOperator;
@@ -63,7 +59,7 @@ public class UserDtoRepositoryImpl  extends ResourceRepositoryBase<UserDto, Long
 					
 				}
 				UserDtoList udl = new UserDtoList();
-				udl.addAll(new UserDto().batchConvert(bus));
+				udl.addAll(Dto.convertToDto(UserDto.class, bus));
 				return udl;
 			}
 		}
@@ -73,18 +69,9 @@ public class UserDtoRepositoryImpl  extends ResourceRepositoryBase<UserDto, Long
 		Example<BootUser> example = Example.of(bu);
 		Long count = bootUserRepository.count(example);
 		
-		ExampleMatcher matcher = ExampleMatcher.matching()
-			    .withMatcher("firstname", new GenericPropertyMatcher().endsWith())
-			    .withMatcher("lastname", new GenericPropertyMatcher().startsWith().ignoreCase());
-
+		List<BootUser> users = bootUserRepository.findAll(querySpec);
 		
-		List<BootUser> users = bootUserRepository.findAll(example, new SimplePageable(querySpec, count)).getContent();
-		Long limit = querySpec.getLimit();
-		Long offset = querySpec.getOffset();
-		List<SortSpec> sorts = querySpec.getSort();
-		List<FilterSpec> filters = querySpec.getFilters();
-		
-		List<UserDto> list = new UserDto().batchConvert(users);
+		List<UserDto> list = Dto.convertToDto(UserDto.class, users);
 		UserDtoList listOb = new UserDtoList();
 		listOb.setMeta(new DtoListMeta(count));
 		listOb.setLinks(new DtoListLinks());

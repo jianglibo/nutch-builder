@@ -2,8 +2,6 @@ package com.jianglibo.nutchbuilder.repository;
 
 import javax.transaction.Transactional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
@@ -12,7 +10,7 @@ import com.jianglibo.nutchbuilder.domain.BootUser;
 
 
 @RepositoryRestResource(collectionResourceRel = "people", path = "people")
-public interface BootUserRepository extends JpaRepository<BootUser, Long>, JpaSpecificationExecutor<BootUser> {
+public interface BootUserRepository extends RepositoryBase<BootUser>{
 
     BootUser findByEmail(@Param("email") String email);
 
