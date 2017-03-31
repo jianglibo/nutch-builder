@@ -3,13 +3,13 @@ package com.jianglibo.nutchbuilder.repository;
 import javax.transaction.Transactional;
 
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
+//import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+//import org.springframework.data.rest.core.annotation.RestResource;
 
 import com.jianglibo.nutchbuilder.domain.BootUser;
 
 
-@RepositoryRestResource(collectionResourceRel = "people", path = "people")
+//@RepositoryRestResource(collectionResourceRel = "people", path = "people")
 public interface BootUserRepository extends RepositoryBase<BootUser>{
 
     BootUser findByEmail(@Param("email") String email);
@@ -19,12 +19,12 @@ public interface BootUserRepository extends RepositoryBase<BootUser>{
     BootUser findByName(@Param("name") String name);
     
     @Override
-    @RestResource(exported = false)
+//    @RestResource(exported = false)
     @Transactional
     public <S extends BootUser> S save(S entity);
     
     @Override
-    @RestResource(exported = false)
+//    @RestResource(exported = false)
     public void delete(BootUser entity);
 
     @Override

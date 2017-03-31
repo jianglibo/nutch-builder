@@ -48,7 +48,7 @@ public class UserDto implements Dto<UserDto, BootUser> {
 
     private boolean enabled;
     
-    @JsonApiToMany()
+//    @JsonApiToMany()
     private List<RoleDto> roles = new ArrayList<>();
     
     public List<RoleDto> getRoles() {

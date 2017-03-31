@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.ResultHandler;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.net.MediaType;
 import com.jianglibo.nutchbuilder.MvcBase;
-import com.jianglibo.nutchbuilder.util.LinkUtil;
+//import com.jianglibo.nutchbuilder.util.LinkUtil;
 
 /**
  * @author jianglibo@gmail.com
@@ -25,8 +25,8 @@ import com.jianglibo.nutchbuilder.util.LinkUtil;
  */
 public class PersonFetchTest extends MvcBase {
     
-    @Autowired
-    private LinkUtil linkUtil;
+//    @Autowired
+//    private LinkUtil linkUtil;
 
 //    @Before
 //    public void b() {
