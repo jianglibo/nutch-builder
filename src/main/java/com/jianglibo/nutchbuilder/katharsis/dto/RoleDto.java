@@ -2,12 +2,14 @@ package com.jianglibo.nutchbuilder.katharsis.dto;
 
 import java.util.Date;
 
+import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.domain.Role;
 
 import io.katharsis.resource.annotations.JsonApiId;
 import io.katharsis.resource.annotations.JsonApiResource;
 
 @JsonApiResource(type = "roles")
+@DtoToEntity(entityClass=Role.class)
 public class RoleDto implements Dto<RoleDto, Role>{
 
 	@JsonApiId

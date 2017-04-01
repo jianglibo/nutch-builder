@@ -14,7 +14,8 @@ import io.katharsis.queryspec.QuerySpec;
  * @author jianglibo@gmail.com
  *
  */
-public class SourceFileRepositoryImpl extends DistinctSimpleJpaRepository<SourceFile> {
+public class SourceFileRepositoryImpl extends DistinctSimpleJpaRepository<SourceFile> implements RepositoryBase<SourceFile>{
+	
 
     
     @Autowired

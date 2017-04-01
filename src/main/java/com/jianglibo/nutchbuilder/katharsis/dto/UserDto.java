@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.BootUser.Gender;
 
@@ -14,6 +15,7 @@ import io.katharsis.resource.annotations.JsonApiResource;
 import io.katharsis.resource.annotations.JsonApiToMany;
 
 @JsonApiResource(type = "users")
+@DtoToEntity(entityClass=BootUser.class)
 public class UserDto implements Dto<UserDto, BootUser> {
 	
 	@JsonApiId

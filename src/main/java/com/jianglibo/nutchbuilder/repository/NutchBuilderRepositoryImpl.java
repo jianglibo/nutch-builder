@@ -14,7 +14,7 @@ import io.katharsis.queryspec.QuerySpec;
  * @author jianglibo@gmail.com
  *
  */
-public class NutchBuilderRepositoryImpl extends DistinctSimpleJpaRepository<NutchBuilder> {
+public class NutchBuilderRepositoryImpl extends DistinctSimpleJpaRepository<NutchBuilder> implements RepositoryBase<NutchBuilder>{
 
     
     @Autowired

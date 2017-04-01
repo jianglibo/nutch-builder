@@ -13,7 +13,7 @@ import io.katharsis.queryspec.QuerySpec;
  * @author jianglibo@gmail.com
  *
  */
-public class BootUserRepositoryImpl extends DistinctSimpleJpaRepository<BootUser> {
+public class BootUserRepositoryImpl extends DistinctSimpleJpaRepository<BootUser> implements RepositoryBase<BootUser>{
 
 //	private final JpaEntityInformation<BootUser, ?> entityInformation;
     

@@ -7,6 +7,8 @@ public interface Dto<T, E> {
 
 	T fromEntity(E entity);
 	
+	Long getId();
+	
 	E patch(E entity);
 	
 	static <D extends Dto<D, E>, E> List<D> convertToDto(Class<D> dtoClass, Iterable<E> entities) {

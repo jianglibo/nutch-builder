@@ -14,7 +14,7 @@ import com.jianglibo.nutchbuilder.domain.LoginAttempt;
 
 import io.katharsis.queryspec.QuerySpec;
 
-public class LoginAttemptRepositoryImpl extends DistinctSimpleJpaRepository<LoginAttempt>  implements  ApplicationContextAware {
+public class LoginAttemptRepositoryImpl extends DistinctSimpleJpaRepository<LoginAttempt>  implements  ApplicationContextAware, RepositoryBase<LoginAttempt> {
 
     @SuppressWarnings("unused")
     private EntityManager entityManager;
