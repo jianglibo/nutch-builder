@@ -56,4 +56,9 @@ public class RoleDto implements Dto<RoleDto, Role>{
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("[%s,%s]", getId(), getName());
+	}
 }

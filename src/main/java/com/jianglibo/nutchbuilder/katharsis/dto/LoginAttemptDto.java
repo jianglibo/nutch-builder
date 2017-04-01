@@ -1,10 +1,15 @@
 package com.jianglibo.nutchbuilder.katharsis.dto;
 
+import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.domain.LoginAttempt;
+import com.jianglibo.nutchbuilder.domain.Role;
 import com.jianglibo.nutchbuilder.domain.ThirdPartLogin.Provider;
 
 import io.katharsis.resource.annotations.JsonApiId;
+import io.katharsis.resource.annotations.JsonApiResource;
 
+@JsonApiResource(type = "longinAttempts")
+@DtoToEntity(entityClass=LoginAttempt.class)
 public class LoginAttemptDto implements Dto<LoginAttemptDto, LoginAttempt>{
 	
 	@JsonApiId

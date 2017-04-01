@@ -3,7 +3,12 @@ package com.jianglibo.nutchbuilder.katharsis.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
+
 import com.jianglibo.nutchbuilder.domain.BaseEntity;
+import com.jianglibo.nutchbuilder.json.exception.AppException;
 import com.jianglibo.nutchbuilder.katharsis.dto.Dto;
 import com.jianglibo.nutchbuilder.repository.RepositoryBase;
 
@@ -13,6 +18,8 @@ import io.katharsis.resource.list.ResourceListBase;
 
 public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceListBase<T, DtoListMeta, DtoListLinks>, E extends BaseEntity>
 		extends ResourceRepositoryBase<T, Long> {
+	
+	private static Logger log = LoggerFactory.getLogger(DtoRepositoryBase.class);
 
 	private final RepositoryBase<E> repository;
 
@@ -40,13 +47,18 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		} else {
 			try {
 				entity = entityClass.newInstance();
-				entity = dto.patch(entity);
-				return (S) dto.fromEntity(repository.save(entity));
 			} catch (InstantiationException | IllegalAccessException e) {
-				e.printStackTrace();
+				log.error("instantiationException {}", entityClass.getName());
+				throw new AppException().addError(1000, entityClass.getName());
 			}
 		}
-		return null;
+		entity = dto.patch(entity);
+		try {
+			return (S) dto.fromEntity(repository.save(entity));
+		} catch (DataIntegrityViolationException div) {
+			log.error("DataIntegrityViolationException {}", entityClass.getName());
+			throw new AppException().addError(2000, entityClass.getName());
+		}
 	}
 	
 

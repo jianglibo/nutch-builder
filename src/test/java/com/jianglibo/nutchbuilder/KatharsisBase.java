@@ -3,10 +3,15 @@ package com.jianglibo.nutchbuilder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -49,12 +54,28 @@ public abstract class KatharsisBase extends Tbase {
 		return (T) documentMapper.fromDocument(document, false);
 	}
 	
+	public ResponseEntity<String> deleteByExchange(String url) {
+		HttpEntity<?> requestEntity = new HttpEntity("");
+
+		return restTemplate.exchange(
+				url,
+		        HttpMethod.DELETE, requestEntity, String.class);
+	}
+	
 	protected String getKatharsisBase() {
 		return domainName + pathPrefix;
 	}
 	
 	protected String getBaseURI() {
 		return domainName + pathPrefix + "/" + getResourceName();
+	}
+	
+	protected String getItemUrl(long id) {
+		return getBaseURI() + "/" + id;
+	}
+	
+	public String getFixture(String fname) throws IOException {
+		return new String(Files.readAllBytes(Paths.get("fixturesingit", "dtos", fname + ".json")));
 	}
 	
 	protected abstract String getResourceName();

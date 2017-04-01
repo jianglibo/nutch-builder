@@ -1,0 +1,16 @@
+{
+    "data": [
+        {
+            "type": "roles",
+            "attributes": {
+                "name": "ROLE_USER_T1"
+            }
+        },
+        {
+            "type": "roles",
+            "attributes": {
+                "name": "ROLE_USER_T2"
+            }
+        }
+    ]
+}
