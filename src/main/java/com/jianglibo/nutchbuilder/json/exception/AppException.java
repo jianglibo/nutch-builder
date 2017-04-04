@@ -12,8 +12,8 @@ public class AppException extends RuntimeException {
 	
 	private final List<CodeAndTitle> errors = new ArrayList<>();
 	
-	public AppException addError(int code, String title) {
-		errors.add(new CodeAndTitle(code, title));
+	public AppException addError(int code, String title, String detail) {
+		errors.add(new CodeAndTitle(code, title, detail));
 		return this;
 	}
 	
@@ -26,11 +26,13 @@ public class AppException extends RuntimeException {
 	public static class CodeAndTitle {
 		private int code;
 		private String title;
+		private String detail;
 		
-		public CodeAndTitle(int code, String title) {
+		public CodeAndTitle(int code, String title, String detail) {
 			super();
 			this.code = code;
 			this.title = title;
+			this.setDetail(detail);
 		}
 		public int getCode() {
 			return code;
@@ -43,6 +45,12 @@ public class AppException extends RuntimeException {
 		}
 		public void setTitle(String title) {
 			this.title = title;
+		}
+		public String getDetail() {
+			return detail;
+		}
+		public void setDetail(String detail) {
+			this.detail = detail;
 		}
 		
 		

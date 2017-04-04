@@ -55,6 +55,7 @@ public class JwtUtil implements InitializingBean {
 		jwtb.withClaim("email", principal.getEmail());
 		jwtb.withClaim("mobile", principal.getMobile());
 		jwtb.withClaim("avatar", principal.getAvatar());
+		jwtb.withClaim("gender", principal.getGender().name());
 		jwtb.withArrayClaim("authorities", principal.getAuthorities().stream().map(a -> a.getAuthority()).toArray(size -> new String[size]));
 		return jwtb;
 	}
@@ -71,7 +72,7 @@ public class JwtUtil implements InitializingBean {
 				, decodedJwt.getClaim("displayName").asString()
 				, decodedJwt.getClaim("email").asString()
 				, decodedJwt.getClaim("mobile").asString()
-				, null
+				, ""
 				, true
 				, true
 				, true
@@ -118,7 +119,7 @@ public class JwtUtil implements InitializingBean {
 		out.write(baos.toByteArray());
 		out.flush();
 	}
-
+	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		String s = new String(Files.readAllBytes(Paths.get(applicationConfig.getJwtConfig().getFile())));

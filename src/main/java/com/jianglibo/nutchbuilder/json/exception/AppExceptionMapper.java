@@ -17,7 +17,7 @@ public class AppExceptionMapper implements ExceptionMapper<AppException> {
 	public ErrorResponse toErrorResponse(AppException e) {
 		return ErrorResponse.builder().setStatus(APP_ERROR_STATUS_CODE)
 				.setErrorData(e.getErrors().stream()
-						.map(ae -> ErrorData.builder().setStatus(String.valueOf(APP_ERROR_STATUS_CODE))
+						.map(ae -> ErrorData.builder().setStatus(String.valueOf(APP_ERROR_STATUS_CODE)).setDetail(ae.getDetail())
 								.setTitle(ae.getTitle()).setCode(String.valueOf(ae.getCode())).build())
 						.collect(Collectors.toList()))
 				.build();
@@ -27,7 +27,7 @@ public class AppExceptionMapper implements ExceptionMapper<AppException> {
 	public AppException fromErrorResponse(ErrorResponse errorResponse) {
 		AppException ae = new AppException();
 		for(ErrorData ed : errorResponse.getErrors()) {
-			ae.addError(Integer.valueOf(ed.getCode()), ed.getTitle());
+			ae.addError(Integer.valueOf(ed.getCode()), ed.getTitle(), ed.getDetail());
 		}
 		return ae;
 	}

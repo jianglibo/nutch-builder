@@ -68,34 +68,29 @@ public class JwtBasicFilter implements Filter {
 			if (HttpMethod.POST.matches(request.getMethod()) && negPathPattern.matcher(request.getRequestURI()).matches()) {
 				chain.doFilter(request, response);
 			} else if (pathPattern.matcher(request.getRequestURI()).matches()) {
-				processBasicLogin(request);
+				try {
+					processBasicLogin(request);
+					chain.doFilter(req, res);
+				} catch (AuthenticationException e) {
+		            SecurityContextHolder.clearContext();
+		            throw new AccessDeniedException("authentication exception.");
+				}
 			} else {
 				chain.doFilter(request, response);
 			}
-		} else {
-			chain.doFilter(req, res);
 		}
 	}
 
     private void processBasicLogin(HttpServletRequest request) throws AccessDeniedException, IOException {
         String header = request.getHeader("Authorization");
-
         if (header == null || !header.startsWith("Bearer ")) {
             throw new AccessDeniedException("no jwt header.");
         }
-
-        try {
-            SecurityContextHolder.clearContext();
-            BootUserPrincipal pricipal = jwtUtil.verifyToken(header.substring(7));
-            
-            
-            BootUserAuthentication buan = new BootUserAuthentication(pricipal);
-            buan.setAuthenticated(true);
-            SecurityContextHolder.getContext().setAuthentication(buan);
-        } catch (AuthenticationException failed) {
-            SecurityContextHolder.clearContext();
-            throw new AccessDeniedException("authentication exception.");
-        }
+        SecurityContextHolder.clearContext();
+        BootUserPrincipal pricipal = jwtUtil.verifyToken(header.substring(7));
+        
+        BootUserAuthentication buan = new BootUserAuthentication(pricipal);
+        SecurityContextHolder.getContext().setAuthentication(buan);
     }
 
 	@Override

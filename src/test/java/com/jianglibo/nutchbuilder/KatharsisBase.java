@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.config.StatelessCSRFFilter;
 
 import io.katharsis.client.internal.ClientDocumentMapper;
@@ -42,12 +43,40 @@ public abstract class KatharsisBase extends Tbase {
 	@Value("${katharsis.default-page-limit}")
 	private String pageSize;
 	
+	public ResponseEntity<String> getBody(String jwtToken, String url) throws IOException {
+		HttpHeaders hds = getAuthorizationHaders(jwtToken);
+		HttpEntity<String> request = new HttpEntity<>(hds);
+		
+		return restTemplate.exchange(
+		        url,
+		        HttpMethod.GET, request, String.class);
+	}
+	
+	public ResponseEntity<String> postItem(String fixtureName, String jwtToken) throws IOException {
+		HttpEntity<String> request = new HttpEntity<String>(getFixture(fixtureName), getAuthorizationHaders(jwtToken));
+		return restTemplate.postForEntity(getBaseURI(), request, String.class);
+	}
+	
 	public HttpHeaders getCsrfHeader() {
 		HttpHeaders requestHeaders = new HttpHeaders();
 		
 		requestHeaders.add("Cookie", StatelessCSRFFilter.CSRF_TOKEN + "=123456");
 		requestHeaders.add(StatelessCSRFFilter.X_CSRF_TOKEN,"123456");
 		return requestHeaders;
+	}
+	
+	public HttpHeaders getAuthorizationHaders(String jwtToken) throws IOException {
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.set("Authorization", "Bearer " + jwtToken);
+		return requestHeaders;
+	}
+	
+	public String getJwtToken() throws IOException {
+		HttpEntity<String> request = new HttpEntity<String>(getFixture("loginAttemptRightCredential"));
+		ResponseEntity<String> response = restTemplate.postForEntity(getBaseURI(JsonApiResourceNames.LOGIN_ATTEMPT), request, String.class);
+		String body = response.getBody();
+		Document d =  kboot.getObjectMapper().readValue(body, Document.class);
+		return d.getSingleData().get().getAttributes().get("jwt_token").asText();
 	}
 	
 	
@@ -73,17 +102,22 @@ public abstract class KatharsisBase extends Tbase {
 		return (T) documentMapper.fromDocument(document, false);
 	}
 	
-	public ResponseEntity<String> deleteByExchange(String url) {
-		HttpEntity<?> requestEntity = new HttpEntity("");
-
+	public ResponseEntity<String> deleteByExchange(String jwtToken, String url) throws IOException {
+		HttpHeaders hds = getAuthorizationHaders(jwtToken);
+		HttpEntity<String> request = new HttpEntity<>(hds);
 		return restTemplate.exchange(
 				url,
-		        HttpMethod.DELETE, requestEntity, String.class);
+		        HttpMethod.DELETE, request, String.class);
 	}
 	
 	protected String getKatharsisBase() {
 		return domainName + pathPrefix;
 	}
+	
+	protected String getBaseURI(String resourceName) {
+		return domainName + pathPrefix + "/" + resourceName;
+	}
+
 	
 	protected String getBaseURI() {
 		return domainName + pathPrefix + "/" + getResourceName();

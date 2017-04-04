@@ -49,7 +49,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 				entity = entityClass.newInstance();
 			} catch (InstantiationException | IllegalAccessException e) {
 				log.error("instantiationException {}", entityClass.getName());
-				throw new AppException().addError(1000, entityClass.getName());
+				throw new AppException().addError(1000, entityClass.getName(), "cannot instantiation " + entityClass.getName());
 			}
 		}
 		entity = dto.patch(entity);
@@ -57,7 +57,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 			return (S) dto.fromEntity(repository.save(entity));
 		} catch (DataIntegrityViolationException div) {
 			log.error("DataIntegrityViolationException {}", entityClass.getName());
-			throw new AppException().addError(2000, entityClass.getName());
+			throw new AppException().addError(2000, "DataIntegrityViolationException", div.getMessage());
 		}
 	}
 	

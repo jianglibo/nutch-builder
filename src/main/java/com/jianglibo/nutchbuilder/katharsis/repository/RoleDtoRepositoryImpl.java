@@ -1,6 +1,5 @@
 package com.jianglibo.nutchbuilder.katharsis.repository;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
