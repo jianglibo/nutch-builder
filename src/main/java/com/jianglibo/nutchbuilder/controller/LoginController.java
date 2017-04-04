@@ -31,7 +31,7 @@ import com.jianglibo.nutchbuilder.model.MenuItem.ShowMenuWhen;
 import com.jianglibo.nutchbuilder.model.MenuItems;
 import com.jianglibo.nutchbuilder.util.ControllerUtil;
 import com.jianglibo.nutchbuilder.vo.BootUserAuthentication;
-import com.jianglibo.nutchbuilder.vo.BootUserVo;
+import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 import com.jianglibo.nutchbuilder.vo.LoginAttemptForm;
 
 @Controller
@@ -102,7 +102,7 @@ public class LoginController implements HasMenuItemController {
 
 			Authentication an = am.authenticate(authRequest);
 			
-			BootUserVo user = (BootUserVo) an.getPrincipal();
+			BootUserPrincipal user = (BootUserPrincipal) an.getPrincipal();
 			
 			BootUserAuthentication buan = new BootUserAuthentication(user);
 

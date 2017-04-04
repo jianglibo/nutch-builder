@@ -16,7 +16,7 @@ import com.jianglibo.nutchbuilder.domain.Role;
  * @author jianglibo@gmail.com
  *
  */
-public class BootUserVo extends User {
+public class BootUserPrincipal extends User {
     /**
      * 
      */
@@ -38,7 +38,7 @@ public class BootUserVo extends User {
 
     private final Set<ThirdPartLoginVo> thirdConns;
 
-    public BootUserVo() {
+    public BootUserPrincipal() {
         super("-1", "", new HashSet<>());
         this.id = 0;
         this.email = null;
@@ -52,17 +52,17 @@ public class BootUserVo extends User {
         this.thirdConns = new HashSet<>();
     }
 
-    public BootUserVo(BootUser bu) {
+    public BootUserPrincipal(BootUser bu) {
         this(bu, new HashSet<>());
     }
 
-    public BootUserVo(BootUser person, Set<Role> roles) {
+    public BootUserPrincipal(BootUser person, Set<Role> roles) {
         this(person.getName(), person.getDisplayName(), person.getEmail(), person.getMobile(), person.getPassword(), person.isEnabled(), person
                 .isAccountNonExpired(), person.isCredentialsNonExpired(), person.isAccountNonLocked(), person.getAvatar(), roles, person.isEmailVerified(),
                 person.isMobileVerified(), person.getGender(), ThirdPartLoginVo.toVos(person.getThirdConns()), person.getId(), person.getOpenId());
     }
 
-    public BootUserVo(String name, String displayName, String email, String mobile, String password, boolean enabled, boolean accountNonExpired,
+    public BootUserPrincipal(String name, String displayName, String email, String mobile, String password, boolean enabled, boolean accountNonExpired,
             boolean credentialNonExpired, boolean accountNonLocked, String avatar, Collection<? extends GrantedAuthority> authorities, boolean emailVerified,
             boolean mobileVerified, Gender gender, Set<ThirdPartLoginVo> thirdConns, long id, String openId) {
         super(name, password, enabled, accountNonExpired, credentialNonExpired, accountNonLocked, authorities);
@@ -82,24 +82,24 @@ public class BootUserVo extends User {
         this.thirdConns = thirdConns;
     }
 
-    public BootUserVo(String name, String displayName, String email, String mobile, String password, boolean enabled, boolean accountNonExpired,
+    public BootUserPrincipal(String name, String displayName, String email, String mobile, String password, boolean enabled, boolean accountNonExpired,
             boolean credentialNonExpired, boolean accountNonLocked, String avatar, Collection<? extends GrantedAuthority> authorities, boolean emailVerified,
             boolean mobileVerified) {
         this(name, displayName, email, mobile, password, enabled, accountNonExpired, credentialNonExpired, accountNonLocked, avatar, authorities,
                 emailVerified, mobileVerified, Gender.FEMALE, new HashSet<>(), 0, null);
     }
 
-    public BootUserVo(String name, String displayName, String email, String mobile, String password, boolean enabled, boolean accountNonExpired,
+    public BootUserPrincipal(String name, String displayName, String email, String mobile, String password, boolean enabled, boolean accountNonExpired,
             boolean credentialNonExpired, boolean accountNonLocked, String avatar, Collection<GrantedAuthority> authorities) {
         this(name, displayName, email, mobile, password, enabled, accountNonExpired, credentialNonExpired, accountNonLocked, avatar, authorities, false, false,
                 Gender.FEMALE, new HashSet<>(), 0, null);
     }
 
-    public BootUserVo(String name, String displayName, String email, String mobile, String password, String avatar, Collection<GrantedAuthority> authorities) {
+    public BootUserPrincipal(String name, String displayName, String email, String mobile, String password, String avatar, Collection<GrantedAuthority> authorities) {
         this(name, displayName, email, mobile, password, true, true, true, true, avatar, authorities);
     }
 
-    public BootUserVo(String name, String email, String mobile, String password) {
+    public BootUserPrincipal(String name, String email, String mobile, String password) {
         this(name, name, email, mobile, password, true, true, true, true, null, new HashSet<>());
     }
 

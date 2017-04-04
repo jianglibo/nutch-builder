@@ -15,7 +15,7 @@ import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.Role;
 import com.jianglibo.nutchbuilder.repository.BootUserRepository;
 import com.jianglibo.nutchbuilder.repository.RoleRepository;
-import com.jianglibo.nutchbuilder.vo.BootUserVo;
+import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 /**
  * @author jianglibo@gmail.com
@@ -44,13 +44,13 @@ public class PersonUtil {
         alterRoles(person, rns);
     }
     
-    public BootUserVo createUnSavedPersonVo(String name, String...rns) {
+    public BootUserPrincipal createUnSavedPersonVo(String name, String...rns) {
         BootUser p = BootUser.newValidPerson();
         p.setName(name);
         p.setEmail(name + "@jianglibo.com");
         p.setPassword(name);
         p.setEmailVerified(true);
         p.setRoles(Stream.of(rns).map(rn -> new Role(rn)).collect(Collectors.toSet()));
-        return new BootUserVo(p);
+        return new BootUserPrincipal(p);
     }
 }

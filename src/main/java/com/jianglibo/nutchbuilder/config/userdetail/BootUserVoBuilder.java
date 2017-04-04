@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.util.Assert;
 
-import com.jianglibo.nutchbuilder.vo.BootUserVo;
+import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 public class BootUserVoBuilder {
 	
@@ -118,8 +118,8 @@ public class BootUserVoBuilder {
 		return this;
 	}
 
-	public BootUserVo build() {
-		return new BootUserVo(name, displayName, email, mobile, password, !disabled, !accountExpired,
+	public BootUserPrincipal build() {
+		return new BootUserPrincipal(name, displayName, email, mobile, password, !disabled, !accountExpired,
 				!credentialsExpired, !accountLocked, null, authorities, emailVerified, mobileVerified);
 	}
 }

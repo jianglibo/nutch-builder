@@ -18,5 +18,16 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 		super(LoginAttemptDto.class, LoginAttemptDtoList.class, LoginAttempt.class, repository);
 		this.repository = repository;
 	}
-
+	
+	@Override
+	public <S extends LoginAttemptDto> S save(S dto) {
+		return dto;
+	}
+	
+	@Override
+	public void delete(Long id) {
+		throw new UnsupportedOperationException();
+	}
+	
+	
 }

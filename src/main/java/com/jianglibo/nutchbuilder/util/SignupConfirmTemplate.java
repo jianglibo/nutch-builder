@@ -2,15 +2,15 @@ package com.jianglibo.nutchbuilder.util;
 
 
 import com.jianglibo.nutchbuilder.domain.UcToken;
-import com.jianglibo.nutchbuilder.vo.BootUserVo;
+import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 public class SignupConfirmTemplate extends SendCloudTemplate {
     
     public static final String VURL = "vurl";
     
-    private BootUserVo personVo;
+    private BootUserPrincipal personVo;
 
-    public SignupConfirmTemplate(BootUserVo personVo, String host, UcToken uctk) {
+    public SignupConfirmTemplate(BootUserPrincipal personVo, String host, UcToken uctk) {
         super("regist_confirm", VURL);
         setSubjectTpl("�뼤�������˺ţ�%s?");
         this.personVo = personVo;

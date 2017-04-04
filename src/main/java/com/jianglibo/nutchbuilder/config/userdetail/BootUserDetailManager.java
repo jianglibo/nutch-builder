@@ -23,7 +23,7 @@ import com.jianglibo.nutchbuilder.domain.Role;
 import com.jianglibo.nutchbuilder.repository.BootUserRepository;
 import com.jianglibo.nutchbuilder.repository.RoleRepository;
 import com.jianglibo.nutchbuilder.util.PairForStream;
-import com.jianglibo.nutchbuilder.vo.BootUserVo;
+import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 
 @Component
@@ -54,7 +54,7 @@ public class BootUserDetailManager implements UserDetailsManager {
     }
 
     @Override
-    public BootUserVo loadUserByUsername(String emailOrMobile) throws UsernameNotFoundException {
+    public BootUserPrincipal loadUserByUsername(String emailOrMobile) throws UsernameNotFoundException {
         BootUser person;
         
         if (emailOrMobile.indexOf('@') != -1) {
@@ -67,12 +67,12 @@ public class BootUserDetailManager implements UserDetailsManager {
         if (person == null) {
             throw new UsernameNotFoundException(emailOrMobile);
         }
-        return new BootUserVo(person);
+        return new BootUserPrincipal(person);
     }
 
     @Override
     public void createUser(UserDetails bootUserVo) {
-       BootUserVo bootUserVoLocal = (BootUserVo) bootUserVo;
+       BootUserPrincipal bootUserVoLocal = (BootUserPrincipal) bootUserVo;
        
       // @formatter:off
        Set<Role> roleset = bootUserVoLocal.getAuthorities().stream()
@@ -150,7 +150,7 @@ public class BootUserDetailManager implements UserDetailsManager {
 		}
 
 		logger.debug("Changing password for user '" + username + "'");
-		BootUserVo pvo = (BootUserVo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		BootUserPrincipal pvo = (BootUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		BootUser p = userRepo.findOne(pvo.getId());		
 		p.setPassword(passwordEncoder.encode(newPassword));		
 		userRepo.save(p);

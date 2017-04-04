@@ -7,9 +7,9 @@ public class BootUserAuthentication extends AbstractAuthenticationToken {
 	
 	private static final long serialVersionUID = -2979276602354404187L;
 	
-	private BootUserVo bootUserVo;
+	private BootUserPrincipal bootUserVo;
 
-	public BootUserAuthentication(BootUserVo bootUserVo) {
+	public BootUserAuthentication(BootUserPrincipal bootUserVo) {
 		super(bootUserVo.getAuthorities());
 		this.bootUserVo = bootUserVo;
 		super.setAuthenticated(true);
@@ -25,7 +25,7 @@ public class BootUserAuthentication extends AbstractAuthenticationToken {
 	}
 
 	@Override
-	public BootUserVo getPrincipal() {
+	public BootUserPrincipal getPrincipal() {
 		return bootUserVo;
 	}
 	

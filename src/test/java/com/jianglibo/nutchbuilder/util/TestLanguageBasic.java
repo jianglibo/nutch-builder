@@ -4,10 +4,12 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.SortedMap;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 
@@ -21,6 +23,25 @@ public class TestLanguageBasic {
 		assertNull("HBASE_HOME_1 should be null.", e);
 		e = System.getProperty("HBASE_HOME");
 		assertNull("HBASE_HOME should be null by property.", e);
+	}
+	
+	@Test
+	public void tp() {
+		Pattern ptn = Pattern.compile("^/jsonapi/loginAttempts/?.*");
+		
+		assertTrue(ptn.matcher("/jsonapi/loginAttemptsabcdefged").matches());
+		assertTrue(ptn.matcher("/jsonapi/loginAttempts").matches());
+		assertTrue(ptn.matcher("/jsonapi/loginAttempts/").matches());
+		assertTrue(ptn.matcher("/jsonapi/loginAttempts/555").matches());
+		
+		ptn = Pattern.compile(String.format("%s/.*|%s", "^/jsonapi/loginAttempts", "^/jsonapi/loginAttempts"));
+		
+		
+//		assertTrue(ptn.matcher("/jsonapi/loginAttemptsabcdefged").matches());
+		assertTrue(ptn.matcher("/jsonapi/loginAttempts").matches());
+		assertTrue(ptn.matcher("/jsonapi/loginAttempts/").matches());
+		assertTrue(ptn.matcher("/jsonapi/loginAttempts/555").matches());
+
 	}
 	
 	

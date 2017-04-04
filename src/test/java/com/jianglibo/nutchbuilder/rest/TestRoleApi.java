@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.jianglibo.nutchbuilder.KatharsisBase;
+import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.json.exception.AppExceptionMapper;
 import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 
@@ -73,7 +74,7 @@ public class TestRoleApi  extends KatharsisBase {
 
 	@Override
 	protected String getResourceName() {
-		return "roles";
+		return JsonApiResourceNames.ROLE;
 	}
 
 }

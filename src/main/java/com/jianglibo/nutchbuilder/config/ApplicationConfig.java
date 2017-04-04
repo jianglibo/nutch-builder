@@ -32,6 +32,8 @@ public class ApplicationConfig implements InitializingBean {
 	
 	private String antExec;
 	
+	private JwtConfig jwtConfig;
+	
 	private String hdfsFullUrlNoLastSlash;
 	
 	private String tProjectRoot;
@@ -56,7 +58,6 @@ public class ApplicationConfig implements InitializingBean {
 		} else {
 			this.setHdfsFullUrlNoLastSlash("hdfs://" + getHdfsHost() + ":" + getHdfsPort());
 		}
-		
 	}
 
 	public String getOutSideBaseUrl() {
@@ -200,5 +201,38 @@ public class ApplicationConfig implements InitializingBean {
 		this.zkQuoram = zkQuoram;
 	}
 	
-	
+	public JwtConfig getJwtConfig() {
+		return jwtConfig;
+	}
+
+	public void setJwtConfig(JwtConfig jwtConfig) {
+		this.jwtConfig = jwtConfig;
+	}
+
+
+	public static class JwtConfig {
+		private String file;
+		private String issuer;
+		
+		private long lasting;
+		
+		public String getFile() {
+			return file;
+		}
+		public void setFile(String file) {
+			this.file = file;
+		}
+		public String getIssuer() {
+			return issuer;
+		}
+		public void setIssuer(String issuer) {
+			this.issuer = issuer;
+		}
+		public long getLasting() {
+			return lasting;
+		}
+		public void setLasting(long lasting) {
+			this.lasting = lasting;
+		}
+	}
 }

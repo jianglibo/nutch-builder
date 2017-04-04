@@ -1,5 +1,13 @@
 package com.jianglibo.nutchbuilder.config;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +16,33 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.session.ChangeSessionIdAuthenticationStrategy;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jianglibo.nutchbuilder.config.userdetail.BootUserDetailManager;
 import com.jianglibo.nutchbuilder.config.userdetail.BootUserManagerConfigurer;
+import com.jianglibo.nutchbuilder.jwt.JwtBasicFilter;
+
+import io.katharsis.errorhandling.ErrorData;
+import io.katharsis.errorhandling.ErrorDataBuilder;
+import io.katharsis.errorhandling.ErrorResponse;
+import io.katharsis.resource.Document;
 
 
 /**
@@ -42,6 +65,12 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     private ApplicationConfig applicationConfig;
+    
+    @Autowired
+    private ObjectMapper objectMapper;
+    
+    @Autowired
+    private  JsonApiAuthenticationEntryPoint jsonApiAuthenticationEntryPoint;
     
     @Autowired
     private BootUserDetailManager bootUserManager;
@@ -76,6 +105,18 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
         	.password("123456");
         // @formatter:on
     };
+    
+    @Bean
+    public StatelessCSRFFilter statelessCSRFFilter() {
+    	return new StatelessCSRFFilter();
+    }
+    
+    
+//    @Bean
+//    public AllExceptionTranslationFilter allExceptionTranslationFilter() {
+//        return new AllExceptionTranslationFilter();
+//    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -83,9 +124,12 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     	if (!applicationConfig.isDisableCsrf()) {
     		http.csrf();
     	}
-		http
+    	http.csrf().disable().addFilterBefore(
+    			statelessCSRFFilter(), CsrfFilter.class)
 		.addFilter(new WebAsyncManagerIntegrationFilter())
-		.exceptionHandling().and()
+//		.addFilterAfter(allExceptionTranslationFilter(), ExceptionTranslationFilter.class) // no need, just alter ceessDeniedHandler.
+//		.addFilterBefore(loginAttemptFilter(),UsernamePasswordAuthenticationFilter.class)
+		.exceptionHandling().authenticationEntryPoint(jsonApiAuthenticationEntryPoint).and()
 		.headers().and()
 		.sessionManagement().and()
 		.securityContext().and()
@@ -95,7 +139,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
         .antMatchers(basePath + "/**", "/login", "/", "/static/**", "/**").permitAll()
         .anyRequest().authenticated().and()
-        .formLogin().loginPage("/login").and()
+//        .formLogin().loginPage("/login").and()
 //        .rememberMe().and()
 //		.apply(new DefaultLoginPageConfigurer<HttpSecurity>()).and()
 		.logout();

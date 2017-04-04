@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.jianglibo.nutchbuilder.vo.BootUserVo;
+import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 @Entity
 @Table(name = "bootuser", uniqueConstraints = { @UniqueConstraint(columnNames = "name"), @UniqueConstraint(columnNames = "email"),
@@ -93,7 +93,7 @@ public class BootUser extends BaseEntity {
      * @param bootUserVo
      * @param encodedPwd
      */
-    public BootUser(BootUserVo bootUserVo, String encodedPwd) {
+    public BootUser(BootUserPrincipal bootUserVo, String encodedPwd) {
         setName(bootUserVo.getUsername());
         setDisplayName(bootUserVo.getDisplayName());
         setAvatar(bootUserVo.getAvatar());

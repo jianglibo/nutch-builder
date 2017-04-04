@@ -10,6 +10,12 @@ import com.github.kristofa.brave.InheritableServerClientAndLocalSpanState;
 import com.twitter.zipkin.gen.Endpoint;
 
 import io.katharsis.brave.BraveModule;
+import io.katharsis.module.Module;
+import io.katharsis.repository.filter.AbstractDocumentFilter;
+import io.katharsis.repository.filter.DocumentFilter;
+import io.katharsis.repository.filter.DocumentFilterChain;
+import io.katharsis.repository.filter.DocumentFilterContext;
+import io.katharsis.repository.response.Response;
 import zipkin.reporter.Reporter;
 
 @Configuration
@@ -34,5 +40,45 @@ public class KatharsisModuleConfig {
 		public void report(zipkin.Span span) {
 			logger.info(span.toString());
 		}
+	}
+	
+	@Bean
+	public MyDFilterModule1 myDFilterModule1() {
+		return new MyDFilterModule1();
+	}
+	
+	
+	@Bean
+	public MyDFilterModule myDFilterModule() {
+		return new MyDFilterModule();
+	}
+	
+
+	
+	
+	public static class MyDFilterModule extends AbstractDocumentFilter {
+
+		private DocumentFilterContext filterRequestContext;
+		private DocumentFilterChain chain;
+		
+		@Override
+		public Response filter(DocumentFilterContext filterRequestContext, DocumentFilterChain chain) {
+			String a = "5";
+			return super.filter(filterRequestContext, chain);
+		}
+		
+	}
+	
+	public static class MyDFilterModule1 extends AbstractDocumentFilter {
+
+		private DocumentFilterContext filterRequestContext;
+		private DocumentFilterChain chain;
+		
+		@Override
+		public Response filter(DocumentFilterContext filterRequestContext, DocumentFilterChain chain) {
+			String a = "6";
+			return super.filter(filterRequestContext, chain);
+		}
+		
 	}
 }

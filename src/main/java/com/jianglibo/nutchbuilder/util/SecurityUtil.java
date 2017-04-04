@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.vo.BootUserAuthentication;
-import com.jianglibo.nutchbuilder.vo.BootUserVo;
+import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 
 /**
@@ -27,12 +27,12 @@ public class SecurityUtil {
     }
 
 
-    public static Optional<BootUserVo> getLoginBootUserVo() {
+    public static Optional<BootUserPrincipal> getLoginBootUserVo() {
         Authentication au = SecurityContextHolder.getContext().getAuthentication();
         if (au == null || au instanceof AnonymousAuthenticationToken) {
             return Optional.empty();
         } else {
-            return Optional.of((BootUserVo) au.getPrincipal());
+            return Optional.of((BootUserPrincipal) au.getPrincipal());
         }
     }
     
@@ -84,7 +84,7 @@ public class SecurityUtil {
     }
 
     public static SecurityContext doLogin(SecurityContext context, BootUser person) {
-        BootUserAuthentication uat = new BootUserAuthentication(new BootUserVo(person));
+        BootUserAuthentication uat = new BootUserAuthentication(new BootUserPrincipal(person));
         uat.setAuthenticated(true);
         context.setAuthentication(uat);
         return context;

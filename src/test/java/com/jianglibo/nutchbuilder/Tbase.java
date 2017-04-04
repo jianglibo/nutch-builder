@@ -56,7 +56,7 @@ public abstract class Tbase extends M3958TsBase {
     private PasswordEncoder passwordEncoder;
     
     @Autowired
-    private ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper;
 
     public ObjectMapper getObjectMapper() {
         return objectMapper;
