@@ -2,14 +2,20 @@ package com.jianglibo.nutchbuilder.katharsis.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import com.jianglibo.nutchbuilder.domain.BaseEntity;
-import com.jianglibo.nutchbuilder.json.exception.AppException;
 import com.jianglibo.nutchbuilder.katharsis.dto.Dto;
+import com.jianglibo.nutchbuilder.katharsis.exception.AppException;
 import com.jianglibo.nutchbuilder.repository.RepositoryBase;
 
 import io.katharsis.queryspec.QuerySpec;
@@ -26,12 +32,24 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	private final Class<L> resourceListClass;
 	
 	private final Class<E> entityClass;
+	
+	private Validator validator;
+	
+	public void validate(Dto<?, ?> o) {
+		Set<ConstraintViolation<Dto<?, ?>>> cve = validator.validate(o);
+		if (!cve.isEmpty()) {
+			throw new ConstraintViolationException(cve);
+		}
+	}
+	
 
 	protected DtoRepositoryBase(Class<T> resourceClass, Class<L> resourceListClass,Class<E> entityClass, RepositoryBase<E> repository) {
 		super(resourceClass);
 		this.repository = repository;
 		this.resourceListClass = resourceListClass;
 		this.entityClass = entityClass;
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	    validator = factory.getValidator();
 	}
 	
 	@Override
@@ -41,6 +59,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	
 	@Override
 	public <S extends T> S save(S dto) {
+		validate(dto);
 		E entity;
 		if (dto.getId() != null) {
 			entity = repository.findOne(dto.getId());
@@ -53,12 +72,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 			}
 		}
 		entity = dto.patch(entity);
-		try {
-			return (S) dto.fromEntity(repository.save(entity));
-		} catch (DataIntegrityViolationException div) {
-			log.error("DataIntegrityViolationException {}", entityClass.getName());
-			throw new AppException().addError(2000, "DataIntegrityViolationException", div.getMessage());
-		}
+		return (S) dto.fromEntity(repository.save(entity));
 	}
 	
 

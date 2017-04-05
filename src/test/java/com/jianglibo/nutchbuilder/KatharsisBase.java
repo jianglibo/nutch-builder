@@ -83,7 +83,7 @@ public abstract class KatharsisBase extends Tbase {
 	public <T> List<T> getList(String responseBody, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = kboot.getObjectMapper();
 		Document document = objectMapper.readValue(responseBody, Document.class);
-		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getResourceRegistry(), objectMapper, null);
+		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getModuleRegistry(), objectMapper, null);
 		return (List<T>) documentMapper.fromDocument(document, true);
 	}
 	
@@ -91,14 +91,14 @@ public abstract class KatharsisBase extends Tbase {
 	public <T> List<T> getErrorDatas(String responseBody, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = kboot.getObjectMapper();
 		Document document = objectMapper.readValue(responseBody, Document.class);
-		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getResourceRegistry(), objectMapper, null);
+		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getModuleRegistry(), objectMapper, null);
 		return (List<T>) documentMapper.fromDocument(document, true);
 	}
 	
 	public <T> T getOne(String responseBody, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = kboot.getObjectMapper();
 		Document document = objectMapper.readValue(responseBody, Document.class);
-		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getResourceRegistry(), objectMapper, null);
+		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getModuleRegistry(), objectMapper, null);
 		return (T) documentMapper.fromDocument(document, false);
 	}
 	

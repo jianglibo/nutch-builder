@@ -1,4 +1,4 @@
-package com.jianglibo.nutchbuilder.katharsis;
+package com.jianglibo.nutchbuilder.katharsis.rest;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -16,8 +16,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.jianglibo.nutchbuilder.KatharsisBase;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
-import com.jianglibo.nutchbuilder.json.exception.AppExceptionMapper;
 import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
+import com.jianglibo.nutchbuilder.katharsis.exception.AppExceptionMapper;
 
 public class TestRoleApi  extends KatharsisBase {
 	
@@ -39,6 +39,16 @@ public class TestRoleApi  extends KatharsisBase {
 			deleteByExchange(jwtToken, getItemUrl(ro.get().getId()));
 			originRoles.remove(ro.get());
 		}
+	}
+	
+	
+	@Test
+	public void tAddOneNoName() throws JsonParseException, JsonMappingException, IOException {
+		ResponseEntity<String> response = postItem("rolenoname", jwtToken);
+		printme(response.getBody());
+		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
+		RoleDto newRole = getOne(response.getBody(), RoleDto.class);
+		assertThat(newRole.getName(), equalTo(role1));
 	}
 	
 	@Test

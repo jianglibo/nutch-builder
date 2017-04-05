@@ -2,6 +2,9 @@ package com.jianglibo.nutchbuilder.katharsis.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.domain.Role;
@@ -16,6 +19,8 @@ public class RoleDto implements Dto<RoleDto, Role>{
 	@JsonApiId
 	private Long id;
 	
+	@NotNull
+	@Size(min=3, max=30)
 	private String name;
 	
 	private Date createdAt;

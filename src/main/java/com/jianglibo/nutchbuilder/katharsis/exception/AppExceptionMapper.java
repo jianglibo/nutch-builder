@@ -1,4 +1,4 @@
-package com.jianglibo.nutchbuilder.json.exception;
+package com.jianglibo.nutchbuilder.katharsis.exception;
 
 import java.util.stream.Collectors;
 

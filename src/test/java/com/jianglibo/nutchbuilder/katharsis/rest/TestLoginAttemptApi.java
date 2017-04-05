@@ -1,4 +1,4 @@
-package com.jianglibo.nutchbuilder.katharsis;
+package com.jianglibo.nutchbuilder.katharsis.rest;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.jianglibo.nutchbuilder.KatharsisBase;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
-import com.jianglibo.nutchbuilder.json.exception.AppExceptionMapper;
+import com.jianglibo.nutchbuilder.katharsis.exception.AppExceptionMapper;
 
 import io.katharsis.errorhandling.ErrorData;
 import io.katharsis.resource.Document;

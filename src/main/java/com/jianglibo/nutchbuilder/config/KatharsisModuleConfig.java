@@ -16,6 +16,7 @@ import io.katharsis.repository.filter.DocumentFilter;
 import io.katharsis.repository.filter.DocumentFilterChain;
 import io.katharsis.repository.filter.DocumentFilterContext;
 import io.katharsis.repository.response.Response;
+import io.katharsis.validation.ValidationModule;
 import zipkin.reporter.Reporter;
 
 @Configuration
@@ -30,6 +31,11 @@ public class KatharsisModuleConfig {
 		builder = builder.reporter(new LoggingReporter());
 		Brave brave = builder.build();
 		return BraveModule.newServerModule(brave);
+	}
+	
+	@Bean
+	public ValidationModule validationModule() {
+		return ValidationModule.newInstance();
 	}
 	
 	public final class LoggingReporter implements Reporter<zipkin.Span> {

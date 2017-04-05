@@ -23,7 +23,7 @@ public class KatharsisConvertUtil {
 	public <T> List<T> getList(String responseBody, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = kboot.getObjectMapper();
 		Document document = objectMapper.readValue(responseBody, Document.class);
-		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getResourceRegistry(), objectMapper, null);
+		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getModuleRegistry(), objectMapper, null);
 		return (List<T>) documentMapper.fromDocument(document, true);
 	}
 	
@@ -34,7 +34,7 @@ public class KatharsisConvertUtil {
 	}
 	
 	public <T> T getOne(Document document, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
-		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getResourceRegistry(), kboot.getObjectMapper(), null);
+		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getModuleRegistry(), kboot.getObjectMapper(), null);
 		return (T) documentMapper.fromDocument(document, false);
 	}
 }

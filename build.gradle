@@ -126,20 +126,30 @@ dependencies {
 	//compile 'org.springframework.data:spring-data-rest-hal-browser'
 	
 	// https://mvnrepository.com/artifact/io.katharsis/katharsis-core
-	compile group: 'io.katharsis', name: 'katharsis-core', version: '3.0.0'
+	compile group: 'io.katharsis', name: 'katharsis-core', version: '3.0.1'
 	
 	// https://mvnrepository.com/artifact/io.katharsis/katharsis-spring
-	compile group: 'io.katharsis', name: 'katharsis-spring', version: '3.0.0'
+	compile group: 'io.katharsis', name: 'katharsis-spring', version: '3.0.1'
 	
 	// https://mvnrepository.com/artifact/io.katharsis/katharsis-brave
-	compile group: 'io.katharsis', name: 'katharsis-brave', version: '3.0.0'
+	compile group: 'io.katharsis', name: 'katharsis-brave', version: '3.0.1'
+
+    // https://mvnrepository.com/artifact/io.katharsis/katharsis-validation
+    compile group: 'io.katharsis', name: 'katharsis-validation', version: '3.0.1'
+
 	
 	// https://mvnrepository.com/artifact/io.zipkin.brave/brave-apache-http-interceptors
 	compile group: 'io.zipkin.brave', name: 'brave-apache-http-interceptors', version: '4.0.6'
     
     // https://mvnrepository.com/artifact/com.auth0/java-jwt
 	compile group: 'com.auth0', name: 'java-jwt', version: '3.1.0'
-	
+
+    // https://mvnrepository.com/artifact/org.glassfish/javax.el
+    compile group: 'org.glassfish', name: 'javax.el', version: '3.0.1-b08'
+
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-validator
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.4.1.Final'
+
 	// https://mvnrepository.com/artifact/org.apache.nutch/nutch
 	// compile group: 'org.apache.nutch', name: 'nutch', version: '2.3.1'
 	
