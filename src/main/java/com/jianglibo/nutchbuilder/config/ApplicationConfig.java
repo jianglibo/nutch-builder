@@ -214,7 +214,9 @@ public class ApplicationConfig implements InitializingBean {
 		private String file;
 		private String issuer;
 		
-		private long lasting;
+		private long principalTokenAlive;
+		
+		private long emailTokenAlive;
 		
 		public String getFile() {
 			return file;
@@ -228,11 +230,18 @@ public class ApplicationConfig implements InitializingBean {
 		public void setIssuer(String issuer) {
 			this.issuer = issuer;
 		}
-		public long getLasting() {
-			return lasting;
+		
+		public long getEmailTokenAlive() {
+			return emailTokenAlive;
 		}
-		public void setLasting(long lasting) {
-			this.lasting = lasting;
+		public void setEmailTokenAlive(long emailTokenAlive) {
+			this.emailTokenAlive = emailTokenAlive;
+		}
+		public long getPrincipalTokenAlive() {
+			return principalTokenAlive;
+		}
+		public void setPrincipalTokenAlive(long principalTokenAlive) {
+			this.principalTokenAlive = principalTokenAlive;
 		}
 	}
 }

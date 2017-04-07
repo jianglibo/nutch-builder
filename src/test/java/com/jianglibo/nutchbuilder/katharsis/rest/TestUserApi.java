@@ -1,7 +1,9 @@
 package com.jianglibo.nutchbuilder.katharsis.rest;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +19,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.jianglibo.nutchbuilder.KatharsisBase;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
-import com.jianglibo.nutchbuilder.katharsis.exception.AppExceptionMapper;
 
 public class TestUserApi  extends KatharsisBase {
 	
@@ -43,17 +44,14 @@ public class TestUserApi  extends KatharsisBase {
 	
 	@Test
 	public void tAddOne() throws JsonParseException, JsonMappingException, IOException {
-		ResponseEntity<String> response = postItem("user", jwtToken);
+		ResponseEntity<String> response = postItem("userwithroles", jwtToken);
 		printme(response.getBody());
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
-		UserDto newRole = getOne(response.getBody(), UserDto.class);
-		assertThat(newRole.getName(), equalTo(user1));
-		// again
-		response = postItem("user", jwtToken);
-		String body = response.getBody();
-		printme(body);
-		assertThat(response.getStatusCodeValue(), equalTo(AppExceptionMapper.APP_ERROR_STATUS_CODE));
-		deleteByExchange(jwtToken, getItemUrl(newRole.getId()));
+		UserDto newUser = getOne(response.getBody(), UserDto.class);
+		assertThat(newUser.getName(), equalTo(user1));
+		assertTrue("password should be empty.", newUser.getPassword() == null || newUser.getPassword().isEmpty());
+		assertThat("id should great than 0.", newUser.getId(), greaterThan(0L));
+		deleteByExchange(jwtToken, getItemUrl(newUser.getId()));
 	}
 
 	@Override

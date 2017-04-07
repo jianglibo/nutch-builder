@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
+import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
 
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -32,8 +35,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.jianglibo.nutchbuilder.config.ApplicationConfig;
 import com.jianglibo.nutchbuilder.config.KatharsisModuleConfig;
 
+import io.katharsis.client.KatharsisClient;
+import io.katharsis.client.http.apache.HttpClientAdapter;
+import io.katharsis.client.http.apache.HttpClientAdapterListener;
 import io.katharsis.resource.registry.RegistryEntry;
 import io.katharsis.resource.registry.ResourceRegistry;
 import io.katharsis.spring.boot.v3.KatharsisConfigV3;
@@ -74,7 +81,19 @@ public class Application {
 //    	return rbm;
 //    }
     
-
+    @Bean
+    public KatharsisClient katharsisClient(@Value("${katharsis.domainName}") String domainName, @Value("${katharsis.pathPrefix}") String pathPrefix) {
+    	
+    	KatharsisClient kc = new KatharsisClient(domainName + pathPrefix);
+    	HttpClientAdapter hca = (HttpClientAdapter) kc.getHttpAdapter();
+    	hca.addListener(new HttpClientAdapterListener() {
+			@Override
+			public void onBuild(HttpClientBuilder builder) {
+				System.out.println(builder);
+			}
+		});
+    	return kc;
+    }
 	
 	
     @Bean

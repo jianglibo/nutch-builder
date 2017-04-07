@@ -35,8 +35,8 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	
 	private Validator validator;
 	
-	public void validate(Dto<?, ?> o) {
-		Set<ConstraintViolation<Dto<?, ?>>> cve = validator.validate(o);
+	public void validate(Dto<?, ?> o, Class<?>...groups) {
+		Set<ConstraintViolation<Dto<?, ?>>> cve = validator.validate(o, groups);
 		if (!cve.isEmpty()) {
 			throw new ConstraintViolationException(cve);
 		}
@@ -59,22 +59,33 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	
 	@Override
 	public <S extends T> S save(S dto) {
-		validate(dto);
-		E entity;
-		if (dto.getId() != null) {
-			entity = repository.findOne(dto.getId());
+		if (dto.getId() == null || dto.getId() == 0) {
+			return createNew(dto);
 		} else {
-			try {
-				entity = entityClass.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
-				log.error("instantiationException {}", entityClass.getName());
-				throw new AppException().addError(1000, entityClass.getName(), "cannot instantiation " + entityClass.getName());
-			}
+			return modify(dto);
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <S extends T> S modify(S dto) {
+		validate(dto);
+		E entity = repository.findOne(dto.getId());
 		entity = dto.patch(entity);
 		return (S) dto.fromEntity(repository.save(entity));
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <S extends T> S createNew(S dto) {
+		validate(dto);
+		try {
+			E entity = entityClass.newInstance();
+			entity = dto.patch(entity);
+			return (S) dto.fromEntity(repository.save(entity));
+		} catch (InstantiationException | IllegalAccessException e) {
+			log.error("instantiationException {}", entityClass.getName());
+			throw new AppException().addError(1000, entityClass.getName(), "cannot instantiation " + entityClass.getName());
+		}
+	}
 
 	@Override
 	public T findOne(Long id, QuerySpec querySpec) {

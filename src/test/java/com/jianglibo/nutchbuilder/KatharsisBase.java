@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.hsqldb.map.ReusableObjectCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -76,7 +75,7 @@ public abstract class KatharsisBase extends Tbase {
 		ResponseEntity<String> response = restTemplate.postForEntity(getBaseURI(JsonApiResourceNames.LOGIN_ATTEMPT), request, String.class);
 		String body = response.getBody();
 		Document d =  kboot.getObjectMapper().readValue(body, Document.class);
-		return d.getSingleData().get().getAttributes().get("jwt_token").asText();
+		return d.getSingleData().get().getAttributes().get("jwtToken").asText();
 	}
 	
 	
@@ -88,11 +87,9 @@ public abstract class KatharsisBase extends Tbase {
 	}
 	
 	
-	public <T> List<T> getErrorDatas(String responseBody, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
+	public Document toDocument(String responseBody) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = kboot.getObjectMapper();
-		Document document = objectMapper.readValue(responseBody, Document.class);
-		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getModuleRegistry(), objectMapper, null);
-		return (List<T>) documentMapper.fromDocument(document, true);
+		return objectMapper.readValue(responseBody, Document.class);
 	}
 	
 	public <T> T getOne(String responseBody, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {

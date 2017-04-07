@@ -153,9 +153,10 @@ myapp:
     jwtConfig:
       file: d:\jwtsecret.txt
       issuer: jianglibo
-      lasting: 1800000
+      principalTokenAlive: 1800000 # 30 minutes
+      emailTokenAlive: 172800000 #2 days
 katharsis:
-    resourcePackage: io.katharsis.example.springboot.simple.domain
+    resourcePackage: com.jianglibo.nutchbuilder.katharsis
     domainName: http://localhost:8080
     pathPrefix: /jsonapi
     default-page-limit: 20

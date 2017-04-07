@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.BootUser.Gender;
 import com.jianglibo.nutchbuilder.domain.Role;
+import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 
 /**
  * @author jianglibo@gmail.com
@@ -55,16 +57,64 @@ public class BootUserPrincipal extends User {
     public BootUserPrincipal(BootUser bu) {
         this(bu, new HashSet<>());
     }
-
-    public BootUserPrincipal(BootUser person, Set<Role> roles) {
-        this(person.getName(), person.getDisplayName(), person.getEmail(), person.getMobile(), person.getPassword(), person.isEnabled(), person
-                .isAccountNonExpired(), person.isCredentialsNonExpired(), person.isAccountNonLocked(), person.getAvatar(), roles, person.isEmailVerified(),
-                person.isMobileVerified(), person.getGender(), ThirdPartLoginVo.toVos(person.getThirdConns()), person.getId(), person.getOpenId());
+    
+    public BootUserPrincipal(UserDto dto) {
+    	this(dto.getName()
+    			,dto.getDisplayName()
+    			,dto.getEmail()
+    			,dto.getMobile()
+    			,dto.getPassword()
+    			,dto.isEnabled()
+    			,dto.isAccountNonExpired()
+    			,dto.isCredentialsNonExpired()
+    			,dto.isAccountNonLocked()
+    			,dto.getAvatar()
+    			,dto.getRoles().stream().map(r -> new Role(r.getName())).collect(Collectors.toSet())
+    			,dto.isEmailVerified()
+    			,dto.isMobileVerified()
+    			,dto.getGender()
+    			,new HashSet<>()
+    			,dto.getId() == null ? 0 : dto.getId()
+    			,null);
     }
 
-    public BootUserPrincipal(String name, String displayName, String email, String mobile, String password, boolean enabled, boolean accountNonExpired,
-            boolean credentialNonExpired, boolean accountNonLocked, String avatar, Collection<? extends GrantedAuthority> authorities, boolean emailVerified,
-            boolean mobileVerified, Gender gender, Set<ThirdPartLoginVo> thirdConns, long id, String openId) {
+    public BootUserPrincipal(BootUser person, Set<Role> roles) {
+        this(person.getName()
+        		,person.getDisplayName()
+        		,person.getEmail()
+        		,person.getMobile()
+        		,person.getPassword()
+        		,person.isEnabled()
+        		,person.isAccountNonExpired()
+        		,person.isCredentialsNonExpired()
+        		,person.isAccountNonLocked()
+        		,person.getAvatar()
+        		,roles
+        		,person.isEmailVerified()
+        		,person.isMobileVerified()
+        		,person.getGender()
+        		,ThirdPartLoginVo.toVos(person.getThirdConns())
+        		,person.getId()
+        		,person.getOpenId());
+    }
+
+    public BootUserPrincipal(String name
+    		,String displayName
+    		,String email
+    		,String mobile
+    		,String password
+    		,boolean enabled
+    		,boolean accountNonExpired
+    		,boolean credentialNonExpired
+    		,boolean accountNonLocked
+    		,String avatar
+    		,Collection<? extends GrantedAuthority> authorities
+    		,boolean emailVerified
+    		,boolean mobileVerified
+    		,Gender gender
+    		,Set<ThirdPartLoginVo> thirdConns
+    		,long id
+    		,String openId) {
         super(name, password, enabled, accountNonExpired, credentialNonExpired, accountNonLocked, authorities);
         this.id = id;
         this.displayName = displayName;
@@ -82,9 +132,19 @@ public class BootUserPrincipal extends User {
         this.thirdConns = thirdConns;
     }
 
-    public BootUserPrincipal(String name, String displayName, String email, String mobile, String password, boolean enabled, boolean accountNonExpired,
-            boolean credentialNonExpired, boolean accountNonLocked, String avatar, Collection<? extends GrantedAuthority> authorities, boolean emailVerified,
-            boolean mobileVerified) {
+    public BootUserPrincipal(String name
+    		,String displayName
+    		,String email
+    		,String mobile
+    		,String password
+    		,boolean enabled
+    		,boolean accountNonExpired
+    		,boolean credentialNonExpired
+            ,boolean accountNonLocked
+            ,String avatar
+            ,Collection<? extends GrantedAuthority> authorities
+            ,boolean emailVerified
+            ,boolean mobileVerified) {
         this(name, displayName, email, mobile, password, enabled, accountNonExpired, credentialNonExpired, accountNonLocked, avatar, authorities,
                 emailVerified, mobileVerified, Gender.FEMALE, new HashSet<>(), 0, null);
     }

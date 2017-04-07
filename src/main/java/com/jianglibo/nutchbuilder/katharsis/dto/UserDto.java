@@ -4,22 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Email;
+
 import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.BootUser.Gender;
 
-import io.katharsis.resource.annotations.JsonApiId;
 import io.katharsis.resource.annotations.JsonApiResource;
 
 @JsonApiResource(type = JsonApiResourceNames.BOOT_USER)
 @DtoToEntity(entityClass=BootUser.class)
-public class UserDto implements Dto<UserDto, BootUser> {
+public class UserDto extends DtoBase<UserDto, BootUser> {
 	
-	@JsonApiId
-	private Long id;
+	public static interface OnCreateGroup {}
+	
+	private boolean updatePassword;
 	
     private String displayName;
 
@@ -29,17 +31,23 @@ public class UserDto implements Dto<UserDto, BootUser> {
 
     private boolean mobileVerified;
     
-    private String gender;
+    private Gender gender;
     
     @NotNull
+    @Size(min=6, max=36)
     private String name;
 
     @NotNull
+    @Size(min=6, max=36)
+    @Email
     private String email;
 
-    @JsonIgnore
+    @NotNull
+    @Size(min=6, max=36, groups=OnCreateGroup.class)
     private String password;
 
+    @NotNull
+    @Size(min=8, max=16)
     private String mobile;
 
     private boolean accountNonExpired;
@@ -50,7 +58,6 @@ public class UserDto implements Dto<UserDto, BootUser> {
 
     private boolean enabled;
     
-//    @JsonApiToMany()
     private List<RoleDto> roles = new ArrayList<>();
     
     public List<RoleDto> getRoles() {
@@ -71,23 +78,15 @@ public class UserDto implements Dto<UserDto, BootUser> {
     	setEmail(bu.getEmail());
     	setEmailVerified(bu.isEmailVerified());
     	setEnabled(bu.isEnabled());
-    	setGender(bu.getGender().name());
+    	setGender(bu.getGender());
     	setId(bu.getId());
     	setMobile(bu.getMobile());
     	setMobileVerified(bu.isMobileVerified());
     	setName(bu.getName());
-    	setPassword(bu.getPassword());
+    	setPassword(null);
     	setRoles((List<RoleDto>) Dto.convertToDto(RoleDto.class, bu.getRoles()));
     	return this;
     }
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getDisplayName() {
 		return displayName;
@@ -121,11 +120,11 @@ public class UserDto implements Dto<UserDto, BootUser> {
 		this.mobileVerified = mobileVerified;
 	}
 
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 
@@ -203,12 +202,20 @@ public class UserDto implements Dto<UserDto, BootUser> {
 		entity.setEmail(getEmail());
 		entity.setEmailVerified(isEmailVerified());
 		entity.setEnabled(isEnabled());
-		entity.setGender(Gender.valueOf(getGender()));
+		entity.setGender(getGender());
 		entity.setId(getId());
 		entity.setMobile(getMobile());
 		entity.setMobileVerified(isMobileVerified());
 		entity.setName(getName());
-		entity.setPassword(getPassword());
+//		entity.setPassword(getPassword());
 		return entity;
+	}
+
+	public boolean isUpdatePassword() {
+		return updatePassword;
+	}
+
+	public void setUpdatePassword(boolean updatePassword) {
+		this.updatePassword = updatePassword;
 	}
 }

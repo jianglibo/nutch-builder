@@ -12,6 +12,7 @@ import io.katharsis.resource.Document;
 
 @Component
 public class KatharsisDocumentLoginFilter extends AbstractDocumentFilter {
+	
 	private DocumentFilterContext filterRequestContext;
 	private DocumentFilterChain chain;
 	
@@ -19,6 +20,7 @@ public class KatharsisDocumentLoginFilter extends AbstractDocumentFilter {
 	public Response filter(DocumentFilterContext filterRequestContext, DocumentFilterChain chain) {
 		String a = "7";
 		JsonPath jp = filterRequestContext.getJsonPath();
+		RepositoryMethodParameterProvider rmpp =  filterRequestContext.getParameterProvider();
 		Document d = filterRequestContext.getRequestBody();
 		RepositoryMethodParameterProvider rmp = filterRequestContext.getParameterProvider();
 		Response r = super.filter(filterRequestContext, chain); 

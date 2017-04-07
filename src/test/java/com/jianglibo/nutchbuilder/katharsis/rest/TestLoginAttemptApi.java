@@ -32,7 +32,7 @@ public class TestLoginAttemptApi  extends KatharsisBase {
 		printme(body);
 		Document d =  kboot.getObjectMapper().readValue(body, Document.class);
 		List<ErrorData> eds = d.getErrors();
-		assertThat(response.getStatusCodeValue(), equalTo(AppExceptionMapper.APP_ERROR_STATUS_CODE));
+		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.BAD_REQUEST.value()));
 	}
 	
 	@Test

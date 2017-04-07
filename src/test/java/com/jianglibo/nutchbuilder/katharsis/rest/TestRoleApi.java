@@ -19,6 +19,9 @@ import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.exception.AppExceptionMapper;
 
+import io.katharsis.errorhandling.ErrorData;
+import io.katharsis.resource.Document;
+
 public class TestRoleApi  extends KatharsisBase {
 	
 	private List<RoleDto> originRoles;
@@ -46,9 +49,10 @@ public class TestRoleApi  extends KatharsisBase {
 	public void tAddOneNoName() throws JsonParseException, JsonMappingException, IOException {
 		ResponseEntity<String> response = postItem("rolenoname", jwtToken);
 		printme(response.getBody());
-		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
-		RoleDto newRole = getOne(response.getBody(), RoleDto.class);
-		assertThat(newRole.getName(), equalTo(role1));
+		Document d = toDocument(response.getBody());
+		List<ErrorData> eds = d.getErrors();
+		assertThat(eds.size(), equalTo(1));
+		assertThat(eds.get(0).getStatus(), equalTo(String.valueOf(HttpStatus.UNPROCESSABLE_ENTITY)));
 	}
 	
 	@Test
@@ -62,6 +66,8 @@ public class TestRoleApi  extends KatharsisBase {
 		response = postItem("role", jwtToken);
 		String body = response.getBody();
 		printme(body);
+		Document d = toDocument(body);
+		assertThat(d.getErrors().get(0).getCode(), equalTo("-104"));
 		assertThat(response.getStatusCodeValue(), equalTo(AppExceptionMapper.APP_ERROR_STATUS_CODE));
 		deleteByExchange(jwtToken, getItemUrl(newRole.getId()));
 	}

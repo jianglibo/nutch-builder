@@ -48,16 +48,16 @@ public class KatharsisModuleConfig {
 		}
 	}
 	
-	@Bean
-	public MyDFilterModule1 myDFilterModule1() {
-		return new MyDFilterModule1();
-	}
-	
-	
-	@Bean
-	public MyDFilterModule myDFilterModule() {
-		return new MyDFilterModule();
-	}
+//	@Bean
+//	public MyDFilterModule1 myDFilterModule1() {
+//		return new MyDFilterModule1();
+//	}
+//	
+//	
+//	@Bean
+//	public MyDFilterModule myDFilterModule() {
+//		return new MyDFilterModule();
+//	}
 	
 
 	

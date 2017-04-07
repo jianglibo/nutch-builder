@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -100,47 +101,9 @@ public class BeforeKatharsisFilter implements Filter, ApplicationContextAware {
 		pathPattern = Pattern.compile(String.format("%s/.*|%s", t, t));
 	}
 
-	private boolean isPathMatch(String path) {
-		return pathPattern.matcher(path).matches();
-	}
-
-	public static class Reswrapper extends HttpServletResponseWrapper {
-
-		private final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-		public Reswrapper(HttpServletResponse response) {
-			super(response);
-		}
-
-		@Override
-		public ServletOutputStream getOutputStream() throws IOException {
-			return new ServletOutputStream() {
-
-				@Override
-				public void write(int b) throws IOException {
-					bos.write(b);
-				}
-
-				@Override
-				public void setWriteListener(WriteListener listener) {
-				}
-
-				@Override
-				public boolean isReady() {
-					return true;
-				}
-			};
-		}
-
-		// It's already a katharsis document.
-		public ByteArrayOutputStream getBos() {
-			return bos;
-		}
-
-		public void writeToOrigin() throws IOException {
-			getResponse().getOutputStream().write(bos.toByteArray());
-			getResponse().flushBuffer();
-		}
+	private boolean isLoginAttempt(HttpServletRequest request) {
+		boolean b = pathPattern.matcher(request.getRequestURI()).matches() && HttpMethod.POST.matches(request.getMethod()); 
+		return b;
 	}
 
 	private ErrorResponse getErrorResponse(ErrorData ed) {
@@ -153,35 +116,36 @@ public class BeforeKatharsisFilter implements Filter, ApplicationContextAware {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
-		logger.debug("filter_order");
-		if (req instanceof HttpServletRequest && res instanceof HttpServletResponse) {
-			HttpServletRequest request = (HttpServletRequest) req;
-			HttpServletResponse response = (HttpServletResponse) res;
-			if (isPathMatch(request.getRequestURI())) {
-				Reswrapper rr = new Reswrapper(response);
-				chain.doFilter(request, rr);
-				ByteArrayOutputStream baos = rr.getBos();
-				String s = baos.toString();
-				Document d = objectMapper.readValue(s, Document.class);
-				invoke(d, request, rr);
-				// Response kr = new Response(d, 200);
-				// objectMapper.writeValueAsBytes(er.toResponse());
-				// int len = s.length();
-				// rr.writeToOrigin();
-				//
-				// boolean passToFilters = invoke(request, response);
-				// if (passToFilters) {
-				//
-				// }
-			} else {
-				chain.doFilter(request, response);
-			}
-		} else {
-			chain.doFilter(req, res);
-		}
+		chain.doFilter(req, res);
+//		logger.debug("filter_order");
+//		if (req instanceof HttpServletRequest && res instanceof HttpServletResponse) {
+//			HttpServletRequest request = (HttpServletRequest) req;
+//			HttpServletResponse response = (HttpServletResponse) res;
+//			if (isLoginAttempt(request)) {
+//				KatharsisContentResponseWrapper rr = new KatharsisContentResponseWrapper(response);
+//				chain.doFilter(request, rr);
+//				ByteArrayOutputStream baos = rr.getBos();
+//				String s = baos.toString();
+//				Document d = objectMapper.readValue(s, Document.class);
+//				invoke(d, request, rr);
+//				// Response kr = new Response(d, 200);
+//				// objectMapper.writeValueAsBytes(er.toResponse());
+//				// int len = s.length();
+//				// rr.writeToOrigin();
+//				//
+//				// boolean passToFilters = invoke(request, response);
+//				// if (passToFilters) {
+//				//
+//				// }
+//			} else {
+//				chain.doFilter(request, response);
+//			}
+//		} else {
+//			chain.doFilter(req, res);
+//		}
 	}
 
-	private void invoke(Document d, HttpServletRequest request, Reswrapper rr) throws JsonGenerationException, JsonMappingException, IOException {
+	private void invoke(Document d, HttpServletRequest request, KatharsisContentResponseWrapper rr) throws JsonGenerationException, JsonMappingException, IOException {
 		Resource r = d.getSingleData().get();
 		String username = r.getAttributes().get("username").asText();
 		String password = r.getAttributes().get("password").asText();
@@ -211,7 +175,7 @@ public class BeforeKatharsisFilter implements Filter, ApplicationContextAware {
 //				SecurityContextHolder.getContext().setAuthentication(buan);
 //				sessionAuthenticationStrategy.onAuthentication(buan, request, rr);
 				
-				r.setAttribute("jwt_token", new TextNode(jwtUtil.issueToken(user)));
+				r.setAttribute("jwtToken", new TextNode(jwtUtil.issuePrincipalToken(user)));
 				writeOut(d, rr);
 
 		} catch (AuthenticationException e) {
@@ -226,12 +190,10 @@ public class BeforeKatharsisFilter implements Filter, ApplicationContextAware {
 	}
 
 	// forget rr object, talk to wrapped response directly.
-	private void writeOut(Document newd, Reswrapper rr) throws JsonGenerationException, JsonMappingException, IOException {
+	private void writeOut(Document newd, KatharsisContentResponseWrapper rr) throws JsonGenerationException, JsonMappingException, IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		objectMapper.writeValue(baos, newd);
-		ServletOutputStream out = rr.getResponse().getOutputStream();
-		out.write(baos.toByteArray());
-		out.flush();
+		rr.writeToWrapped(baos);
 	}
 
 	@Override

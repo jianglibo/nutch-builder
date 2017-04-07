@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jianglibo.nutchbuilder.config.ApplicationConfig;
 import com.jianglibo.nutchbuilder.domain.Role;
+import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.BootUser.Gender;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
@@ -56,7 +57,16 @@ public class JwtUtil implements InitializingBean {
 		jwtb.withClaim("mobile", principal.getMobile());
 		jwtb.withClaim("avatar", principal.getAvatar());
 		jwtb.withClaim("gender", principal.getGender().name());
+		jwtb.withSubject("principal");
 		jwtb.withArrayClaim("authorities", principal.getAuthorities().stream().map(a -> a.getAuthority()).toArray(size -> new String[size]));
+		return jwtb;
+	}
+	
+	public JWTCreator.Builder setEmailVerifyClaims(BootUser bootUser) {
+		JWTCreator.Builder jwtb = JWT.create();
+		jwtb.withClaim("id", String.valueOf(bootUser.getId()));
+		jwtb.withClaim("email", bootUser.getEmail());
+		jwtb.withSubject("emailVerify");
 		return jwtb;
 	}
 	
@@ -88,21 +98,35 @@ public class JwtUtil implements InitializingBean {
 	}
 
 	
-	private Date getExpireDate() {
-		return new Date(new Date().getTime() + applicationConfig.getJwtConfig().getLasting());
+	private Date getPrincipalExpireDate() {
+		return new Date(new Date().getTime() + applicationConfig.getJwtConfig().getPrincipalTokenAlive());
 	}
 	
-	public String issueToken(BootUserPrincipal principal) {
+	private Date getEmailVerifyExpireDate() {
+		return new Date(new Date().getTime() + applicationConfig.getJwtConfig().getEmailTokenAlive());
+	}
+	
+	public String issuePrincipalToken(BootUserPrincipal principal) {
 		JWTCreator.Builder jwt = setPrincipalClaims(principal);
 		return jwt.withIssuer(applicationConfig.getJwtConfig().getIssuer())
-		        .withExpiresAt(getExpireDate())
+		        .withExpiresAt(getPrincipalExpireDate())
 		        .sign(algorithm);
 	}
 	
+	public String issueEmailVerifyToken(BootUser bootUser) {
+		JWTCreator.Builder jwt = setEmailVerifyClaims(bootUser);
+		return jwt.withIssuer(applicationConfig.getJwtConfig().getIssuer())
+		        .withExpiresAt(getEmailVerifyExpireDate())
+		        .sign(algorithm);
+	}
 	
-	public BootUserPrincipal verifyToken(String token) {
+	public BootUserPrincipal verifyPrincipalToken(String token) {
         DecodedJWT jwt = verifier.verify(token);
         return toPrincipal(jwt);
+	}
+	
+	public DecodedJWT verifyEmailToken(String token) {
+        return verifier.verify(token);
 	}
 	
 	

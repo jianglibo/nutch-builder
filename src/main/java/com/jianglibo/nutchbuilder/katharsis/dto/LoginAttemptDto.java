@@ -5,15 +5,11 @@ import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.domain.LoginAttempt;
 import com.jianglibo.nutchbuilder.domain.ThirdPartLogin.Provider;
 
-import io.katharsis.resource.annotations.JsonApiId;
 import io.katharsis.resource.annotations.JsonApiResource;
 
 @JsonApiResource(type = JsonApiResourceNames.LOGIN_ATTEMPT)
 @DtoToEntity(entityClass=LoginAttempt.class)
-public class LoginAttemptDto implements Dto<LoginAttemptDto, LoginAttempt>{
-	
-	@JsonApiId
-	private Long id;
+public class LoginAttemptDto extends  DtoBase<LoginAttemptDto, LoginAttempt>{
 	
     private String username;
     
@@ -22,6 +18,8 @@ public class LoginAttemptDto implements Dto<LoginAttemptDto, LoginAttempt>{
 	private String remoteAddress;
 	
 	private String sessionId;
+	
+	private String jwtToken;
 	
 	private Provider provider = Provider.NORMAL;
 	
@@ -92,12 +90,12 @@ public class LoginAttemptDto implements Dto<LoginAttemptDto, LoginAttempt>{
 		this.success = success;
 	}
 
-	public Long getId() {
-		return id;
+	public String getJwtToken() {
+		return jwtToken;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setJwtToken(String jwtToken) {
+		this.jwtToken = jwtToken;
 	}
 	
 	

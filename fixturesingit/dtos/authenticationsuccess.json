@@ -1,0 +1,18 @@
+{
+    "data": {
+        "id": "1343488",
+        "type": "loginAttempts",
+        "attributes": {
+            "password": "",
+            "provider": "NORMAL",
+            "success": true,
+            "jwtToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcmluY2lwYWwiLCJnZW5kZXIiOiJGRU1BTEUiLCJtb2JpbGUiOiIxMjM0NTY3ODkwMTIiLCJpc3MiOiJqaWFuZ2xpYm8iLCJpZCI6IjEiLCJleHAiOjE0OTE1MzIyOTAsImVtYWlsIjoiYWRtaW5AbG9jYWxob3N0LmNvbSIsImF1dGhvcml0aWVzIjpbXSwidXNlcm5hbWUiOiJhZG1pbiJ9.iQfekeejuJfP6KdAS8xJeKQA82qxbDvSg5ZLCMcngZ4",
+            "sessionId": null,
+            "remoteAddress": null,
+            "username": "admin"
+        },
+        "links": {
+            "self": "http://localhost:8080/jsonapi/loginAttempts/1343488"
+        }
+    }
+}

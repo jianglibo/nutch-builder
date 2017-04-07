@@ -87,7 +87,7 @@ public class JwtBasicFilter implements Filter {
             throw new AccessDeniedException("no jwt header.");
         }
         SecurityContextHolder.clearContext();
-        BootUserPrincipal pricipal = jwtUtil.verifyToken(header.substring(7));
+        BootUserPrincipal pricipal = jwtUtil.verifyPrincipalToken(header.substring(7));
         
         BootUserAuthentication buan = new BootUserAuthentication(pricipal);
         SecurityContextHolder.getContext().setAuthentication(buan);

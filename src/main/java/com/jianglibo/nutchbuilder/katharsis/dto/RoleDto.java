@@ -9,15 +9,11 @@ import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.domain.Role;
 
-import io.katharsis.resource.annotations.JsonApiId;
 import io.katharsis.resource.annotations.JsonApiResource;
 
 @JsonApiResource(type = JsonApiResourceNames.ROLE)
 @DtoToEntity(entityClass=Role.class)
-public class RoleDto implements Dto<RoleDto, Role>{
-
-	@JsonApiId
-	private Long id;
+public class RoleDto extends DtoBase<RoleDto, Role>{
 	
 	@NotNull
 	@Size(min=3, max=30)
@@ -31,14 +27,6 @@ public class RoleDto implements Dto<RoleDto, Role>{
 		setName(role.getName());
 		setCreatedAt(role.getCreatedAt());
 		return this;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {
