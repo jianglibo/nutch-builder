@@ -1,0 +1,43 @@
+{
+    "data": {
+        "id": "622593",
+        "type": "sites",
+        "attributes": {
+            "homeUrl": "http://a.b.c1",
+            "cburl": null,
+            "createdAt": 1491637005549,
+            "cburlVerified": false,
+            "cbsecret": null
+        },
+        "relationships": {
+            "crawlCat": {
+                "data": {
+                    "id": "688129",
+                    "type": "crawlCats"
+                },
+                "links": {
+                    "self": "http://localhost:8080/jsonapi/sites/622593/relationships/crawlCat",
+                    "related": "http://localhost:8080/jsonapi/sites/622593/crawlCat"
+                }
+            }
+        },
+        "links": {
+            "self": "http://localhost:8080/jsonapi/sites/622593"
+        }
+    },
+    "included": [
+        {
+            "id": "688129",
+            "type": "crawlCats",
+            "attributes": {
+                "projectRoot": "rj",
+                "createdAt": 1491637005505,
+                "name": "acc",
+                "description": "dd"
+            },
+            "links": {
+                "self": "http://localhost:8080/jsonapi/crawlCats/688129"
+            }
+        }
+    ]
+}

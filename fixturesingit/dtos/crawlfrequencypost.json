@@ -1,0 +1,18 @@
+{
+    "data": {
+        "type": "crawlFres",
+        "attributes": {
+            "createdAt": 1491638907547,
+            "regex": "xxx",
+            "seconds": 3000000
+        },
+        "relationships": {
+            "site": {
+                "data": {
+                    "id": "884736",
+                    "type": "sites"
+                }
+            }
+        }
+    }
+}

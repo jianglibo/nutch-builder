@@ -1,0 +1,17 @@
+{
+    "data": {
+        "type": "urlfilters",
+        "attributes": {
+            "createdAt": null,
+            "regex": "xxx"
+        },
+        "relationships": {
+            "site": {
+                "data": {
+                    "id": "655360",
+                    "type": "sites"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,66 @@
+{
+    "data": {
+        "id": "163840",
+        "type": "urlfilters",
+        "attributes": {
+            "createdAt": null,
+            "regex": "xxx"
+        },
+        "relationships": {
+            "site": {
+                "data": {
+                    "id": "655360",
+                    "type": "sites"
+                },
+                "links": {
+                    "self": "http://localhost:8080/jsonapi/urlfilters/163840/relationships/site",
+                    "related": "http://localhost:8080/jsonapi/urlfilters/163840/site"
+                }
+            }
+        },
+        "links": {
+            "self": "http://localhost:8080/jsonapi/urlfilters/163840"
+        }
+    },
+    "included": [
+        {
+            "id": "720896",
+            "type": "crawlCats",
+            "attributes": {
+                "projectRoot": "rj",
+                "createdAt": 1491637101436,
+                "name": "acc",
+                "description": "dd"
+            },
+            "links": {
+                "self": "http://localhost:8080/jsonapi/crawlCats/720896"
+            }
+        },
+        {
+            "id": "655360",
+            "type": "sites",
+            "attributes": {
+                "homeUrl": "http://a.b.c",
+                "cburl": null,
+                "createdAt": 1491637101440,
+                "cburlVerified": false,
+                "cbsecret": null
+            },
+            "relationships": {
+                "crawlCat": {
+                    "data": {
+                        "id": "720896",
+                        "type": "crawlCats"
+                    },
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/sites/655360/relationships/crawlCat",
+                        "related": "http://localhost:8080/jsonapi/sites/655360/crawlCat"
+                    }
+                }
+            },
+            "links": {
+                "self": "http://localhost:8080/jsonapi/sites/655360"
+            }
+        }
+    ]
+}

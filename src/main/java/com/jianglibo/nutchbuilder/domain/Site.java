@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
+import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
+
 @Entity
 @Table(name = "site")
 public class Site extends BaseEntity {
@@ -31,7 +34,7 @@ public class Site extends BaseEntity {
 	private Set<UrlFilter> urlfilters = new HashSet<>();
 	
 	@OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="site")
-	private Set<CrawlFrequency> crawlFrequencies;
+	private Set<CrawlFrequency> crawlFrequencies = new HashSet<>();
 	
 	private String cburl;
 	
@@ -93,6 +96,17 @@ public class Site extends BaseEntity {
 
 	public void setHomeUrl(String homeUrl) {
 		this.homeUrl = homeUrl;
+	}
+	
+	public SiteDto toDto() {
+		SiteDto sdto = new SiteDto();
+		sdto.setCbsecret(getCbsecret());
+		sdto.setCburl(getCburl());
+		sdto.setCreatedAt(getCreatedAt());
+		sdto.setHomeUrl(getHomeUrl());
+		sdto.setId(getId());
+		sdto.setCrawlCat(new CrawlCatDto().fromEntity(getCrawlCat()));
+		return sdto;
 	}
 
 }

@@ -71,7 +71,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		validate(dto);
 		E entity = repository.findOne(dto.getId());
 		entity = dto.patch(entity);
-		return (S) dto.fromEntity(repository.save(entity));
+		return (S) dto.fromEntity(saveToJpaRepo(dto, entity));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -80,11 +80,15 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		try {
 			E entity = entityClass.newInstance();
 			entity = dto.patch(entity);
-			return (S) dto.fromEntity(repository.save(entity));
+			return (S) dto.fromEntity(saveToJpaRepo(dto, entity));
 		} catch (InstantiationException | IllegalAccessException e) {
 			log.error("instantiationException {}", entityClass.getName());
 			throw new AppException().addError(1000, entityClass.getName(), "cannot instantiation " + entityClass.getName());
 		}
+	}
+	
+	public E saveToJpaRepo(T dto, E entity) {
+		return repository.save(entity);
 	}
 
 	@Override

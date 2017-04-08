@@ -1,0 +1,54 @@
+{
+    "data": [
+        {
+            "id": "622592",
+            "type": "sites",
+            "attributes": {
+                "homeUrl": "http://a.b.c",
+                "cburl": null,
+                "createdAt": 1491637004993,
+                "cburlVerified": false,
+                "cbsecret": null
+            },
+            "relationships": {
+                "crawlCat": {
+                    "data": {
+                        "id": "688128",
+                        "type": "crawlCats"
+                    },
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/sites/622592/relationships/crawlCat",
+                        "related": "http://localhost:8080/jsonapi/sites/622592/crawlCat"
+                    }
+                }
+            },
+            "links": {
+                "self": "http://localhost:8080/jsonapi/sites/622592"
+            }
+        }
+    ],
+    "included": [
+        {
+            "id": "688128",
+            "type": "crawlCats",
+            "attributes": {
+                "projectRoot": "rj",
+                "createdAt": 1491637004982,
+                "name": "acc",
+                "description": "dd"
+            },
+            "links": {
+                "self": "http://localhost:8080/jsonapi/crawlCats/688128"
+            }
+        }
+    ],
+    "links": {
+        "first": "http://localhost:8080/jsonapi/sites/?page[limit]=20",
+        "last": "http://localhost:8080/jsonapi/sites/?page[limit]=20",
+        "next": null,
+        "prev": null
+    },
+    "meta": {
+        "totalResourceCount": 1
+    }
+}

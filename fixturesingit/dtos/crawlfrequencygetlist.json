@@ -1,0 +1,78 @@
+{
+    "data": [
+        {
+            "id": "1",
+            "type": "crawlFres",
+            "attributes": {
+                "createdAt": 1491638907547,
+                "regex": "xxx",
+                "seconds": 3000000
+            },
+            "relationships": {
+                "site": {
+                    "data": {
+                        "id": "884736",
+                        "type": "sites"
+                    },
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/crawlFres/1/relationships/site",
+                        "related": "http://localhost:8080/jsonapi/crawlFres/1/site"
+                    }
+                }
+            },
+            "links": {
+                "self": "http://localhost:8080/jsonapi/crawlFres/1"
+            }
+        }
+    ],
+    "included": [
+        {
+            "id": "950272",
+            "type": "crawlCats",
+            "attributes": {
+                "projectRoot": "rj",
+                "createdAt": 1491638907529,
+                "name": "acc",
+                "description": "dd"
+            },
+            "links": {
+                "self": "http://localhost:8080/jsonapi/crawlCats/950272"
+            }
+        },
+        {
+            "id": "884736",
+            "type": "sites",
+            "attributes": {
+                "homeUrl": "http://a.b.c",
+                "cburl": null,
+                "createdAt": 1491638907534,
+                "cburlVerified": false,
+                "cbsecret": null
+            },
+            "relationships": {
+                "crawlCat": {
+                    "data": {
+                        "id": "950272",
+                        "type": "crawlCats"
+                    },
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/sites/884736/relationships/crawlCat",
+                        "related": "http://localhost:8080/jsonapi/sites/884736/crawlCat"
+                    }
+                }
+            },
+            "links": {
+                "self": "http://localhost:8080/jsonapi/sites/884736"
+            }
+        }
+    ],
+    "links": {
+        "first": "http://localhost:8080/jsonapi/crawlFres/?page[limit]=20",
+        "last": "http://localhost:8080/jsonapi/crawlFres/?page[limit]=20",
+        "next": null,
+        "prev": null
+    },
+    "meta": {
+        "totalResourceCount": 1
+    }
+}

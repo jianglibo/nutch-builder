@@ -1,0 +1,20 @@
+{
+    "data": 
+        {
+            "type": "sites",
+            "attributes": {
+                "homeUrl": "http://a.b.c1",
+                "cburl": null,
+                "cburlVerified": false,
+                "cbsecret": null
+            },
+            "relationships": {
+                "crawlCat": {
+                    "data": {
+                        "id": "65536",
+                        "type": "crawlCats"
+                    }
+                }
+            }
+        }
+}

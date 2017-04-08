@@ -1,11 +1,6 @@
 package com.jianglibo.nutchbuilder.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -24,9 +19,6 @@ public class CrawlCat extends BaseEntity {
 	
 	private String description;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="crawlCat")
-	private Set<Site> sites = new HashSet<>();
-	
 	public String getName() {
 		return name;
 	}
@@ -38,12 +30,6 @@ public class CrawlCat extends BaseEntity {
 	}
 	public void setProjectRoot(String projectRoot) {
 		this.projectRoot = projectRoot;
-	}
-	public Set<Site> getSites() {
-		return sites;
-	}
-	public void setSites(Set<Site> sites) {
-		this.sites = sites;
 	}
 	public String getDescription() {
 		return description;

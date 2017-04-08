@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,6 +54,11 @@ public abstract class KatharsisBase extends Tbase {
 	
 	public ResponseEntity<String> postItem(String fixtureName, String jwtToken) throws IOException {
 		HttpEntity<String> request = new HttpEntity<String>(getFixture(fixtureName), getAuthorizationHaders(jwtToken));
+		return restTemplate.postForEntity(getBaseURI(), request, String.class);
+	}
+	
+	public ResponseEntity<String> postItem(Document document, String jwtToken) throws IOException {
+		HttpEntity<String> request = new HttpEntity<String>(objectMapper.writeValueAsString(document), getAuthorizationHaders(jwtToken));
 		return restTemplate.postForEntity(getBaseURI(), request, String.class);
 	}
 	
@@ -127,6 +133,18 @@ public abstract class KatharsisBase extends Tbase {
 	public String getFixture(String fname) throws IOException {
 		return new String(Files.readAllBytes(Paths.get("fixturesingit", "dtos", fname + ".json")));
 	}
+	
+	protected Document replaceRelationshipId(String origin,String key, String value, String...segnames) throws JsonParseException, JsonMappingException, IOException {
+		Map<String, Object> m = objectMapper.readValue(origin, Map.class);
+		
+		Map<String, Object> dest = m;
+		for(String seg : segnames) {
+			dest = (Map<String, Object>) dest.get(seg);
+		}
+		dest.put(key, value);
+		return objectMapper.readValue(objectMapper.writeValueAsString(m), Document.class);
+	}
+
 	
 	protected abstract String getResourceName();
 
