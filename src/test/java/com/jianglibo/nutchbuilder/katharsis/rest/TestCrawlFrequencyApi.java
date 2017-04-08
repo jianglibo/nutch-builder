@@ -39,7 +39,7 @@ public class TestCrawlFrequencyApi  extends KatharsisBase {
 	
 	@Before
 	public void b() throws JsonParseException, JsonMappingException, IOException {
-		jwtToken = getJwtToken();
+		jwtToken = getAdminJwtToken();
 		siteRepository.deleteAll();
 		ccrepository.deleteAll();
 	}

@@ -76,8 +76,8 @@ public abstract class KatharsisBase extends Tbase {
 		return requestHeaders;
 	}
 	
-	public String getJwtToken() throws IOException {
-		HttpEntity<String> request = new HttpEntity<String>(getFixture("loginAttemptRightCredential"));
+	public String getAdminJwtToken() throws IOException {
+		HttpEntity<String> request = new HttpEntity<String>(getFixture("loginAdmin"));
 		ResponseEntity<String> response = restTemplate.postForEntity(getBaseURI(JsonApiResourceNames.LOGIN_ATTEMPT), request, String.class);
 		String body = response.getBody();
 		Document d =  kboot.getObjectMapper().readValue(body, Document.class);

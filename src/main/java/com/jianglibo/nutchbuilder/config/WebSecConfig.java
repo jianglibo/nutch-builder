@@ -17,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.session.ChangeSessionIdAuthenticationStrategy;
 import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
-import org.springframework.security.web.csrf.CsrfFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jianglibo.nutchbuilder.config.userdetail.BootUserDetailManager;
@@ -74,6 +73,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
         pc.withUser("admin")
         	.accountExpired(false)
         	.accountLocked(false)
+        	.authorities("administrator")
         	.authorities("abc")
         	.credentialsExpired(false)
         	.disabled(false)

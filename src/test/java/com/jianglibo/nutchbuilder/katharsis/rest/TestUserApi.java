@@ -30,7 +30,7 @@ public class TestUserApi  extends KatharsisBase {
 	
 	@Before
 	public void b() throws JsonParseException, JsonMappingException, IOException {
-		jwtToken = getJwtToken();
+		jwtToken = getAdminJwtToken();
 		ResponseEntity<String> response = getBody(jwtToken, getBaseURI());
 		String body = response.getBody();
 		printme(body);

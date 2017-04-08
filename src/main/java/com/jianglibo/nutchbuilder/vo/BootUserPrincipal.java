@@ -78,24 +78,24 @@ public class BootUserPrincipal extends User {
     			,null);
     }
 
-    public BootUserPrincipal(BootUser person, Set<Role> roles) {
-        this(person.getName()
-        		,person.getDisplayName()
-        		,person.getEmail()
-        		,person.getMobile()
-        		,person.getPassword()
-        		,person.isEnabled()
-        		,person.isAccountNonExpired()
-        		,person.isCredentialsNonExpired()
-        		,person.isAccountNonLocked()
-        		,person.getAvatar()
+    public BootUserPrincipal(BootUser bootUser, Set<Role> roles) {
+        this(bootUser.getName()
+        		,bootUser.getDisplayName()
+        		,bootUser.getEmail()
+        		,bootUser.getMobile()
+        		,bootUser.getPassword()
+        		,bootUser.isEnabled()
+        		,bootUser.isAccountNonExpired()
+        		,bootUser.isCredentialsNonExpired()
+        		,bootUser.isAccountNonLocked()
+        		,bootUser.getAvatar()
         		,roles
-        		,person.isEmailVerified()
-        		,person.isMobileVerified()
-        		,person.getGender()
-        		,ThirdPartLoginVo.toVos(person.getThirdConns())
-        		,person.getId()
-        		,person.getOpenId());
+        		,bootUser.isEmailVerified()
+        		,bootUser.isMobileVerified()
+        		,bootUser.getGender()
+        		,ThirdPartLoginVo.toVos(bootUser.getThirdConns())
+        		,bootUser.getId()
+        		,bootUser.getOpenId());
     }
 
     public BootUserPrincipal(String name

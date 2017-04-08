@@ -59,7 +59,6 @@ public class SecurityUtil {
     }
     
     public static void doLogin(BootUserAuthentication mat) {
-        mat.setAuthenticated(true);
         SecurityContextHolder.getContext().setAuthentication(mat);
     }
 

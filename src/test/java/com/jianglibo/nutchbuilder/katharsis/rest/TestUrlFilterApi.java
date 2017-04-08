@@ -39,7 +39,7 @@ public class TestUrlFilterApi  extends KatharsisBase {
 	
 	@Before
 	public void b() throws JsonParseException, JsonMappingException, IOException {
-		jwtToken = getJwtToken();
+		jwtToken = getAdminJwtToken();
 		repository.deleteAll();
 		ccrepository.deleteAll();
 	}

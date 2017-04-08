@@ -36,7 +36,7 @@ public class TestSitetApi  extends KatharsisBase {
 	
 	@Before
 	public void b() throws JsonParseException, JsonMappingException, IOException {
-		jwtToken = getJwtToken();
+		jwtToken = getAdminJwtToken();
 		repository.deleteAll();
 		ccrepository.deleteAll();
 	}
@@ -65,6 +65,7 @@ public class TestSitetApi  extends KatharsisBase {
 	
 	@Test
 	public void tCreateByRepo() throws IOException {
+		loginAs("kkk", "ADMINISTRATOR");
 		CrawlCat crawlCat = new CrawlCat();
 		crawlCat.setName("acc");
 		crawlCat.setProjectRoot("rj");
@@ -74,6 +75,7 @@ public class TestSitetApi  extends KatharsisBase {
 		site.setHomeUrl("http://a.b.c");
 		site.setCrawlCat(crawlCat);
 		repository.save(site);
+		logout();
 		ResponseEntity<String> response = getBody(jwtToken, getBaseURI());
 		printme(response.getBody());
 		List<SiteDto> sites = getList(response.getBody(), SiteDto.class);

@@ -1,0 +1,9 @@
+{
+    "data": {
+        "type": "loginAttempts",
+        "attributes": {
+            "username": "user",
+            "password": "123456"
+        }
+    }
+}

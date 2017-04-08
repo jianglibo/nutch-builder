@@ -2,6 +2,13 @@ package com.jianglibo.nutchbuilder;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +28,14 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jianglibo.nutchbuilder.config.ApplicationConfig;
+import com.jianglibo.nutchbuilder.domain.BootUser;
+import com.jianglibo.nutchbuilder.domain.Role;
 import com.jianglibo.nutchbuilder.repository.BootUserRepository;
 import com.jianglibo.nutchbuilder.repository.RoleRepository;
+import com.jianglibo.nutchbuilder.util.SecurityUtil;
+import com.jianglibo.nutchbuilder.vo.BootUserAuthentication;
+import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
+import com.jianglibo.nutchbuilder.vo.RoleNames;
 
 /**
  * @author jianglibo@gmail.com
@@ -102,16 +115,16 @@ public abstract class Tbase extends M3958TsBase {
         return createApageable(10);
     }
     
-//    private void loginAsCreator() {
-//        loginAs("creator", RoleNames.PERSON_CREATOR);
-//    }
+    private void loginAsCreator() {
+        loginAs("creator", RoleNames.PERSON_CREATOR);
+    }
     
-//    protected void loginAs(String name, String...rns) {
-//        PersonVo pv = createPersonVo(name, rns);
-//        M3958LoginAuthenticationToken saut = new M3958LoginAuthenticationToken(pv);
-//        M3958SecurityUtil.doLogin(saut);
-//    }
-//    
+    protected void loginAs(String name, String...rns) {
+        BootUserPrincipal pv = createBootUserPrincipal(name, rns);
+        BootUserAuthentication saut = new BootUserAuthentication(pv);
+        SecurityUtil.doLogin(saut);
+    }
+    
 //    public Authentication getAdminAuthentication() {
 //        PersonVo pv = createPersonVoAndSave("admin", RoleNames.PERSON_MANAGER);
 //        M3958LoginAuthenticationToken saut = new M3958LoginAuthenticationToken(pv);
@@ -132,50 +145,56 @@ public abstract class Tbase extends M3958TsBase {
 //        saut.setAuthenticated(true);
 //        return saut;
 //    }
-//    
-//    public void createFullPerson(String name, String password, String...rns) {
-//        createPersonVo(name, password, true, rns);
-//    }
-//
-//    public PersonVo createPersonVo(String name, String... rns) {
-//        return createPersonVo(name, false, rns);
-//    }
-//    
-//    public PersonVo createPersonVoAndSave(String name, String... rns) {
-//        return createPersonVo(name, true, rns);
-//    }
-//
-//    private PersonVo createPersonVo(String name,String password, boolean createDomain, String... rns) {
-//        List<String> rnl = new ArrayList<>();
-//        rnl.addAll(Arrays.asList(rns));
-//
-//        if (!rnl.contains(RoleNames.USER)) {
-//            rnl.add(RoleNames.USER);
-//        }
-//
-//        Person p = personRepo.findByName(name);
-//
-//        if (p == null) {
-//            p = Person.newValidPerson();
-//            p.setName(name);
-//            p.setEmail(name + "@m3958.com");
-//            p.setEmailVerified(true);
-//            p.setPassword(passwordEncoder.encode(password));
-//            Set<Role> roles = new HashSet<>(rnl.stream().map(rn -> roleRepo.findByName(rn)).collect(Collectors.toList()));
-//            p.setRoles(roles);
-//
-//            if (createDomain) {
-//                loginAsCreator();
-//                p = personRepo.save(p);
-//                logout();
-//            }
-//        }
-//        return new PersonVo(p);
-//    }
-//    
-//    private PersonVo createPersonVo(String name,boolean createDomain, String... rns) {
-//        return createPersonVo(name,name, createDomain, rns);
-//    }
+    
+    public void createFullPerson(String name, String password, String...rns) {
+        createPersonVo(name, password, true, rns);
+    }
+
+    public BootUserPrincipal createBootUserPrincipal(String name, String... rns) {
+        return createPersonVo(name, false, rns);
+    }
+    
+    public BootUserPrincipal createBootUserAndSave(String name, String... rns) {
+        return createPersonVo(name, true, rns);
+    }
+    
+    public void createUserWithUserRole() {
+    	createFullPerson("user", "123456");
+    }
+
+    private BootUserPrincipal createPersonVo(String name,String password, boolean createDomain, String... rns) {
+        List<String> rnl = new ArrayList<>();
+        rnl.addAll(Arrays.asList(rns));
+
+        if (!rnl.contains(RoleNames.USER)) {
+            rnl.add(RoleNames.USER);
+        }
+
+        BootUser p = personRepo.findByName(name);
+
+        if (p == null) {
+            p = BootUser.newValidPerson();
+            p.setName(name);
+            p.setEmail(name + "@m3958.com");
+            p.setEmailVerified(true);
+            p.setPassword(passwordEncoder.encode(password));
+            Set<Role> roles = new HashSet<>(rnl.stream().map(Role::new).collect(Collectors.toList()));
+            p.setRoles(roles);
+
+            if (createDomain) {
+                loginAsCreator();
+                p = personRepo.save(p);
+                logout();
+            } else {
+            	p.setId(55L);
+            }
+        }
+        return new BootUserPrincipal(p);
+    }
+    
+    private BootUserPrincipal createPersonVo(String name,boolean createDomain, String... rns) {
+        return createPersonVo(name,name, createDomain, rns);
+    }
 
     public String getRestUri(String uri) {
         if (!uri.startsWith("/")) {

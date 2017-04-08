@@ -17,14 +17,14 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 
 
 /**
- * securedEnabled = true, @ Secured("IS_AUTHENTICATED_ANONYMOUSLY")
- * prePostEnabled = true @ PreAuthorize("isAnonymous()")
+ * securedEnabled = true, @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
+ * prePostEnabled = true @PreAuthorize("isAnonymous()")
  * @author jianglibo@gmail.com
  *
  */
 
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MethodSecConfig extends GlobalMethodSecurityConfiguration {
     
 //    @Autowired

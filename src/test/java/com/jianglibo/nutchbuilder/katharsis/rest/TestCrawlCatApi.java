@@ -3,24 +3,24 @@ package com.jianglibo.nutchbuilder.katharsis.rest;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.jianglibo.nutchbuilder.KatharsisBase;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
+import com.jianglibo.nutchbuilder.domain.CrawlCat;
 import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
 import com.jianglibo.nutchbuilder.repository.CrawlCatRepository;
+import com.jianglibo.nutchbuilder.repository.SiteRepository;
 
 public class TestCrawlCatApi  extends KatharsisBase {
 	
@@ -29,10 +29,32 @@ public class TestCrawlCatApi  extends KatharsisBase {
 	@Autowired
 	private CrawlCatRepository repository;
 	
+	@Autowired
+	private SiteRepository siteRepository;
+
+	
 	@Before
 	public void b() throws JsonParseException, JsonMappingException, IOException {
-		jwtToken = getJwtToken();
+		jwtToken = getAdminJwtToken();
+		siteRepository.deleteAll();
 		repository.deleteAll();
+	}
+	
+	@Test
+	public void byRepoUser() throws IOException {
+		loginAs("user", "USER");
+		CrawlCat cc = new CrawlCat();
+		cc.setName("a");
+		cc.setProjectRoot("b");
+		repository.save(cc);
+	}
+	
+	@Test(expected=AuthenticationCredentialsNotFoundException.class)
+	public void byRepoAdmin() {
+		CrawlCat cc = new CrawlCat();
+		cc.setName("a");
+		cc.setProjectRoot("b");
+		repository.save(cc);
 	}
 	
 	@Test
