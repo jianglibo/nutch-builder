@@ -22,6 +22,8 @@ public class CrawlCat extends BaseEntity {
 	
 	private String projectRoot;
 	
+	private String description;
+	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="crawlCat")
 	private Set<Site> sites = new HashSet<>();
 	
@@ -42,5 +44,11 @@ public class CrawlCat extends BaseEntity {
 	}
 	public void setSites(Set<Site> sites) {
 		this.sites = sites;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
