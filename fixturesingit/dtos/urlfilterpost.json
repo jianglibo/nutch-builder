@@ -3,13 +3,23 @@
         "type": "urlfilters",
         "attributes": {
             "createdAt": null,
-            "regex": "xxx"
-        },
-        "relationships": {
+            "regex": "xxx",
             "site": {
-                "data": {
-                    "id": "655360",
-                    "type": "sites"
+                "id": 2457600,
+                "createdAt": 1491729645441,
+                "homeUrl": "http://a.b.c",
+                "cburl": null,
+                "cburlVerified": false,
+                "cbsecret": null,
+                "urlfilters": [],
+                "crawlFrenquencies": [],
+                "crawlCat": {
+                    "id": 2949120,
+                    "createdAt": 1491729645438,
+                    "name": "acc",
+                    "projectRoot": "rj",
+                    "description": "dd",
+                    "sites": []
                 }
             }
         }

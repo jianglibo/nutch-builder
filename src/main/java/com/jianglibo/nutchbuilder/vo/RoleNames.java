@@ -19,6 +19,8 @@ public class RoleNames {
     public static final String PERSON_CREATOR = "ROLE_PERSON_CREATOR";
     public static final String ROLE_CREATOR = "ROLE_ROLECREATOR";
     
+    public static final String ROLE_ADMINISTRATOR = "ROLE_ADMINISTRATOR";
+    
     public static final String ACL_OWNERSHIP = "ROLE_ACL_OWNERSHIP";
     public static final String ACL_AUDITING = "ROLE_ACL_AUDITING";
     public static final String ACL_DETAIL = "ROLE_ACL_DETAIL";

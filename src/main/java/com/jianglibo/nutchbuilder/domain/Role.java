@@ -30,7 +30,6 @@ public class Role extends BaseEntity implements GrantedAuthority {
         setName(authority);
     }
     
-    
     @PrePersist
     public void beforePersist() {
     	String n = getName().toUpperCase();
@@ -45,12 +44,29 @@ public class Role extends BaseEntity implements GrantedAuthority {
     }
 
     public void setName(String name) {
-        this.name = name;
+    	String n = name.toUpperCase();
+    	if (!n.startsWith("ROLE_")) {
+    		n = "ROLE_" + n;
+    	}
+        this.name = n;
     }
 
     @Override
     @JsonIgnore
     public String getAuthority() {
         return name;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if (obj instanceof Role) {
+    		return getName().equals(((Role) obj).getName()); 
+    	}
+    	return false;
+    }
+    
+    @Override
+    public String toString() {
+    	return "ROLE: " + getName();
     }
 }

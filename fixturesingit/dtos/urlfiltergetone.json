@@ -1,66 +1,31 @@
 {
     "data": {
-        "id": "163840",
+        "id": "98304",
         "type": "urlfilters",
         "attributes": {
-            "createdAt": null,
-            "regex": "xxx"
-        },
-        "relationships": {
+            "createdAt": 1491729645451,
+            "regex": "xxx",
             "site": {
-                "data": {
-                    "id": "655360",
-                    "type": "sites"
-                },
-                "links": {
-                    "self": "http://localhost:8080/jsonapi/urlfilters/163840/relationships/site",
-                    "related": "http://localhost:8080/jsonapi/urlfilters/163840/site"
+                "id": 2457600,
+                "createdAt": 1491729645441,
+                "homeUrl": "http://a.b.c",
+                "cburl": null,
+                "cburlVerified": false,
+                "cbsecret": null,
+                "urlfilters": [],
+                "crawlFrenquencies": [],
+                "crawlCat": {
+                    "id": 2949120,
+                    "createdAt": 1491729645438,
+                    "name": "acc",
+                    "projectRoot": "rj",
+                    "description": "dd",
+                    "sites": []
                 }
             }
         },
         "links": {
-            "self": "http://localhost:8080/jsonapi/urlfilters/163840"
+            "self": "http://localhost:88/jsonapi/urlfilters/98304"
         }
-    },
-    "included": [
-        {
-            "id": "720896",
-            "type": "crawlCats",
-            "attributes": {
-                "projectRoot": "rj",
-                "createdAt": 1491637101436,
-                "name": "acc",
-                "description": "dd"
-            },
-            "links": {
-                "self": "http://localhost:8080/jsonapi/crawlCats/720896"
-            }
-        },
-        {
-            "id": "655360",
-            "type": "sites",
-            "attributes": {
-                "homeUrl": "http://a.b.c",
-                "cburl": null,
-                "createdAt": 1491637101440,
-                "cburlVerified": false,
-                "cbsecret": null
-            },
-            "relationships": {
-                "crawlCat": {
-                    "data": {
-                        "id": "720896",
-                        "type": "crawlCats"
-                    },
-                    "links": {
-                        "self": "http://localhost:8080/jsonapi/sites/655360/relationships/crawlCat",
-                        "related": "http://localhost:8080/jsonapi/sites/655360/crawlCat"
-                    }
-                }
-            },
-            "links": {
-                "self": "http://localhost:8080/jsonapi/sites/655360"
-            }
-        }
-    ]
+    }
 }

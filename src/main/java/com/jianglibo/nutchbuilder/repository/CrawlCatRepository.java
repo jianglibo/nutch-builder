@@ -8,6 +8,6 @@ public interface CrawlCatRepository extends RepositoryBase<CrawlCat> {
 	CrawlCat findByName(String rn);
 	
 	@Override
-	@PreAuthorize("hasRole('ADMINSTRATOR')")
+	@PreAuthorize("hasRole('ADMINISTRATOR')")
 	<S extends CrawlCat> S save(S entity);
 }

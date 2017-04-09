@@ -13,7 +13,10 @@ import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.BootUser.Gender;
 
+import io.katharsis.resource.annotations.JsonApiRelation;
 import io.katharsis.resource.annotations.JsonApiResource;
+import io.katharsis.resource.annotations.LookupIncludeBehavior;
+import io.katharsis.resource.annotations.SerializeType;
 
 @JsonApiResource(type = JsonApiResourceNames.BOOT_USER)
 @DtoToEntity(entityClass=BootUser.class)
@@ -32,6 +35,9 @@ public class UserDto extends DtoBase<UserDto, BootUser> {
     private boolean mobileVerified;
     
     private Gender gender;
+    
+    @JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.LAZY, opposite="creator")
+    private List<SiteDto> sites = new ArrayList<>();
     
     @NotNull
     @Size(min=6, max=36)
@@ -217,5 +223,13 @@ public class UserDto extends DtoBase<UserDto, BootUser> {
 
 	public void setUpdatePassword(boolean updatePassword) {
 		this.updatePassword = updatePassword;
+	}
+
+	public List<SiteDto> getSites() {
+		return sites;
+	}
+
+	public void setSites(List<SiteDto> sites) {
+		this.sites = sites;
 	}
 }

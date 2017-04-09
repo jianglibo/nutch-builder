@@ -1,11 +1,15 @@
 package com.jianglibo.nutchbuilder.katharsis.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
+import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.Site;
 
 import io.katharsis.resource.annotations.JsonApiRelation;
@@ -26,10 +30,17 @@ public class SiteDto extends DtoBase<SiteDto, Site> {
 	
 	private String cbsecret;
 	
+	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.LAZY, opposite="site")
+	private List<UrlFilterDto> urlfilters = new ArrayList<>();
 	
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_WHEN_NULL,serialize=SerializeType.EAGER)
+	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.LAZY, opposite="site")
+	private List<CrawlFrequencyDto> crawlFrenquencies = new ArrayList<>();
+	
 	@NotNull
 	private CrawlCatDto crawlCat;
+	
+	@NotNull
+	private UserDto creator;
 	
 	@Override
 	public SiteDto fromEntity(Site entity) {
@@ -38,7 +49,7 @@ public class SiteDto extends DtoBase<SiteDto, Site> {
 		setCreatedAt(entity.getCreatedAt());
 		setHomeUrl(entity.getHomeUrl());
 		setId(entity.getId());
-		setCrawlCat(new CrawlCatDto().fromEntity(entity.getCrawlCat()));
+//		setCrawlCat(new CrawlCatDto().fromEntity(entity.getCrawlCat()));
 		return this;
 	}
 
@@ -88,6 +99,30 @@ public class SiteDto extends DtoBase<SiteDto, Site> {
 
 	public void setCrawlCat(CrawlCatDto crawlCat) {
 		this.crawlCat = crawlCat;
+	}
+
+	public List<UrlFilterDto> getUrlfilters() {
+		return urlfilters;
+	}
+
+	public void setUrlfilters(List<UrlFilterDto> urlfilters) {
+		this.urlfilters = urlfilters;
+	}
+
+	public List<CrawlFrequencyDto> getCrawlFrenquencies() {
+		return crawlFrenquencies;
+	}
+
+	public void setCrawlFrenquencies(List<CrawlFrequencyDto> crawlFrenquencies) {
+		this.crawlFrenquencies = crawlFrenquencies;
+	}
+
+	public UserDto getCreator() {
+		return creator;
+	}
+
+	public void setCreator(UserDto creator) {
+		this.creator = creator;
 	}
 
 }

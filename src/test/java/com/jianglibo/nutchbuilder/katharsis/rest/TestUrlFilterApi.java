@@ -21,6 +21,7 @@ import com.jianglibo.nutchbuilder.domain.UrlFilter;
 import com.jianglibo.nutchbuilder.repository.CrawlCatRepository;
 import com.jianglibo.nutchbuilder.repository.SiteRepository;
 import com.jianglibo.nutchbuilder.repository.UrlFilterRepository;
+import com.jianglibo.nutchbuilder.vo.RoleNames;
 
 import io.katharsis.resource.Document;
 
@@ -46,7 +47,7 @@ public class TestUrlFilterApi  extends KatharsisBase {
 	
 	@Test
 	public void tPostOne() throws JsonParseException, JsonMappingException, IOException {
-
+		loginAs("kkk", RoleNames.ROLE_ADMINISTRATOR);
 		CrawlCat crawlCat = new CrawlCat();
 		crawlCat.setName("acc");
 		crawlCat.setProjectRoot("rj");
@@ -56,9 +57,10 @@ public class TestUrlFilterApi  extends KatharsisBase {
 		site.setHomeUrl("http://a.b.c");
 		site.setCrawlCat(crawlCat);
 		site = repository.save(site);
+		logout();
 		
 		String fixture = getFixture("urlfilterpost");
-		Document d = replaceRelationshipId(fixture, "id", String.valueOf(site.getId()), "data", "relationships", "site", "data");
+		Document d = replaceRelationshipId(fixture, "id", String.valueOf(site.getId()), "data", "attributes", "site");
 		
 		ResponseEntity<String> response = postItem(d, jwtToken);
 		printme(response.getBody());
@@ -67,7 +69,7 @@ public class TestUrlFilterApi  extends KatharsisBase {
 	
 	@Test
 	public void tGetOneAndList() throws JsonParseException, JsonMappingException, IOException {
-
+		loginAs("kkk", RoleNames.ROLE_ADMINISTRATOR);
 		CrawlCat crawlCat = new CrawlCat();
 		crawlCat.setName("acc");
 		crawlCat.setProjectRoot("rj");
@@ -77,7 +79,7 @@ public class TestUrlFilterApi  extends KatharsisBase {
 		site.setHomeUrl("http://a.b.c");
 		site.setCrawlCat(crawlCat);
 		site = repository.save(site);
-		
+		logout();
 		UrlFilter ul = new UrlFilter();
 		ul.setRegex("xxx");
 		ul.setSite(site);

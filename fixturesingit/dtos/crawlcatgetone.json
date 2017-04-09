@@ -1,0 +1,23 @@
+{
+    "data": {
+        "id": "1802240",
+        "type": "crawlCats",
+        "attributes": {
+            "projectRoot": "abc/ddd",
+            "createdAt": 1491719109730,
+            "name": "crawlcat1",
+            "description": "hello"
+        },
+        "relationships": {
+            "sites": {
+                "links": {
+                    "self": "http://localhost:88/jsonapi/crawlCats/1802240/relationships/sites",
+                    "related": "http://localhost:88/jsonapi/crawlCats/1802240/sites"
+                }
+            }
+        },
+        "links": {
+            "self": "http://localhost:88/jsonapi/crawlCats/1802240"
+        }
+    }
+}

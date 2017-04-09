@@ -1,10 +1,14 @@
 package com.jianglibo.nutchbuilder;
 
+import static org.hamcrest.Matchers.contains;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.config.StatelessCSRFFilter;
 
-import io.katharsis.client.internal.ClientDocumentMapper;
+import io.katharsis.client.KatharsisClient;
 import io.katharsis.core.internal.boot.KatharsisBoot;
 import io.katharsis.resource.Document;
 
@@ -33,6 +37,9 @@ public abstract class KatharsisBase extends Tbase {
 	
 	@Autowired
 	protected KatharsisBoot kboot;
+	
+	@Autowired
+	protected KatharsisClient katharsisClient;
 	
 	@Value("${katharsis.domainName}")
 	private String domainName;
@@ -85,14 +92,6 @@ public abstract class KatharsisBase extends Tbase {
 	}
 	
 	
-	public <T> List<T> getList(String responseBody, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
-		ObjectMapper objectMapper = kboot.getObjectMapper();
-		Document document = objectMapper.readValue(responseBody, Document.class);
-		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getModuleRegistry(), objectMapper, null);
-		return (List<T>) documentMapper.fromDocument(document, true);
-	}
-	
-	
 	public Document toDocument(String responseBody) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = kboot.getObjectMapper();
 		return objectMapper.readValue(responseBody, Document.class);
@@ -101,9 +100,24 @@ public abstract class KatharsisBase extends Tbase {
 	public <T> T getOne(String responseBody, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = kboot.getObjectMapper();
 		Document document = objectMapper.readValue(responseBody, Document.class);
-		ClientDocumentMapper documentMapper = new ClientDocumentMapper(kboot.getModuleRegistry(), objectMapper, null);
-		return (T) documentMapper.fromDocument(document, false);
+		return (T) katharsisClient.getDocumentMapper().fromDocument(document, false);
 	}
+	
+	public <T> T getOne(ResponseEntity<String> response, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
+		return getOne(response.getBody(), targetClass);
+	}
+	
+	public <T> List<T> getList(String responseBody, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper objectMapper = kboot.getObjectMapper();
+		Document document = objectMapper.readValue(responseBody, Document.class);
+		return (List<T>) katharsisClient.getDocumentMapper().fromDocument(document, true);
+	}
+	
+	public <T> List<T> getList(ResponseEntity<String> response, Class<T> targetClass) throws JsonParseException, JsonMappingException, IOException {
+		return getList(response.getBody(), targetClass);
+	}
+
+	
 	
 	public ResponseEntity<String> deleteByExchange(String jwtToken, String url) throws IOException {
 		HttpHeaders hds = getAuthorizationHaders(jwtToken);
@@ -130,21 +144,61 @@ public abstract class KatharsisBase extends Tbase {
 		return getBaseURI() + "/" + id;
 	}
 	
+	protected String getItemUrl(String id) {
+		return getBaseURI() + "/" + id;
+	}
+
+	
 	public String getFixture(String fname) throws IOException {
 		return new String(Files.readAllBytes(Paths.get("fixturesingit", "dtos", fname + ".json")));
 	}
 	
-	protected Document replaceRelationshipId(String origin,String key, String value, String...segnames) throws JsonParseException, JsonMappingException, IOException {
+	protected Document replaceRelationshipId(String origin,String key, String value, String...paths) throws JsonParseException, JsonMappingException, IOException {
 		Map<String, Object> m = objectMapper.readValue(origin, Map.class);
 		
 		Map<String, Object> dest = m;
-		for(String seg : segnames) {
+		for(String seg : paths) {
 			dest = (Map<String, Object>) dest.get(seg);
 		}
 		dest.put(key, value);
 		return objectMapper.readValue(objectMapper.writeValueAsString(m), Document.class);
 	}
-
+	
+	protected String replaceRelationshipIdReturnString(String origin,String key, String value, String...paths) throws JsonParseException, JsonMappingException, IOException {
+		Map<String, Object> m = objectMapper.readValue(origin, Map.class);
+		
+		Map<String, Object> dest = m;
+		for(String seg : paths) {
+			dest = (Map<String, Object>) dest.get(seg);
+		}
+		dest.put(key, value);
+		return objectMapper.writeValueAsString(m);
+	}
+	
+	protected Object getDocumentProperty(String responseBody, String...keys) throws JsonParseException, JsonMappingException, IOException {
+		Map<String, Object> m = objectMapper.readValue(responseBody, Map.class);
+		String[] segs = Arrays.copyOf(keys, keys.length - 1);
+		Map<String, Object> dest = m;
+		for(String seg : segs) {
+			dest = (Map<String, Object>) dest.get(seg);
+		}
+		
+		return dest.get(keys[keys.length - 1]);
+	}
+	
+	
+	
+	protected Object getDocumentProperty(ResponseEntity<String> response, String...keys) throws JsonParseException, JsonMappingException, IOException {
+		return getDocumentProperty(response.getBody(), keys);
+	}
+	
+	protected String getResponseIdString(ResponseEntity<String> response) throws JsonParseException, JsonMappingException, IOException {
+		return (String) getDocumentProperty(response, "data", "id");
+	}
+	
+	protected Long getResponseIdLong(ResponseEntity<String> response) throws JsonParseException, JsonMappingException, IOException {
+		return Long.valueOf((String)getDocumentProperty(response, "data", "id"));
+	}
 	
 	protected abstract String getResourceName();
 
@@ -155,5 +209,18 @@ public abstract class KatharsisBase extends Tbase {
                 .contentType(mt)//
                 .accept(mt));
         return ra;
+	}
+	
+	public void verifyRelationshipsKeys(ResponseEntity<String> response, String relationName, String...keys) throws JsonParseException, JsonMappingException, IOException {
+		verifyKeys(response, keys, new String[]{"data", "relationships", relationName});
+	}
+	
+	public void verifyKeys(ResponseEntity<String> response, String[] keys, String...paths) throws JsonParseException, JsonMappingException, IOException {
+		Map<String, Object> m = objectMapper.readValue(response.getBody(), Map.class);
+		Map<String, Object> dest = m;
+		for(String seg : paths) {
+			dest = (Map<String, Object>) dest.get(seg);
+		}
+		assertThat(dest.keySet(), contains(keys));
 	}
 }

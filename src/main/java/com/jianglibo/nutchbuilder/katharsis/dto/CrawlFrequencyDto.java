@@ -25,7 +25,6 @@ public class CrawlFrequencyDto extends DtoBase<CrawlFrequencyDto, CrawlFrequency
 	private int seconds;
 	
 	@NotNull
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_WHEN_NULL,serialize=SerializeType.EAGER)
 	private SiteDto site;
 	
 	public String getRegex() {

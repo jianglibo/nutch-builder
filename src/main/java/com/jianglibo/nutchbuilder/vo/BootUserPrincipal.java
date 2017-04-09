@@ -55,7 +55,7 @@ public class BootUserPrincipal extends User {
     }
 
     public BootUserPrincipal(BootUser bu) {
-        this(bu, new HashSet<>());
+        this(bu, bu.getRoles());
     }
     
     public BootUserPrincipal(UserDto dto) {

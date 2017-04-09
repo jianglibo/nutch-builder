@@ -1,43 +1,32 @@
 {
     "data": {
-        "id": "622593",
+        "id": "163841",
         "type": "sites",
         "attributes": {
+            "crawlCat": null,
             "homeUrl": "http://a.b.c1",
             "cburl": null,
-            "createdAt": 1491637005549,
+            "createdAt": 1491742310315,
+            "creator": null,
             "cburlVerified": false,
             "cbsecret": null
         },
         "relationships": {
-            "crawlCat": {
-                "data": {
-                    "id": "688129",
-                    "type": "crawlCats"
-                },
+            "urlfilters": {
                 "links": {
-                    "self": "http://localhost:8080/jsonapi/sites/622593/relationships/crawlCat",
-                    "related": "http://localhost:8080/jsonapi/sites/622593/crawlCat"
+                    "self": "http://localhost:88/jsonapi/sites/163841/relationships/urlfilters",
+                    "related": "http://localhost:88/jsonapi/sites/163841/urlfilters"
+                }
+            },
+            "crawlFrenquencies": {
+                "links": {
+                    "self": "http://localhost:88/jsonapi/sites/163841/relationships/crawlFrenquencies",
+                    "related": "http://localhost:88/jsonapi/sites/163841/crawlFrenquencies"
                 }
             }
         },
         "links": {
-            "self": "http://localhost:8080/jsonapi/sites/622593"
+            "self": "http://localhost:88/jsonapi/sites/163841"
         }
-    },
-    "included": [
-        {
-            "id": "688129",
-            "type": "crawlCats",
-            "attributes": {
-                "projectRoot": "rj",
-                "createdAt": 1491637005505,
-                "name": "acc",
-                "description": "dd"
-            },
-            "links": {
-                "self": "http://localhost:8080/jsonapi/crawlCats/688129"
-            }
-        }
-    ]
+    }
 }

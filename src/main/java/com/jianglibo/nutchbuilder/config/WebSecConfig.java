@@ -74,7 +74,6 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
         	.accountExpired(false)
         	.accountLocked(false)
         	.authorities("administrator")
-        	.authorities("abc")
         	.credentialsExpired(false)
         	.disabled(false)
         	.displayName("admin")

@@ -8,10 +8,7 @@ import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.domain.UrlFilter;
 
-import io.katharsis.resource.annotations.JsonApiRelation;
 import io.katharsis.resource.annotations.JsonApiResource;
-import io.katharsis.resource.annotations.LookupIncludeBehavior;
-import io.katharsis.resource.annotations.SerializeType;
 
 @JsonApiResource(type = JsonApiResourceNames.URL_FILTER)
 @DtoToEntity(entityClass=UrlFilter.class)
@@ -22,7 +19,6 @@ public class UrlFilterDto extends DtoBase<UrlFilterDto, UrlFilter> {
 	private String regex;
 	
 	@NotNull
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_WHEN_NULL,serialize=SerializeType.EAGER)
 	private SiteDto site;
 
 	public String getRegex() {

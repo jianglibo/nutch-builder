@@ -1,8 +1,10 @@
 package com.jianglibo.nutchbuilder.domain;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -12,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -40,6 +43,9 @@ public class BootUser extends BaseEntity {
     private boolean emailVerified;
 
     private boolean mobileVerified;
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="creator")
+    private List<Site> sites = new ArrayList<>();
     
     @Enumerated(EnumType.STRING)
     private Gender gender = Gender.FEMALE;
@@ -73,6 +79,7 @@ public class BootUser extends BaseEntity {
     private String openId;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "BOOTUSER_ROLES")
     private Set<Role> roles = new HashSet<>();
 
     public static BootUser newValidPerson() {
@@ -242,8 +249,15 @@ public class BootUser extends BaseEntity {
         this.thirdConns = thirdConns;
     }
     
-    public static enum Gender {
+    public List<Site> getSites() {
+		return sites;
+	}
+
+	public void setSites(List<Site> sites) {
+		this.sites = sites;
+	}
+
+	public static enum Gender {
         MALE, FEMALE
     }
-
 }

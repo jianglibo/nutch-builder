@@ -3,18 +3,21 @@
         {
             "type": "sites",
             "attributes": {
+                "crawlCat": {
+                    "id": 2293760,
+                    "createdAt": 1491720771669,
+                    "name": "acc",
+                    "projectRoot": "rj",
+                    "description": "dd",
+                    "sites": []
+                },
+                "creator": {
+                    "id": 28378272
+                },
                 "homeUrl": "http://a.b.c1",
                 "cburl": null,
                 "cburlVerified": false,
                 "cbsecret": null
-            },
-            "relationships": {
-                "crawlCat": {
-                    "data": {
-                        "id": "65536",
-                        "type": "crawlCats"
-                    }
-                }
             }
         }
 }

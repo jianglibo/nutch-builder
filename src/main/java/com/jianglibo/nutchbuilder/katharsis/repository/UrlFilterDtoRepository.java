@@ -14,6 +14,8 @@ public interface UrlFilterDtoRepository extends ResourceRepositoryV2<UrlFilterDt
 	}
 
 	@Override
-	public UrlFilterDtoList findAll(QuerySpec querySpec);
+	UrlFilterDtoList findAll(QuerySpec querySpec);
+	
+	
 }
 

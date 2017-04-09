@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
@@ -29,6 +30,10 @@ public class Site extends BaseEntity {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	private CrawlCat crawlCat;
+	
+	@ManyToOne
+	@NotNull
+	private BootUser creator;
 	
 	@OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="site")
 	private Set<UrlFilter> urlfilters = new HashSet<>();
@@ -107,6 +112,14 @@ public class Site extends BaseEntity {
 		sdto.setId(getId());
 		sdto.setCrawlCat(new CrawlCatDto().fromEntity(getCrawlCat()));
 		return sdto;
+	}
+
+	public BootUser getCreator() {
+		return creator;
+	}
+
+	public void setCreator(BootUser creator) {
+		this.creator = creator;
 	}
 
 }

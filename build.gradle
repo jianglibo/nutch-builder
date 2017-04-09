@@ -166,13 +166,14 @@ task compileWordCount (type: JavaCompile) {
     destinationDir = sourceSets.main.output.classesDir
 }
 */
+/*
 eclipse {
     classpath {
          containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
          containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
     }
 }
-
+*/
 task wrapper(type: Wrapper) {
     gradleVersion = '3.2.1'
 }
