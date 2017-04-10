@@ -22,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Proxy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
@@ -29,6 +31,7 @@ import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 @Entity
 @Table(name = "bootuser", uniqueConstraints = { @UniqueConstraint(columnNames = "name"), @UniqueConstraint(columnNames = "email"),
         @UniqueConstraint(columnNames = "mobile"),@UniqueConstraint(columnNames = "openId") })
+@Proxy(lazy=false)
 public class BootUser extends BaseEntity {
 
     /**
