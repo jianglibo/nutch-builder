@@ -43,7 +43,7 @@ public abstract class KatharsisBase extends Tbase {
 	protected KatharsisClient katharsisClient;
 	
 	@Value("${katharsis.domainName}")
-	private String domainName;
+	protected String domainName;
 	
 	@Value("${katharsis.pathPrefix}")
 	private String pathPrefix;

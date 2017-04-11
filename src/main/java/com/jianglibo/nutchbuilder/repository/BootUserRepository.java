@@ -11,7 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 
 
-public interface BootUserRepository extends RepositoryBase<BootUser>{
+public interface BootUserRepository extends RepositoryBase<BootUser> {
 
     BootUser findByEmail(@Param("email") String email);
 
@@ -32,5 +32,4 @@ public interface BootUserRepository extends RepositoryBase<BootUser>{
     //cannot delete yourself.
     @PreAuthorize("hasRole('ADMINISTRATOR') and (#id != principal.id)")
     public void delete(@P("id") Long id);
-
 }

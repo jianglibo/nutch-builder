@@ -50,20 +50,24 @@ public class TestUserApi  extends KatharsisBase {
 		}
 	}
 	
-//	@Test(expected=AccessDeniedException.class)
-//	public void deleteMyself() {
-//		loginAs("kkk", RoleNames.ROLE_ADMINISTRATOR);
-//		BootUser bu = userRepository.findByName("kkk");
-//		userRepository.delete(bu.getId());
-//	}
+	@Test(expected=AccessDeniedException.class)
+	public void deleteMyself() {
+		loginAs("kkk", RoleNames.ROLE_ADMINISTRATOR);
+		BootUser bu = userRepository.findByName("kkk");
+		userRepository.delete(bu.getId());
+	}
 	
 	@Test
 	public void tAddOne() throws JsonParseException, JsonMappingException, IOException {
 		long c= userRepository.count();
+		BootUser admin1 = userRepository.findByName("admin1");
+		if (admin1 != null) {
+			userRepository.delete(admin1);
+		}
 		ResponseEntity<String> response = postItem("userwithroles", jwtToken);
 		printme(response.getBody());
-		assertThat(userRepository.count() - 1, equalTo(c));
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
+		assertThat(userRepository.count() - 1, equalTo(c));
 		UserDto newUser = getOne(response.getBody(), UserDto.class);
 		assertThat(newUser.getName(), equalTo(user1));
 		assertTrue("password should be empty.", newUser.getPassword() == null || newUser.getPassword().isEmpty());

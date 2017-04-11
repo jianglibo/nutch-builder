@@ -41,7 +41,6 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 			throw new ConstraintViolationException(cve);
 		}
 	}
-	
 
 	protected DtoRepositoryBase(Class<T> resourceClass, Class<L> resourceListClass,Class<E> entityClass, RepositoryBase<E> repository) {
 		super(resourceClass);

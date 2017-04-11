@@ -54,8 +54,8 @@ public class SecurityUtil {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public static void doLogin(BootUser person) {
-        doLogin(SecurityContextHolder.getContext(), person);
+    public static void doLogin(BootUser bootUser) {
+        doLogin(SecurityContextHolder.getContext(), bootUser);
     }
     
     public static void doLogin(BootUserAuthentication mat) {
@@ -82,9 +82,8 @@ public class SecurityUtil {
         return Stream.of(rns).anyMatch(SecurityUtil::hasRole);
     }
 
-    public static SecurityContext doLogin(SecurityContext context, BootUser person) {
-        BootUserAuthentication uat = new BootUserAuthentication(new BootUserPrincipal(person));
-        uat.setAuthenticated(true);
+    public static SecurityContext doLogin(SecurityContext context, BootUser bootUser) {
+        BootUserAuthentication uat = new BootUserAuthentication(new BootUserPrincipal(bootUser));
         context.setAuthentication(uat);
         return context;
     }

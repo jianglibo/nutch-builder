@@ -14,4 +14,6 @@ public interface RepositoryBase<T> extends JpaRepository<T, Long>, JpaSpecificat
 	List<T> findAll(QuerySpec querySpec);
 	
 	long count(QuerySpec querySpec);
+	// it's important
+	void delete(Long id);
 }
