@@ -6,7 +6,6 @@ import com.jianglibo.nutchbuilder.domain.LoginAttempt;
 import com.jianglibo.nutchbuilder.domain.ThirdPartLogin.Provider;
 
 import io.katharsis.resource.annotations.JsonApiResource;
-import io.katharsis.resource.meta.MetaInformation;
 
 @JsonApiResource(type = JsonApiResourceNames.LOGIN_ATTEMPT)
 @DtoToEntity(entityClass=LoginAttempt.class)
@@ -108,20 +107,4 @@ public class LoginAttemptDto extends  DtoBase<LoginAttemptDto, LoginAttempt>{
 	public void setUser(UserDto user) {
 		this.user = user;
 	}
-
-	private UserLinks links;
-	
-    public static class UserLinks implements MetaInformation {
-
-        private String value;
-
-        public String getValue() {
-                return value;
-        }
-
-        public void setValue(String value) {
-                this.value = value;
-        }
-    }
-	
 }

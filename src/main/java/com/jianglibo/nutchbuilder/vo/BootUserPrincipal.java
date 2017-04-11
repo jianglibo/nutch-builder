@@ -24,7 +24,7 @@ public class BootUserPrincipal extends User {
      */
     private static final long serialVersionUID = 1L;
 
-    private final long id;
+    private final Long id;
 
     private final String email;
     private final String mobile;
@@ -42,7 +42,7 @@ public class BootUserPrincipal extends User {
 
     public BootUserPrincipal() {
         super("-1", "", new HashSet<>());
-        this.id = 0;
+        this.id = 0L;
         this.email = null;
         this.mobile = null;
         this.avatar = null;
@@ -187,7 +187,7 @@ public class BootUserPrincipal extends User {
         return displayName;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

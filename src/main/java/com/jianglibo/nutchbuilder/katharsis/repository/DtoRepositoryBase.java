@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
@@ -23,7 +22,6 @@ import io.katharsis.queryspec.QuerySpec;
 import io.katharsis.repository.ResourceRepositoryBase;
 import io.katharsis.resource.list.ResourceListBase;
 
-@Transactional
 public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceListBase<T, DtoListMeta, DtoListLinks>, E extends BaseEntity>
 		extends ResourceRepositoryBase<T, Long> {
 	
@@ -54,6 +52,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	    validator = factory.getValidator();
 	}
 	
+	//MethodSecurityMetadataSourceAdvisor
 	@Override
 	public void delete(Long id) {
 		repository.delete(id);
@@ -141,4 +140,9 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		}
 		return null;
 	}
+	
+	public RepositoryBase<E> getRepository() {
+		return repository;
+	}
+	
 }

@@ -3,6 +3,8 @@ package com.jianglibo.nutchbuilder.katharsis.repository;
 import javax.validation.groups.Default;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -17,20 +19,22 @@ import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 @Component
 public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoList, BootUser> implements UserDtoRepository {
 	
-	private final BootUserRepository repository;
-	
 	private final BootUserDetailManager bootUserDetailManager;
 	
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private ApplicationContext applicationContext;
 
+    @Autowired
 	public UserDtoRepositoryImpl(BootUserRepository bootUserRepository, BootUserDetailManager bootUserDetailManager) {
 		super(UserDto.class, UserDtoList.class, BootUser.class, bootUserRepository);
-		this.repository = bootUserRepository;
 		this.bootUserDetailManager = bootUserDetailManager;
 	}
 	
 	@Override
+	@PreAuthorize("")
 	public <S extends UserDto> S createNew(S dto) {
 		validate(dto, OnCreateGroup.class, Default.class);
 		BootUserPrincipal bu = new BootUserPrincipal(dto);
@@ -44,16 +48,16 @@ public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoLis
 			return (S) updatePassword(dto);
 		} else {
 			validate(dto);
-			BootUser entity = repository.findOne(dto.getId());
+			BootUser entity = getRepository().findOne(dto.getId());
 			entity = dto.patch(entity);
-			return (S) dto.fromEntity(repository.save(entity));
+			return (S) dto.fromEntity(getRepository().save(entity));
 		}
 	}
 
 	private  UserDto updatePassword(UserDto dto) {
-		BootUser entity = repository.findOne(dto.getId());
+		BootUser entity = getRepository().findOne(dto.getId());
 		entity.setPassword(passwordEncoder.encode(dto.getPassword()));
-		repository.save(entity);
+		getRepository().save(entity);
 		dto.setPassword("");
 		return dto;
 	}

@@ -2,6 +2,7 @@ package com.jianglibo.nutchbuilder;
 
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.io.IOException;
@@ -212,10 +213,10 @@ public abstract class KatharsisBase extends Tbase {
 	}
 	
 	public void verifyRelationshipsKeys(ResponseEntity<String> response, String relationName, String...keys) throws JsonParseException, JsonMappingException, IOException {
-		verifyKeys(response, keys, new String[]{"data", "relationships", relationName});
+		verifyAllKeys(response, keys, new String[]{"data", "relationships", relationName});
 	}
 	
-	public void verifyKeys(ResponseEntity<String> response, String[] keys, String...paths) throws JsonParseException, JsonMappingException, IOException {
+	public void verifyAllKeys(ResponseEntity<String> response, String[] keys, String...paths) throws JsonParseException, JsonMappingException, IOException {
 		Map<String, Object> m = objectMapper.readValue(response.getBody(), Map.class);
 		Map<String, Object> dest = m;
 		for(String seg : paths) {
@@ -223,4 +224,16 @@ public abstract class KatharsisBase extends Tbase {
 		}
 		assertThat(dest.keySet(), contains(keys));
 	}
+	
+	public void verifyAnyKeys(ResponseEntity<String> response, String[] keys, String...paths) throws JsonParseException, JsonMappingException, IOException {
+		Map<String, Object> m = objectMapper.readValue(response.getBody(), Map.class);
+		Map<String, Object> dest = m;
+		for(String seg : paths) {
+			dest = (Map<String, Object>) dest.get(seg);
+		}
+		for(String k: keys) {
+			assertTrue("should contains key: " + k, dest.containsKey(k));
+		}
+	}
+
 }

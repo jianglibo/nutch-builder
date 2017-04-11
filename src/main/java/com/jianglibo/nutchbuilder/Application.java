@@ -31,6 +31,7 @@ import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.jianglibo.nutchbuilder.config.KatharsisModuleConfig;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
+import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 
 import io.katharsis.client.KatharsisClient;
 import io.katharsis.client.http.apache.HttpClientAdapter;
@@ -86,6 +87,7 @@ public class Application {
 		});
     	// load resource
     	kc.getRepositoryForType(SiteDto.class);
+    	kc.getRepositoryForType(UserDto.class);
     	return kc;
     }
 	

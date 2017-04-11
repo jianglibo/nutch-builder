@@ -3,6 +3,7 @@ package com.jianglibo.nutchbuilder.repository;
 import javax.transaction.Transactional;
 
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.method.P;
 //import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 //import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,10 +25,12 @@ public interface BootUserRepository extends RepositoryBase<BootUser>{
     
     @Override
     //cannot delete yourself.
-    @PreAuthorize("hasRole('ADMINISTRATOR') and (#entity.id != principal.id)")
-    public void delete(BootUser entity);
-
+    @PreAuthorize("hasRole('ADMINISTRATOR') and (#e.id != principal.id)")
+    public void delete(@P("e") BootUser entity);
+    
     @Override
-    public BootUser findOne(Long personId);
+    //cannot delete yourself.
+    @PreAuthorize("hasRole('ADMINISTRATOR') and (#id != principal.id)")
+    public void delete(@P("id") Long id);
 
 }

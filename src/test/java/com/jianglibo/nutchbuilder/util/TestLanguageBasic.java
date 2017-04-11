@@ -44,6 +44,16 @@ public class TestLanguageBasic {
 
 	}
 	
+	@Test
+	public void tLong() {
+		Long l1 = 1L;
+		Long l2 = 1L;
+		if (l1 != l2) {
+			System.out.println("hahaha");
+		}
+		assertTrue(l1 == l2);
+	}
+	
 	
 	@Test
 	public void tLocal() {
