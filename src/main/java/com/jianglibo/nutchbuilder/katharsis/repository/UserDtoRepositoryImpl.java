@@ -1,19 +1,21 @@
 package com.jianglibo.nutchbuilder.katharsis.repository;
 
+import java.util.stream.Collectors;
+
 import javax.validation.groups.Default;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.jianglibo.nutchbuilder.config.userdetail.BootUserDetailManager;
 import com.jianglibo.nutchbuilder.domain.BootUser;
+import com.jianglibo.nutchbuilder.facade.BootUserFacadeRepository;
+import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto.OnCreateGroup;
 import com.jianglibo.nutchbuilder.katharsis.repository.UserDtoRepository.UserDtoList;
-import com.jianglibo.nutchbuilder.repository.BootUserRepository;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 @Component
@@ -25,32 +27,47 @@ public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoLis
     private PasswordEncoder passwordEncoder;
     
     @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
-	public UserDtoRepositoryImpl(BootUserRepository bootUserRepository, BootUserDetailManager bootUserDetailManager) {
+	public UserDtoRepositoryImpl(BootUserFacadeRepository bootUserRepository, BootUserDetailManager bootUserDetailManager) {
 		super(UserDto.class, UserDtoList.class, BootUser.class, bootUserRepository);
 		this.bootUserDetailManager = bootUserDetailManager;
 	}
+    
+    @Override
+    public <S extends UserDto> S create(S resource) {
+    	return super.create(resource);
+    }
+    
+    @SuppressWarnings("unchecked")
+	@Override
+    @PreAuthorize("hasRole('KKKKKKK')")
+    public UserDto save(UserDto dto) {
+    	return super.save(dto);
+    }
+    
+    @Override
+    public UserDto convertToDto(BootUser entity) {
+    	UserDto user = super.convertToDto(entity);
+    	user.setRoles(entity.getRoles().stream().map(r -> new RoleDto().fromEntity(r)).collect(Collectors.toList()));
+    	return user;
+    }
 	
 	@Override
-	@PreAuthorize("")
-	public <S extends UserDto> S createNew(S dto) {
+	public UserDto createNew(UserDto dto) {
 		validate(dto, OnCreateGroup.class, Default.class);
 		BootUserPrincipal bu = new BootUserPrincipal(dto);
-		return (S) dto.fromEntity(bootUserDetailManager.createUserAndReturn(bu));
+		return dto.fromEntity(bootUserDetailManager.createUserAndReturn(bu));
 	}
 	
 	@Override
-	public <S extends UserDto> S modify(S dto) {
+	public UserDto modify(UserDto dto) {
 		if (dto.isUpdatePassword()) {
 			validate(dto, OnCreateGroup.class, Default.class);
-			return (S) updatePassword(dto);
+			return updatePassword(dto);
 		} else {
 			validate(dto);
 			BootUser entity = getRepository().findOne(dto.getId());
 			entity = dto.patch(entity);
-			return (S) dto.fromEntity(getRepository().save(entity));
+			return dto.fromEntity(getRepository().save(entity));
 		}
 	}
 

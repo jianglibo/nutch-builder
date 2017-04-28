@@ -2,26 +2,22 @@ package com.jianglibo.nutchbuilder.katharsis.repository;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.jianglibo.nutchbuilder.domain.CrawlCat;
+import com.jianglibo.nutchbuilder.facade.CrawlCatFacadeRepository;
 import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
-import com.jianglibo.nutchbuilder.repository.CrawlCatRepository;
 import com.jianglibo.nutchbuilder.katharsis.repository.CrawlCatDtoRepository.CrawlCatDtoList;
 
 
 @Component
 public class CrawlCatDtoRepositoryImpl  extends DtoRepositoryBase<CrawlCatDto, CrawlCatDtoList, CrawlCat> implements CrawlCatDtoRepository {
 	
-	private final CrawlCatRepository repository;
+	private final CrawlCatFacadeRepository repository;
 	
 	
 	@Autowired
-	private ApplicationContext applicationContext;
-
-	@Autowired
-	public CrawlCatDtoRepositoryImpl(CrawlCatRepository repository) {
+	public CrawlCatDtoRepositoryImpl(CrawlCatFacadeRepository repository) {
 		super(CrawlCatDto.class, CrawlCatDtoList.class, CrawlCat.class, repository);
 		this.repository = repository;
 	}

@@ -19,9 +19,15 @@ public class SimplePageable implements Pageable {
 	private final int offset;
 	
 	public SimplePageable(QuerySpec querySpec) {
-		this.perPage = querySpec.getLimit().intValue();
-		this.offset = (int)querySpec.getOffset();
-		this.curPage = (int) Math.ceil(querySpec.getOffset() / querySpec.getLimit());
+		if (querySpec.getLimit() == null) {
+			this.perPage = 10;
+			this.offset = (int)querySpec.getOffset();
+			this.curPage = 0;
+		} else {
+			this.perPage = querySpec.getLimit().intValue();
+			this.offset = (int)querySpec.getOffset();
+			this.curPage = (int) Math.ceil(querySpec.getOffset() / querySpec.getLimit());
+		}
 		List<Order> orders = querySpec.getSort().stream().map(sc -> {
 			return new Order(sc.getDirection() == Direction.ASC ? Sort.Direction.ASC : Sort.Direction.DESC, sc.getAttributePath().get(0));
 		}).collect(Collectors.toList());

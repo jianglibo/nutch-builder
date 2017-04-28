@@ -27,7 +27,7 @@ public class TestBean extends Tbase{
     
     @Test
     public void tequal() {
-        assertThat(objectMapper == om2, is(false));
+        assertThat(objectMapper == om2, is(true));
         assertThat(om2 == om3, is(true));
     }
 

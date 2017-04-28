@@ -1,68 +1,24 @@
 {
     "data": [
         {
-            "id": "1",
+            "id": "131072",
             "type": "crawlFres",
             "attributes": {
-                "createdAt": 1491638907547,
+                "createdAt": 1493341758030,
                 "regex": "xxx",
                 "seconds": 3000000
             },
             "relationships": {
                 "site": {
-                    "data": {
-                        "id": "884736",
-                        "type": "sites"
-                    },
+                    "data": null,
                     "links": {
-                        "self": "http://localhost:8080/jsonapi/crawlFres/1/relationships/site",
-                        "related": "http://localhost:8080/jsonapi/crawlFres/1/site"
+                        "self": "http://localhost:8080/jsonapi/crawlFres/131072/relationships/site",
+                        "related": "http://localhost:8080/jsonapi/crawlFres/131072/site"
                     }
                 }
             },
             "links": {
-                "self": "http://localhost:8080/jsonapi/crawlFres/1"
-            }
-        }
-    ],
-    "included": [
-        {
-            "id": "950272",
-            "type": "crawlCats",
-            "attributes": {
-                "projectRoot": "rj",
-                "createdAt": 1491638907529,
-                "name": "acc",
-                "description": "dd"
-            },
-            "links": {
-                "self": "http://localhost:8080/jsonapi/crawlCats/950272"
-            }
-        },
-        {
-            "id": "884736",
-            "type": "sites",
-            "attributes": {
-                "homeUrl": "http://a.b.c",
-                "cburl": null,
-                "createdAt": 1491638907534,
-                "cburlVerified": false,
-                "cbsecret": null
-            },
-            "relationships": {
-                "crawlCat": {
-                    "data": {
-                        "id": "950272",
-                        "type": "crawlCats"
-                    },
-                    "links": {
-                        "self": "http://localhost:8080/jsonapi/sites/884736/relationships/crawlCat",
-                        "related": "http://localhost:8080/jsonapi/sites/884736/crawlCat"
-                    }
-                }
-            },
-            "links": {
-                "self": "http://localhost:8080/jsonapi/sites/884736"
+                "self": "http://localhost:8080/jsonapi/crawlFres/131072"
             }
         }
     ],

@@ -13,9 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -74,15 +72,15 @@ public abstract class Tbase extends M3958TsBase {
         return objectMapper;
     }
     
-	@TestConfiguration
-	static class Config {
-		// does't work
-		@Bean
-		public TestRestTemplate testTemplate() {
-			return new TestRestTemplate();
-		}
-	}
-
+//	@TestConfiguration
+//	static class Config {
+//		// does't work
+//		@Bean
+//		public TestRestTemplate testTemplate() {
+//			return new TestRestTemplate();
+//		}
+//	}
+//
     @Before
     public void before() {
         mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
@@ -102,6 +100,14 @@ public abstract class Tbase extends M3958TsBase {
 
     public Pageable createApageable() {
         return createApageable(10);
+    }
+    
+    protected BootUser loginAsAdmin() {
+    	BootUser bu = createBootUserPrincipal("admin",null,RoleNames.ROLE_ADMINISTRATOR);
+        BootUserPrincipal pv = new BootUserPrincipal(bu);
+        BootUserAuthentication saut = new BootUserAuthentication(pv);
+        SecurityUtil.doLogin(saut);
+        return bu;
     }
     
     protected void loginAs(String name, String...rns) {

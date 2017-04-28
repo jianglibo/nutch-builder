@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.config.StatelessCSRFFilter;
+import com.jianglibo.nutchbuilder.domain.BootUser;
+import com.jianglibo.nutchbuilder.domain.CrawlCat;
+import com.jianglibo.nutchbuilder.domain.Site;
+import com.jianglibo.nutchbuilder.repository.CrawlCatRepository;
+import com.jianglibo.nutchbuilder.repository.SiteRepository;
 
 import io.katharsis.client.KatharsisClient;
 import io.katharsis.core.internal.boot.KatharsisBoot;
@@ -40,6 +44,13 @@ public abstract class KatharsisBase extends Tbase {
 	protected KatharsisBoot kboot;
 	
 	@Autowired
+	protected SiteRepository siteRepository;
+	
+	@Autowired
+	protected CrawlCatRepository ccrepository;
+
+	
+	@Autowired
 	protected KatharsisClient katharsisClient;
 	
 	@Value("${katharsis.domainName}")
@@ -50,6 +61,42 @@ public abstract class KatharsisBase extends Tbase {
 
 	@Value("${katharsis.default-page-limit}")
 	private String pageSize;
+	
+	public void deleteAllSitesAndCrawlCats() {
+		loginAsAdmin();
+		List<Site> sites = siteRepository.findAll();
+		siteRepository.delete(sites);
+		List<CrawlCat> ccc = ccrepository.findAll();
+		ccrepository.delete(ccc);
+		logout();
+	}
+	
+	public Site createSite() {
+		BootUser bu = loginAsAdmin();
+		CrawlCat crawlCat = new CrawlCat();
+		crawlCat.setName("acc");
+		crawlCat.setProjectRoot("rj");
+		crawlCat.setDescription("dd");
+		crawlCat = ccrepository.save(crawlCat);
+		Site site = new Site();
+		site.setHomeUrl("http://a.b.c");
+		site.setCrawlCat(crawlCat);
+		site.setCreator(bu);
+		site = siteRepository.save(site);
+		logout();
+		return site;
+	}
+	
+	public Site createSite(CrawlCat crawlCat) {
+		BootUser bu = loginAsAdmin();
+		Site site = new Site();
+		site.setHomeUrl("http://a.b.c");
+		site.setCrawlCat(crawlCat);
+		site.setCreator(bu);
+		site = siteRepository.save(site);
+		logout();
+		return site;
+	}
 	
 	public ResponseEntity<String> getBody(String jwtToken, String url) throws IOException {
 		HttpHeaders hds = getAuthorizationHaders(jwtToken);
@@ -155,15 +202,26 @@ public abstract class KatharsisBase extends Tbase {
 	}
 	
 	protected Document replaceRelationshipId(String origin,String key, String value, String...paths) throws JsonParseException, JsonMappingException, IOException {
+		return objectMapper.readValue(replaceRelationshipIdReturnString(origin, key, value, paths), Document.class);
+	}
+	
+	protected Document replaceRelationshipId(String origin,String relationName, Long id) throws JsonParseException, JsonMappingException, IOException {
+		return objectMapper.readValue(replaceRelationshipIdReturnString(origin, relationName, id), Document.class);
+	}
+	
+	protected String replaceRelationshipIdReturnString(String origin,String relationName, Long id) throws JsonParseException, JsonMappingException, IOException {
 		Map<String, Object> m = objectMapper.readValue(origin, Map.class);
 		
 		Map<String, Object> dest = m;
+		String[] paths = new String[]{"data", "relationships", relationName, "data"};
 		for(String seg : paths) {
 			dest = (Map<String, Object>) dest.get(seg);
 		}
-		dest.put(key, value);
-		return objectMapper.readValue(objectMapper.writeValueAsString(m), Document.class);
+		dest.put("id", id);
+		return objectMapper.writeValueAsString(m);
 	}
+
+
 	
 	protected String replaceRelationshipIdReturnString(String origin,String key, String value, String...paths) throws JsonParseException, JsonMappingException, IOException {
 		Map<String, Object> m = objectMapper.readValue(origin, Map.class);
@@ -173,6 +231,35 @@ public abstract class KatharsisBase extends Tbase {
 			dest = (Map<String, Object>) dest.get(seg);
 		}
 		dest.put(key, value);
+		return objectMapper.writeValueAsString(m);
+	}
+	
+	protected Document replaceRelationshipLinkId(String origin,String relationName, String myType, Long value) throws JsonParseException, JsonMappingException, IOException {
+		return objectMapper.readValue(replaceRelationshipLinkIdReturnString(origin, relationName, myType, value), Document.class);
+	}
+
+	
+	protected String replaceRelationshipLinkIdReturnString(String origin,String relationName, String myType, Long value) throws JsonParseException, JsonMappingException, IOException {
+		Map<String, Object> m = objectMapper.readValue(origin, Map.class);
+		
+		Map<String, Object> dest = m;
+		String[] paths = new String[]{"data", "relationships", relationName, "links"};
+		for(String seg : paths) {
+			dest = (Map<String, Object>) dest.get(seg);
+		}
+		if (dest.containsKey("self")) {
+			String url = (String) dest.get("self");
+			url = url.replaceAll("/" + myType + "/\\d+", "/" + myType + "/" + value);
+			dest.put("self", url);
+		}
+		
+		if (dest.containsKey("related")) {
+			String url = (String) dest.get("related");
+			url = url.replaceAll("/" + myType + "/\\d+", "/" + myType + "/" + value);
+			dest.put("related", url);
+		}
+
+		
 		return objectMapper.writeValueAsString(m);
 	}
 	

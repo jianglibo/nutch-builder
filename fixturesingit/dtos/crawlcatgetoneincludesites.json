@@ -1,0 +1,73 @@
+{
+    "data": {
+        "id": "1310720",
+        "type": "crawlCats",
+        "attributes": {
+            "projectRoot": "abc/ddd",
+            "createdAt": 1493279773586,
+            "name": "crawlcat1",
+            "description": "hello"
+        },
+        "relationships": {
+            "sites": {
+                "data": [
+                    {
+                        "id": "1179648",
+                        "type": "sites"
+                    }
+                ],
+                "links": {
+                    "self": "http://localhost:8080/jsonapi/crawlCats/1310720/relationships/sites",
+                    "related": "http://localhost:8080/jsonapi/crawlCats/1310720/sites"
+                }
+            }
+        },
+        "links": {
+            "self": "http://localhost:8080/jsonapi/crawlCats/1310720"
+        }
+    },
+    "included": [
+        {
+            "id": "1179648",
+            "type": "sites",
+            "attributes": {
+                "homeUrl": "http://a.b.c",
+                "cburl": null,
+                "createdAt": 1493279773660,
+                "cburlVerified": false,
+                "cbsecret": null
+            },
+            "relationships": {
+                "crawlCat": {
+                    "data": null,
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/sites/1179648/relationships/crawlCat",
+                        "related": "http://localhost:8080/jsonapi/sites/1179648/crawlCat"
+                    }
+                },
+                "creator": {
+                    "data": null,
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/sites/1179648/relationships/creator",
+                        "related": "http://localhost:8080/jsonapi/sites/1179648/creator"
+                    }
+                },
+                "urlfilters": {
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/sites/1179648/relationships/urlfilters",
+                        "related": "http://localhost:8080/jsonapi/sites/1179648/urlfilters"
+                    }
+                },
+                "crawlFrenquencies": {
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/sites/1179648/relationships/crawlFrenquencies",
+                        "related": "http://localhost:8080/jsonapi/sites/1179648/crawlFrenquencies"
+                    }
+                }
+            },
+            "links": {
+                "self": "http://localhost:8080/jsonapi/sites/1179648"
+            }
+        }
+    ]
+}

@@ -90,7 +90,6 @@ public class UserDto extends DtoBase<UserDto, BootUser> {
     	setMobileVerified(bu.isMobileVerified());
     	setName(bu.getName());
     	setPassword(null);
-    	setRoles((List<RoleDto>) Dto.convertToDto(RoleDto.class, bu.getRoles()));
     	return this;
     }
 

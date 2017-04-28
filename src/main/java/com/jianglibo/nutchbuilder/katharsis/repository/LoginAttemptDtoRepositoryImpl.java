@@ -16,25 +16,25 @@ import com.jianglibo.nutchbuilder.config.HttpRequestHolder;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.LoginAttempt;
 import com.jianglibo.nutchbuilder.domain.Site;
+import com.jianglibo.nutchbuilder.facade.BootUserFacadeRepository;
+import com.jianglibo.nutchbuilder.facade.LoginAttemptFacadeRepository;
 import com.jianglibo.nutchbuilder.jwt.JwtUtil;
 import com.jianglibo.nutchbuilder.katharsis.dto.LoginAttemptDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.LoginAttemptDtoRepository.LoginAttemptDtoList;
-import com.jianglibo.nutchbuilder.repository.BootUserRepository;
-import com.jianglibo.nutchbuilder.repository.LoginAttemptRepository;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 @Component
 @Transactional
 public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttemptDto, LoginAttemptDtoList, LoginAttempt> implements LoginAttemptDtoRepository {
 	
-	private final LoginAttemptRepository repository;
+	private final LoginAttemptFacadeRepository repository;
 	
 	@Autowired
 	private ApplicationContext applicationContext;
 	
 	@Autowired
-	private BootUserRepository userRepository;
+	private BootUserFacadeRepository userRepository;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -44,19 +44,19 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 	}
 
 	@Autowired
-	public LoginAttemptDtoRepositoryImpl(LoginAttemptRepository repository) {
+	public LoginAttemptDtoRepositoryImpl(LoginAttemptFacadeRepository repository) {
 		super(LoginAttemptDto.class, LoginAttemptDtoList.class, LoginAttempt.class, repository);
 		this.repository = repository;
 	}
 	
 	@Override
-	public <S extends LoginAttemptDto> S createNew(S dto) {
+	public LoginAttemptDto createNew(LoginAttemptDto dto) {
 		HttpRequestHolder request = applicationContext.getBean(HttpRequestHolder.class);
-		return (S) invoke(dto);
+		return invoke(dto);
 	}
 	
 	@Override
-	public <S extends LoginAttemptDto> S modify(S dto) {
+	public LoginAttemptDto modify(LoginAttemptDto dto) {
 		throw new UnsupportedOperationException();
 	}
 	
@@ -84,7 +84,7 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 				dto.setSuccess(true);
 				dto.setPassword("");
 				dto.setJwtToken(jwtUtil.issuePrincipalToken(user));
-				BootUser bu = userRepository.getOne(user.getId());
+				BootUser bu = userRepository.findOne(user.getId());
 				List<Site> sites = bu.getSites();
 				dto.setUser(new UserDto().fromEntity(bu));
 				return dto;

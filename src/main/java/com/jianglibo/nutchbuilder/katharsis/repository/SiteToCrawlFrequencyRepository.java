@@ -8,9 +8,9 @@ import com.jianglibo.nutchbuilder.katharsis.dto.UrlFilterDto;
 import io.katharsis.repository.RelationshipRepositoryBase;
 
 @Component
-public class SiteDtoToCrawlFrequencyRepository extends RelationshipRepositoryBase<SiteDto, Long, UrlFilterDto, Long> {
+public class SiteToCrawlFrequencyRepository extends RelationshipRepositoryBase<SiteDto, Long, UrlFilterDto, Long> {
 
-	protected SiteDtoToCrawlFrequencyRepository() {
+	protected SiteToCrawlFrequencyRepository() {
 		super(SiteDto.class, UrlFilterDto.class);
 	}
 }

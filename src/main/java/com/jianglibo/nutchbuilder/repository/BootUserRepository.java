@@ -26,10 +26,12 @@ public interface BootUserRepository extends RepositoryBase<BootUser> {
     @Override
     //cannot delete yourself.
     @PreAuthorize("hasRole('ADMINISTRATOR') and (#e.id != principal.id)")
+    @Transactional
     public void delete(@P("e") BootUser entity);
     
     @Override
     //cannot delete yourself.
     @PreAuthorize("hasRole('ADMINISTRATOR') and (#id != principal.id)")
+    @Transactional
     public void delete(@P("id") Long id);
 }

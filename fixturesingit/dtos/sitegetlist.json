@@ -1,44 +1,45 @@
 {
     "data": [
         {
-            "id": "622592",
+            "id": "786432",
             "type": "sites",
             "attributes": {
                 "homeUrl": "http://a.b.c",
                 "cburl": null,
-                "createdAt": 1491637004993,
+                "createdAt": 1493262086562,
                 "cburlVerified": false,
                 "cbsecret": null
             },
             "relationships": {
                 "crawlCat": {
-                    "data": {
-                        "id": "688128",
-                        "type": "crawlCats"
-                    },
+                    "data": null,
                     "links": {
-                        "self": "http://localhost:8080/jsonapi/sites/622592/relationships/crawlCat",
-                        "related": "http://localhost:8080/jsonapi/sites/622592/crawlCat"
+                        "self": "http://localhost:8080/jsonapi/sites/786432/relationships/crawlCat",
+                        "related": "http://localhost:8080/jsonapi/sites/786432/crawlCat"
+                    }
+                },
+                "creator": {
+                    "data": null,
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/sites/786432/relationships/creator",
+                        "related": "http://localhost:8080/jsonapi/sites/786432/creator"
+                    }
+                },
+                "urlfilters": {
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/sites/786432/relationships/urlfilters",
+                        "related": "http://localhost:8080/jsonapi/sites/786432/urlfilters"
+                    }
+                },
+                "crawlFrenquencies": {
+                    "links": {
+                        "self": "http://localhost:8080/jsonapi/sites/786432/relationships/crawlFrenquencies",
+                        "related": "http://localhost:8080/jsonapi/sites/786432/crawlFrenquencies"
                     }
                 }
             },
             "links": {
-                "self": "http://localhost:8080/jsonapi/sites/622592"
-            }
-        }
-    ],
-    "included": [
-        {
-            "id": "688128",
-            "type": "crawlCats",
-            "attributes": {
-                "projectRoot": "rj",
-                "createdAt": 1491637004982,
-                "name": "acc",
-                "description": "dd"
-            },
-            "links": {
-                "self": "http://localhost:8080/jsonapi/crawlCats/688128"
+                "self": "http://localhost:8080/jsonapi/sites/786432"
             }
         }
     ],

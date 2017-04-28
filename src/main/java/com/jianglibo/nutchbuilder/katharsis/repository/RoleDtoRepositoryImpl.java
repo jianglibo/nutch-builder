@@ -6,21 +6,20 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.jianglibo.nutchbuilder.domain.Role;
+import com.jianglibo.nutchbuilder.facade.RoleFacadeRepository;
 import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.RoleDtoRepository.RoleDtoList;
-import com.jianglibo.nutchbuilder.repository.RoleRepository;
 
 @Component
 public class RoleDtoRepositoryImpl  extends DtoRepositoryBase<RoleDto, RoleDtoList, Role> implements RoleDtoRepository {
 	
-	private final RoleRepository repository;
-	
+	private final RoleFacadeRepository repository;
 	
 	@Autowired
 	private ApplicationContext applicationContext;
 
 	@Autowired
-	public RoleDtoRepositoryImpl(RoleRepository repository) {
+	public RoleDtoRepositoryImpl(RoleFacadeRepository repository) {
 		super(RoleDto.class, RoleDtoList.class, Role.class, repository);
 		this.repository = repository;
 	}

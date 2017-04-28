@@ -10,4 +10,5 @@ public interface SiteRepository extends RepositoryBase<Site> {
 //	@PreAuthorize("hasRole('ADMINISTRATOR') or (#entity.id == principal.id)")
 	@PreAuthorize("isFullyAuthenticated()")
 	<S extends Site> S save(@P("entity")S entity);
+	
 }

@@ -29,7 +29,7 @@ public class TestUserApi  extends KatharsisBase {
 	
 	private List<UserDto> originUsers;
 	
-	private String user1 = "USER_T1";
+	private static final String USER_T1 = "USER_T1";
 	
 	private String jwtToken;
 	
@@ -43,7 +43,7 @@ public class TestUserApi  extends KatharsisBase {
 		String body = response.getBody();
 		printme(body);
 		originUsers = getList(body, UserDto.class);
-		Optional<UserDto> uo = originUsers.stream().filter(u -> user1.equals(u.getName())).findAny(); 
+		Optional<UserDto> uo = originUsers.stream().filter(u -> USER_T1.equals(u.getName())).findAny(); 
 		if (uo.isPresent()) {
 			deleteByExchange(jwtToken, getItemUrl(uo.get().getId()));
 			originUsers.remove(uo.get());
@@ -59,20 +59,23 @@ public class TestUserApi  extends KatharsisBase {
 	
 	@Test
 	public void tAddOne() throws JsonParseException, JsonMappingException, IOException {
-		long c= userRepository.count();
-		BootUser admin1 = userRepository.findByName("admin1");
+		BootUser admin1 = userRepository.findByName(USER_T1);
 		if (admin1 != null) {
+			loginAsAdmin();
 			userRepository.delete(admin1);
+			logout();
 		}
+		long c= userRepository.count();
 		ResponseEntity<String> response = postItem("userwithroles", jwtToken);
 		printme(response.getBody());
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
 		assertThat(userRepository.count() - 1, equalTo(c));
 		UserDto newUser = getOne(response.getBody(), UserDto.class);
-		assertThat(newUser.getName(), equalTo(user1));
+		assertThat(newUser.getName(), equalTo(USER_T1));
 		assertTrue("password should be empty.", newUser.getPassword() == null || newUser.getPassword().isEmpty());
 		assertThat("id should great than 0.", newUser.getId(), greaterThan(0L));
-		deleteByExchange(jwtToken, getItemUrl(newUser.getId()));
+		response = deleteByExchange(jwtToken, getItemUrl(newUser.getId()));
+		printme(response.getBody());
 		assertThat(userRepository.count(), equalTo(c));
 	}
 	

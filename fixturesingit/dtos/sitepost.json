@@ -1,23 +1,23 @@
 {
-    "data": 
-        {
-            "type": "sites",
-            "attributes": {
-                "crawlCat": {
-                    "id": 2293760,
-                    "createdAt": 1491720771669,
-                    "name": "acc",
-                    "projectRoot": "rj",
-                    "description": "dd",
-                    "sites": []
-                },
-                "creator": {
-                    "id": 28378272
-                },
-                "homeUrl": "http://a.b.c1",
-                "cburl": null,
-                "cburlVerified": false,
-                "cbsecret": null
+    "data": {
+        "type": "sites",
+        "attributes": {
+            "homeUrl": "http://a.b.c",
+            "cburl": null,
+            "cburlVerified": false,
+            "cbsecret": null
+        },
+        "relationships": {
+            "crawlCat": {
+                "data": {
+                    "id": 5566
+                }
+            },
+            "creator": {
+                "data": {
+                    "id": 5566
+                }
             }
         }
+    }
 }

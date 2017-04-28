@@ -3,6 +3,7 @@ package com.jianglibo.nutchbuilder.katharsis.repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -14,9 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jianglibo.nutchbuilder.domain.BaseEntity;
+import com.jianglibo.nutchbuilder.facade.FacadeRepositoryBase;
 import com.jianglibo.nutchbuilder.katharsis.dto.Dto;
 import com.jianglibo.nutchbuilder.katharsis.exception.AppException;
-import com.jianglibo.nutchbuilder.repository.RepositoryBase;
 
 import io.katharsis.queryspec.QuerySpec;
 import io.katharsis.repository.ResourceRepositoryBase;
@@ -27,7 +28,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	
 	private static Logger log = LoggerFactory.getLogger(DtoRepositoryBase.class);
 
-	private final RepositoryBase<E> repository;
+	private final FacadeRepositoryBase<E> repository;
 
 	private final Class<L> resourceListClass;
 	
@@ -42,7 +43,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		}
 	}
 
-	protected DtoRepositoryBase(Class<T> resourceClass, Class<L> resourceListClass,Class<E> entityClass, RepositoryBase<E> repository) {
+	protected DtoRepositoryBase(Class<T> resourceClass, Class<L> resourceListClass,Class<E> entityClass, FacadeRepositoryBase<E> repository) {
 		super(resourceClass);
 		this.repository = repository;
 		this.resourceListClass = resourceListClass;
@@ -60,27 +61,25 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	@Override
 	public <S extends T> S save(S dto) {
 		if (dto.getId() == null || dto.getId() == 0) {
-			return createNew(dto);
+			return (S) createNew(dto);
 		} else {
-			return modify(dto);
+			return (S) modify(dto);
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <S extends T> S modify(S dto) {
+	public T modify(T dto) {
 		validate(dto);
 		E entity = repository.findOne(dto.getId());
 		entity = dto.patch(entity);
-		return (S) dto.fromEntity(saveToJpaRepo(dto, entity));
+		return dto.fromEntity(saveToJpaRepo(dto, entity));
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <S extends T> S createNew(S dto) {
+	public T createNew(T dto) {
 		validate(dto);
 		try {
 			E entity = entityClass.newInstance();
 			entity = dto.patch(entity);
-			return (S) dto.fromEntity(saveToJpaRepo(dto, entity));
+			return dto.fromEntity(saveToJpaRepo(dto, entity));
 		} catch (InstantiationException | IllegalAccessException e) {
 			log.error("instantiationException {}", entityClass.getName());
 			throw new AppException().addError(1000, entityClass.getName(), "cannot instantiation " + entityClass.getName());
@@ -90,10 +89,17 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	public E saveToJpaRepo(T dto, E entity) {
 		return repository.save(entity);
 	}
-
+	
 	@Override
 	public T findOne(Long id, QuerySpec querySpec) {
 		E entity = repository.findOne(id);
+		return convertToDto(entity);
+	}
+	
+	public T convertToDto(E entity) {
+		if (entity == null) {
+			return null;
+		}
 		T t;
 		try {
 			t = getResourceClass().newInstance();
@@ -113,7 +119,8 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		L udl;
 		try {
 			udl = resourceListClass.newInstance();
-			udl.addAll(Dto.convertToDto(getResourceClass(), bus));
+			udl.addAll(bus.stream().map(entity -> convertToDto(entity)).collect(Collectors.toList()));
+//			udl.addAll(Dto.convertToDto(getResourceClass(), bus));
 			return udl;
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
@@ -125,7 +132,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	public L findAll(QuerySpec querySpec) {
 		Long count = repository.count(querySpec);
 		List<E> entities = repository.findAll(querySpec);
-		List<T> list = Dto.convertToDto(getResourceClass(), entities);
+		List<T> list = entities.stream().map(entity -> convertToDto(entity)).collect(Collectors.toList());
 		
 		L listOb;
 		try {
@@ -140,7 +147,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		return null;
 	}
 	
-	public RepositoryBase<E> getRepository() {
+	public FacadeRepositoryBase<E> getRepository() {
 		return repository;
 	}
 	

@@ -9,7 +9,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
-import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.Site;
 
 import io.katharsis.resource.annotations.JsonApiRelation;
@@ -37,9 +36,11 @@ public class SiteDto extends DtoBase<SiteDto, Site> {
 	private List<CrawlFrequencyDto> crawlFrenquencies = new ArrayList<>();
 	
 	@NotNull
+	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.EAGER, opposite="sites")
 	private CrawlCatDto crawlCat;
 	
 	@NotNull
+	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.EAGER, opposite="sites")
 	private UserDto creator;
 	
 	@Override
@@ -49,7 +50,6 @@ public class SiteDto extends DtoBase<SiteDto, Site> {
 		setCreatedAt(entity.getCreatedAt());
 		setHomeUrl(entity.getHomeUrl());
 		setId(entity.getId());
-//		setCrawlCat(new CrawlCatDto().fromEntity(entity.getCrawlCat()));
 		return this;
 	}
 

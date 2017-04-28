@@ -13,7 +13,7 @@ import com.jianglibo.nutchbuilder.katharsis.dto.SimplePageable;
 import io.katharsis.queryspec.FilterSpec;
 import io.katharsis.queryspec.QuerySpec;
 
-public abstract class DistinctSimpleJpaRepository<T> extends SimpleJpaRepository<T, Long>{
+public abstract class DistinctSimpleJpaRepository<T> extends SimpleJpaRepository<T, Long> implements RepositoryBase<T>{
 	
 	public DistinctSimpleJpaRepository(Class<T> domainClass, EntityManager em) {
 		super(domainClass, em);

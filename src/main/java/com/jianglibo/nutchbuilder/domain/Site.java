@@ -31,7 +31,7 @@ public class Site extends BaseEntity {
 	@ManyToOne(fetch=FetchType.EAGER)
 	private CrawlCat crawlCat;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@NotNull
 	private BootUser creator;
 	

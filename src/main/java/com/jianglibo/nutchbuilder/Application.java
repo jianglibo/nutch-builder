@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
@@ -30,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.jianglibo.nutchbuilder.config.KatharsisModuleConfig;
+import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 
@@ -47,6 +49,7 @@ import io.katharsis.spring.boot.v3.KatharsisConfigV3;
 @EnableScheduling
 @EnableAspectJAutoProxy
 @Import({ KatharsisConfigV3.class, KatharsisModuleConfig.class })
+@ComponentScan(basePackages={"com.jianglibo"})
 public class Application {
 
     public static void main(String[] args) {
@@ -88,6 +91,7 @@ public class Application {
     	// load resource
     	kc.getRepositoryForType(SiteDto.class);
     	kc.getRepositoryForType(UserDto.class);
+    	kc.getRepositoryForType(RoleDto.class);
     	return kc;
     }
 	

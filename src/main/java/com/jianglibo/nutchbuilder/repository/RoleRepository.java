@@ -7,4 +7,5 @@ import com.jianglibo.nutchbuilder.domain.Role;
 //@RepositoryRestResource(collectionResourceRel = "roles", path = "roles")
 public interface RoleRepository extends RepositoryBase<Role> {
     Role findByName(String rn);
+
 }
