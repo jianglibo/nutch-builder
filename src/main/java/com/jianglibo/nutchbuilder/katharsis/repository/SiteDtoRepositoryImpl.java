@@ -15,9 +15,7 @@ import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.SiteDtoRepository.SiteDtoList;
 
 @Component
-public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoList, Site> implements SiteDtoRepository {
-	
-	private final SiteFacadeRepository repository;
+public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoList, Site, SiteFacadeRepository> implements SiteDtoRepository {
 	
 	private final CrawlCatFacadeRepository ccrepository;
 	
@@ -29,7 +27,6 @@ public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoLi
 	@Autowired
 	public SiteDtoRepositoryImpl(SiteFacadeRepository repository, CrawlCatFacadeRepository ccrepository, BootUserFacadeRepository userRepository) {
 		super(SiteDto.class, SiteDtoList.class, Site.class, repository);
-		this.repository = repository;
 		this.ccrepository = ccrepository;
 		this.userRepository = userRepository;
 	}
@@ -38,7 +35,7 @@ public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoLi
 	public Site saveToJpaRepo(SiteDto dto, Site entity) {
 		entity.setCrawlCat(ccrepository.findOne(dto.getCrawlCat().getId()));
 		entity.setCreator(userRepository.findOne(dto.getCreator().getId()));
-		return repository.save(entity);
+		return getRepository().save(entity);
 	}
 	
 	@Override

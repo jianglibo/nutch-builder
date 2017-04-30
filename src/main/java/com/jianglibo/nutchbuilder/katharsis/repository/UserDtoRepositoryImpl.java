@@ -19,7 +19,7 @@ import com.jianglibo.nutchbuilder.katharsis.repository.UserDtoRepository.UserDto
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 @Component
-public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoList, BootUser> implements UserDtoRepository {
+public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoList, BootUser, BootUserFacadeRepository> implements UserDtoRepository {
 	
 	private final BootUserDetailManager bootUserDetailManager;
 	

@@ -14,6 +14,11 @@ import javax.validation.constraints.NotNull;
 import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 
+/**
+ * When the sites changed, regex-urlfilter.txt will changed. nutch should be rebuilded.
+ * @author Administrator
+ *
+ */
 @Entity
 @Table(name = "site")
 public class Site extends BaseEntity {
@@ -35,11 +40,17 @@ public class Site extends BaseEntity {
 	@NotNull
 	private BootUser creator;
 	
+	/**
+	 * we don't use urlfiters in nutch builder. but in callback procedure.
+	 */
 	@OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="site")
 	private Set<UrlFilter> urlfilters = new HashSet<>();
 	
 	@OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="site")
 	private Set<CrawlFrequency> crawlFrequencies = new HashSet<>();
+	
+	@OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="site")
+	private Set<SiteBuilder> siteBuilders = new HashSet<>();
 	
 	private String cburl;
 	
@@ -103,6 +114,14 @@ public class Site extends BaseEntity {
 		this.homeUrl = homeUrl;
 	}
 	
+	public Set<SiteBuilder> getSiteBuilders() {
+		return siteBuilders;
+	}
+
+	public void setSiteBuilders(Set<SiteBuilder> siteBuilders) {
+		this.siteBuilders = siteBuilders;
+	}
+
 	public SiteDto toDto() {
 		SiteDto sdto = new SiteDto();
 		sdto.setCbsecret(getCbsecret());

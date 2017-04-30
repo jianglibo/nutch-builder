@@ -26,7 +26,6 @@ public class TestClient extends KatharsisBase {
 		try {
 			List<RoleDto> tasks = taskRepo.findAll(new QuerySpec(RoleDto.class));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		List<RoleDto> tasks = taskRepo.findAll(new QuerySpec(RoleDto.class));

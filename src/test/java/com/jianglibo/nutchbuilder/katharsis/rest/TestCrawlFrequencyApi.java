@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -64,17 +63,6 @@ public class TestCrawlFrequencyApi  extends KatharsisBase {
 		printme(response.getBody());
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.OK.value()));
 	}
-	
-	@Test(expected=AuthenticationCredentialsNotFoundException.class)
-	public void tSecu() {
-		Site site = createSite();
-		CrawlFrequency fq = new CrawlFrequency();
-		fq.setRegex("xxx");
-		fq.setSeconds(3000000);
-		fq.setSite(site);
-		fq = fqrepository.save(fq);
-	}
-	
 
 	@Override
 	protected String getResourceName() {

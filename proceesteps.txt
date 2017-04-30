@@ -1,0 +1,7 @@
+## on web server
+* nutch project root
+* build jar
+
+## on cluster
+* download jar.
+* execute tasks.

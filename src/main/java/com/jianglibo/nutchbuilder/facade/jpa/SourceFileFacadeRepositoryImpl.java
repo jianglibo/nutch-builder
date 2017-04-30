@@ -11,7 +11,7 @@ import com.jianglibo.nutchbuilder.repository.SourceFileRepository;
  *
  */
 @Component
-public class SourceFileFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<SourceFile> implements SourceFileFacadeRepository{
+public class SourceFileFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<SourceFile, SourceFileRepository> implements SourceFileFacadeRepository{
 
 	public SourceFileFacadeRepositoryImpl(SourceFileRepository jpaRepo) {
 		super(jpaRepo);

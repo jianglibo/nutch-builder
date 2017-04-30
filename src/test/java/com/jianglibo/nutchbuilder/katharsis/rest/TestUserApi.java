@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -23,7 +22,6 @@ import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 import com.jianglibo.nutchbuilder.repository.BootUserRepository;
-import com.jianglibo.nutchbuilder.vo.RoleNames;
 
 public class TestUserApi  extends KatharsisBase {
 	
@@ -48,13 +46,6 @@ public class TestUserApi  extends KatharsisBase {
 			deleteByExchange(jwtToken, getItemUrl(uo.get().getId()));
 			originUsers.remove(uo.get());
 		}
-	}
-	
-	@Test(expected=AccessDeniedException.class)
-	public void deleteMyself() {
-		loginAs("kkk", RoleNames.ROLE_ADMINISTRATOR);
-		BootUser bu = userRepository.findByName("kkk");
-		userRepository.delete(bu.getId());
 	}
 	
 	@Test

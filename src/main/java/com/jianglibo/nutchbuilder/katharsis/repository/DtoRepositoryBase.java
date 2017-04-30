@@ -23,12 +23,12 @@ import io.katharsis.queryspec.QuerySpec;
 import io.katharsis.repository.ResourceRepositoryBase;
 import io.katharsis.resource.list.ResourceListBase;
 
-public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceListBase<T, DtoListMeta, DtoListLinks>, E extends BaseEntity>
+public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceListBase<T, DtoListMeta, DtoListLinks>, E extends BaseEntity, F extends FacadeRepositoryBase<E>>
 		extends ResourceRepositoryBase<T, Long> {
 	
 	private static Logger log = LoggerFactory.getLogger(DtoRepositoryBase.class);
 
-	private final FacadeRepositoryBase<E> repository;
+	private final F repository;
 
 	private final Class<L> resourceListClass;
 	
@@ -43,7 +43,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		}
 	}
 
-	protected DtoRepositoryBase(Class<T> resourceClass, Class<L> resourceListClass,Class<E> entityClass, FacadeRepositoryBase<E> repository) {
+	protected DtoRepositoryBase(Class<T> resourceClass, Class<L> resourceListClass,Class<E> entityClass, F repository) {
 		super(resourceClass);
 		this.repository = repository;
 		this.resourceListClass = resourceListClass;
@@ -147,7 +147,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		return null;
 	}
 	
-	public FacadeRepositoryBase<E> getRepository() {
+	public F getRepository() {
 		return repository;
 	}
 	

@@ -26,9 +26,7 @@ import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 @Component
 @Transactional
-public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttemptDto, LoginAttemptDtoList, LoginAttempt> implements LoginAttemptDtoRepository {
-	
-	private final LoginAttemptFacadeRepository repository;
+public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttemptDto, LoginAttemptDtoList, LoginAttempt, LoginAttemptFacadeRepository> implements LoginAttemptDtoRepository {
 	
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -46,7 +44,6 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 	@Autowired
 	public LoginAttemptDtoRepositoryImpl(LoginAttemptFacadeRepository repository) {
 		super(LoginAttemptDto.class, LoginAttemptDtoList.class, LoginAttempt.class, repository);
-		this.repository = repository;
 	}
 	
 	@Override
@@ -79,7 +76,7 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 				BootUserPrincipal user = (BootUserPrincipal) an.getPrincipal();
 				loginAttemp.setSuccess(true);
 				loginAttemp.setPassword("");
-				repository.save(loginAttemp);
+				getRepository().save(loginAttemp);
 				dto.setId(loginAttemp.getId());
 				dto.setSuccess(true);
 				dto.setPassword("");
@@ -89,7 +86,7 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 				dto.setUser(new UserDto().fromEntity(bu));
 				return dto;
 		} catch (AuthenticationException e) {
-				repository.save(loginAttemp);
+				getRepository().save(loginAttemp);
 				throw e;
 		}
 	}

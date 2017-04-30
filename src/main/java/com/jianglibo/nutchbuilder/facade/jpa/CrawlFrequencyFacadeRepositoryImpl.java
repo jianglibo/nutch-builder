@@ -11,11 +11,10 @@ import com.jianglibo.nutchbuilder.repository.CrawlFrequencyRepository;
  *
  */
 @Component
-public class CrawlFrequencyFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<CrawlFrequency> implements CrawlFrequencyFacadeRepository {
+public class CrawlFrequencyFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<CrawlFrequency, CrawlFrequencyRepository> implements CrawlFrequencyFacadeRepository {
 
 	public CrawlFrequencyFacadeRepositoryImpl(CrawlFrequencyRepository jpaRepo) {
 		super(jpaRepo);
-		// TODO Auto-generated constructor stub
 	}
 
 

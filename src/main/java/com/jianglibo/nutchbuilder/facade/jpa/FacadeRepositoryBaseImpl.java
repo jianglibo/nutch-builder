@@ -7,11 +7,11 @@ import com.jianglibo.nutchbuilder.repository.RepositoryBase;
 
 import io.katharsis.queryspec.QuerySpec;
 
-public abstract class FacadeRepositoryBaseImpl<T> implements FacadeRepositoryBase<T> {
+public abstract class FacadeRepositoryBaseImpl<T, R extends RepositoryBase<T>> implements FacadeRepositoryBase<T> {
 
-	private final RepositoryBase<T> jpaRepo;
+	private final R jpaRepo;
 	
-	public FacadeRepositoryBaseImpl(RepositoryBase<T> jpaRepo) {
+	public FacadeRepositoryBaseImpl(R jpaRepo) {
 		this.jpaRepo = jpaRepo;
 	}
 	
@@ -36,16 +36,11 @@ public abstract class FacadeRepositoryBaseImpl<T> implements FacadeRepositoryBas
 	}
 
 	@Override
-	public void deleteAll() {
-		jpaRepo.deleteAll();
-	}
-
-	@Override
 	public T findOne(Long id) {
 		return jpaRepo.findOne(id);
 	}
 	
-	RepositoryBase<T> getRepository() {
+	R getRepository() {
 		return jpaRepo;
 	}
 

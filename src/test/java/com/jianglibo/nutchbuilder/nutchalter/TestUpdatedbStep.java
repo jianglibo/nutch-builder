@@ -6,7 +6,6 @@ import static org.junit.Assert.assertThat;
 
 import java.nio.file.Files;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import com.jianglibo.nutchbuilder.crawl.CrawlProcesses.CrawlStepProcess;

@@ -13,16 +13,13 @@ import com.jianglibo.nutchbuilder.katharsis.repository.CrawlFrequencyDtoReposito
 
 
 @Component
-public class CrawlFrequencyDtoRepositoryImpl  extends DtoRepositoryBase<CrawlFrequencyDto, CrawlFrequencyDtoList, CrawlFrequency> implements CrawlFrequencyDtoRepository {
-	
-	private final CrawlFrequencyFacadeRepository repository;
+public class CrawlFrequencyDtoRepositoryImpl  extends DtoRepositoryBase<CrawlFrequencyDto, CrawlFrequencyDtoList, CrawlFrequency, CrawlFrequencyFacadeRepository> implements CrawlFrequencyDtoRepository {
 	
 	private final SiteFacadeRepository siteRepository;
 	
 	@Autowired
 	public CrawlFrequencyDtoRepositoryImpl(CrawlFrequencyFacadeRepository repository, SiteFacadeRepository siteRepository) {
 		super(CrawlFrequencyDto.class, CrawlFrequencyDtoList.class, CrawlFrequency.class, repository);
-		this.repository = repository;
 		this.siteRepository = siteRepository;
 	}
 	
@@ -30,6 +27,6 @@ public class CrawlFrequencyDtoRepositoryImpl  extends DtoRepositoryBase<CrawlFre
 	public CrawlFrequency saveToJpaRepo(CrawlFrequencyDto dto, CrawlFrequency entity) {
 		SiteDto sd = dto.getSite();
 		entity.setSite(siteRepository.findOne(sd.getId()));
-		return repository.save(entity);
+		return getRepository().save(entity);
 	}
 }

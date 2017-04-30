@@ -15,8 +15,6 @@ public class CrawlCat extends BaseEntity {
 	
 	private String name;
 	
-	private String projectRoot;
-	
 	private String description;
 	
 	public String getName() {
@@ -25,12 +23,7 @@ public class CrawlCat extends BaseEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getProjectRoot() {
-		return projectRoot;
-	}
-	public void setProjectRoot(String projectRoot) {
-		this.projectRoot = projectRoot;
-	}
+	
 	public String getDescription() {
 		return description;
 	}

@@ -1,5 +1,8 @@
 package com.jianglibo.nutchbuilder.batch.learning;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
+
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -14,7 +17,6 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.Assert;
 
 @Configuration
 public class TaskletForLearning {
@@ -35,7 +37,7 @@ public class TaskletForLearning {
 				log.info("Step {} got exitCode with: {}", stepExecution.getStepName(), stepExecution.getExitStatus().getExitCode());
 				Date cc = stepExecution.getJobParameters().getDate("currentTime");
 				Long forceFetch = stepExecution.getJobParameters().getLong("forceFetch");
-				Assert.isTrue(forceFetch == 1L);
+				assertThat(forceFetch, equalTo(1L));
 //				String cc = stepExecution.getExecutionContext().getString("currentTime");
 				log.info("currentTime is {}", cc);
 				// the returned ExistStatus is combined with original existStatus, If custom existStatus provided, custom exist code will win.

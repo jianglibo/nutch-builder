@@ -11,7 +11,7 @@ import com.jianglibo.nutchbuilder.repository.NutchBuilderTemplateRepository;
  *
  */
 @Component
-public class NutchBuilderTemplateFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<NutchBuilderTemplate> implements NutchBuilderTemplateFacadeRepository {
+public class NutchBuilderTemplateFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<NutchBuilderTemplate, NutchBuilderTemplateRepository> implements NutchBuilderTemplateFacadeRepository {
 
 	public NutchBuilderTemplateFacadeRepositoryImpl(NutchBuilderTemplateRepository jpaRepo) {
 		super(jpaRepo);
@@ -19,8 +19,7 @@ public class NutchBuilderTemplateFacadeRepositoryImpl extends FacadeRepositoryBa
 
 	@Override
 	public NutchBuilderTemplate findByName(String rn) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRepository().findByName(rn);
 	}
 
 

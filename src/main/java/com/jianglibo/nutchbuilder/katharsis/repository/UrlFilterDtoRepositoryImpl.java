@@ -14,9 +14,7 @@ import com.jianglibo.nutchbuilder.katharsis.repository.UrlFilterDtoRepository.Ur
 
 
 @Component
-public class UrlFilterDtoRepositoryImpl  extends DtoRepositoryBase<UrlFilterDto, UrlFilterDtoList, UrlFilter> implements UrlFilterDtoRepository {
-	
-	private final UrlFilterFacadeRepository repository;
+public class UrlFilterDtoRepositoryImpl  extends DtoRepositoryBase<UrlFilterDto, UrlFilterDtoList, UrlFilter, UrlFilterFacadeRepository> implements UrlFilterDtoRepository {
 	
 	private final SiteFacadeRepository siteRepository;
 	
@@ -26,7 +24,6 @@ public class UrlFilterDtoRepositoryImpl  extends DtoRepositoryBase<UrlFilterDto,
 	@Autowired
 	public UrlFilterDtoRepositoryImpl(UrlFilterFacadeRepository repository, SiteFacadeRepository siteRepository) {
 		super(UrlFilterDto.class, UrlFilterDtoList.class, UrlFilter.class, repository);
-		this.repository = repository;
 		this.siteRepository = siteRepository;
 	}
 	
@@ -34,6 +31,6 @@ public class UrlFilterDtoRepositoryImpl  extends DtoRepositoryBase<UrlFilterDto,
 	public UrlFilter saveToJpaRepo(UrlFilterDto dto, UrlFilter entity) {
 		SiteDto sd = dto.getSite();
 		entity.setSite(siteRepository.findOne(sd.getId()));
-		return repository.save(entity);
+		return getRepository().save(entity);
 	}
 }

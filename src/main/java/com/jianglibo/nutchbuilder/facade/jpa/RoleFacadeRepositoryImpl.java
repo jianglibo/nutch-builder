@@ -11,7 +11,7 @@ import com.jianglibo.nutchbuilder.repository.RoleRepository;
  *
  */
 @Component
-public class RoleFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Role> implements RoleFacadeRepository {
+public class RoleFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Role, RoleRepository> implements RoleFacadeRepository {
 	
 	public RoleFacadeRepositoryImpl(RoleRepository jpaRepo) {
 		super(jpaRepo);
@@ -19,7 +19,7 @@ public class RoleFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Role> imp
 
 	@Override
 	public Role findByName(String rn) {
-		return ((RoleRepository)getRepository()).findByName(rn);
+		return getRepository().findByName(rn);
 	}
 
 

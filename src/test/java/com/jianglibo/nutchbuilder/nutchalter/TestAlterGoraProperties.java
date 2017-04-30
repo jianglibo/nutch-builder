@@ -13,14 +13,11 @@ import java.util.List;
 
 import javax.xml.transform.TransformerException;
 
-import org.junit.Assume;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import com.jianglibo.nutchbuilder.Tbase;
-import com.jianglibo.nutchbuilder.nutchalter.AntBuild.Build;
 import com.jianglibo.nutchbuilder.nutchalter.GoraProperties.StoreType;
-import com.jianglibo.nutchbuilder.util.NameValueConfiguration;
 
 public class TestAlterGoraProperties extends Tbase {
 	

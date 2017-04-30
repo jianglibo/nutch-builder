@@ -10,14 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.jianglibo.nutchbuilder.KatharsisBase;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
-import com.jianglibo.nutchbuilder.domain.CrawlCat;
 import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
 import com.jianglibo.nutchbuilder.util.JsonApiUrlBuilder;
 
@@ -32,22 +29,22 @@ public class TestCrawlCatApi  extends KatharsisBase {
 		deleteAllSitesAndCrawlCats();
 	}
 	
-	@Test(expected=AccessDeniedException.class)
-	public void byRepoUser() throws IOException {
-		loginAs("user", "USER");
-		CrawlCat cc = new CrawlCat();
-		cc.setName("a");
-		cc.setProjectRoot("b");
-		ccrepository.save(cc);
-	}
-	
-	@Test(expected=AuthenticationCredentialsNotFoundException.class)
-	public void byRepoAdmin() {
-		CrawlCat cc = new CrawlCat();
-		cc.setName("a");
-		cc.setProjectRoot("b");
-		ccrepository.save(cc);
-	}
+//	@Test(expected=AccessDeniedException.class)
+//	public void byRepoUser() throws IOException {
+//		loginAs("user", "USER");
+//		CrawlCat cc = new CrawlCat();
+//		cc.setName("a");
+//		cc.setProjectRoot("b");
+//		ccrepository.save(cc);
+//	}
+//	
+//	@Test(expected=AuthenticationCredentialsNotFoundException.class)
+//	public void byRepoAdmin() {
+//		CrawlCat cc = new CrawlCat();
+//		cc.setName("a");
+//		cc.setProjectRoot("b");
+//		ccrepository.save(cc);
+//	}
 	
 	@Test
 	public void tAddOne() throws JsonParseException, JsonMappingException, IOException {

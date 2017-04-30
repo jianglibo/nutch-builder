@@ -18,12 +18,18 @@ public class RegexUrlFilterConfFile {
 		List<String> newLines = new ArrayList<>();
 		for(String ol : originLines) {
 			if (ol.trim().startsWith("#")) {
-				newLines.add(ol);
+				String uncomment = ol.trim().substring(1);
+				if (acceptLines.contains(uncomment)) {
+					newLines.add(uncomment);
+					acceptLines.remove(uncomment);
+				} else {
+					newLines.add(ol);
+				}
 			} else {
 				if (skipLines.contains(ol.trim())) { // if already exists, take away from acceptsLines.
 					skipLines.remove(ol.trim());
 					newLines.add(ol);
-				}else if(acceptLines.contains(ol.trim())) {
+				}else if(acceptLines.contains(ol.trim())) { // alreay exists.
 					acceptLines.remove(ol.trim());
 					newLines.add(ol);
 				} else {

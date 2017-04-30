@@ -11,7 +11,7 @@ import com.jianglibo.nutchbuilder.repository.UrlFilterRepository;
  *
  */
 @Component
-public class UrlFilterFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<UrlFilter> implements UrlFilterFacadeRepository {
+public class UrlFilterFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<UrlFilter, UrlFilterRepository> implements UrlFilterFacadeRepository {
 
 	public UrlFilterFacadeRepositoryImpl(UrlFilterRepository jpaRepo) {
 		super(jpaRepo);

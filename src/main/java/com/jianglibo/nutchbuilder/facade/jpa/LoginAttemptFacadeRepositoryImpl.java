@@ -7,7 +7,7 @@ import com.jianglibo.nutchbuilder.facade.LoginAttemptFacadeRepository;
 import com.jianglibo.nutchbuilder.repository.LoginAttemptRepository;
 
 @Component
-public class LoginAttemptFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<LoginAttempt> implements  LoginAttemptFacadeRepository {
+public class LoginAttemptFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<LoginAttempt, LoginAttemptRepository> implements  LoginAttemptFacadeRepository {
 
 	public LoginAttemptFacadeRepositoryImpl(LoginAttemptRepository jpaRepo) {
 		super(jpaRepo);

@@ -15,12 +15,9 @@ import io.katharsis.queryspec.QuerySpec;
  */
 public class BootUserRepositoryImpl extends DistinctSimpleJpaRepository<BootUser> implements RepositoryBase<BootUser>{
 
-//	private final JpaEntityInformation<BootUser, ?> entityInformation;
-    
     @Autowired
     public BootUserRepositoryImpl(EntityManager entityManager) {
         super(BootUser.class, entityManager);
-//        this.entityInformation = JpaEntityInformationSupport.getMetadata(BootUser.class, entityManager);
     }
 
 	@Override

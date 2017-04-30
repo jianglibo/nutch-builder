@@ -59,7 +59,6 @@ public class CrawlCatDto extends DtoBase<CrawlCatDto, CrawlCat>{
 		setId(entity.getId());
 		setName(entity.getName());
 		setCreatedAt(entity.getCreatedAt());
-		setProjectRoot(entity.getProjectRoot());
 		return this;
 	}
 
@@ -67,7 +66,6 @@ public class CrawlCatDto extends DtoBase<CrawlCatDto, CrawlCat>{
 	public CrawlCat patch(CrawlCat entity) {
 		entity.setDescription(getDescription());
 		entity.setName(getName());
-		entity.setProjectRoot(getProjectRoot());
 		return entity;
 	}
 

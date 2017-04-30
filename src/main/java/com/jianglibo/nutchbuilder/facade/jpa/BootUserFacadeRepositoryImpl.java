@@ -13,7 +13,7 @@ import com.jianglibo.nutchbuilder.repository.BootUserRepository;
  *
  */
 @Component
-public class BootUserFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<BootUser> implements BootUserFacadeRepository {
+public class BootUserFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<BootUser, BootUserRepository> implements BootUserFacadeRepository {
 
 	@Autowired
 	public BootUserFacadeRepositoryImpl(BootUserRepository jpaRepo) {

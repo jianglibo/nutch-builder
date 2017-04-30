@@ -12,12 +12,11 @@ import com.jianglibo.nutchbuilder.repository.CrawlCatRepository;
  *
  */
 @Component
-public class CrawlCatFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<CrawlCat> implements CrawlCatFacadeRepository {
+public class CrawlCatFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<CrawlCat, CrawlCatRepository> implements CrawlCatFacadeRepository {
 
 	@Autowired
 	public CrawlCatFacadeRepositoryImpl(CrawlCatRepository jpaRepo) {
 		super(jpaRepo);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

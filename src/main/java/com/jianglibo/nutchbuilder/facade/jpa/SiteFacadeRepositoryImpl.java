@@ -4,18 +4,16 @@ import org.springframework.stereotype.Component;
 
 import com.jianglibo.nutchbuilder.domain.Site;
 import com.jianglibo.nutchbuilder.facade.SiteFacadeRepository;
-import com.jianglibo.nutchbuilder.repository.SiteRepositoryImpl;
+import com.jianglibo.nutchbuilder.repository.SiteRepository;
 
 /**
  * @author jianglibo@gmail.com
  *
  */
 @Component
-public class SiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Site> implements SiteFacadeRepository {
+public class SiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Site, SiteRepository> implements SiteFacadeRepository {
 
-	public SiteFacadeRepositoryImpl(SiteRepositoryImpl jpaRepo) {
+	public SiteFacadeRepositoryImpl(SiteRepository jpaRepo) {
 		super(jpaRepo);
 	}
-
-
 }

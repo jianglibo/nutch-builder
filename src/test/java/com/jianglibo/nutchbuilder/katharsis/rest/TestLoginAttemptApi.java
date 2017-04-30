@@ -1,6 +1,7 @@
 package com.jianglibo.nutchbuilder.katharsis.rest;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class TestLoginAttemptApi  extends KatharsisBase {
 		printme(body);
 		Document d =  kboot.getObjectMapper().readValue(body, Document.class);
 		List<ErrorData> eds = d.getErrors();
+		assertThat(eds.size(), equalTo(1));
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.BAD_REQUEST.value()));
 	}
 	
@@ -42,6 +44,7 @@ public class TestLoginAttemptApi  extends KatharsisBase {
 		printme(body);
 		Document d =  kboot.getObjectMapper().readValue(body, Document.class);
 		List<ErrorData> eds = d.getErrors();
+		assertNull(eds);
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
 	}
 

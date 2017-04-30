@@ -11,9 +11,7 @@ import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.RoleDtoRepository.RoleDtoList;
 
 @Component
-public class RoleDtoRepositoryImpl  extends DtoRepositoryBase<RoleDto, RoleDtoList, Role> implements RoleDtoRepository {
-	
-	private final RoleFacadeRepository repository;
+public class RoleDtoRepositoryImpl  extends DtoRepositoryBase<RoleDto, RoleDtoList, Role, RoleFacadeRepository> implements RoleDtoRepository {
 	
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -21,7 +19,6 @@ public class RoleDtoRepositoryImpl  extends DtoRepositoryBase<RoleDto, RoleDtoLi
 	@Autowired
 	public RoleDtoRepositoryImpl(RoleFacadeRepository repository) {
 		super(RoleDto.class, RoleDtoList.class, Role.class, repository);
-		this.repository = repository;
 	}
 //	$r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/roles/32768 -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -Method Delete
 //	$r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/roles -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -ContentType "application/vnd.api+json;charset=UTF-8" -Body '{"data": {"attributes": {"name": "test"}, "type": "roles"}}' -Method Post
