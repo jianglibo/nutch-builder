@@ -21,7 +21,4 @@ public class RoleFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Role, Rol
 	public Role findByName(String rn) {
 		return getRepository().findByName(rn);
 	}
-
-
-
 }

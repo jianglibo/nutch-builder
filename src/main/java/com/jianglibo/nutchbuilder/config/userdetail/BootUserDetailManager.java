@@ -20,8 +20,8 @@ import org.springframework.stereotype.Component;
 
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.Role;
-import com.jianglibo.nutchbuilder.repository.BootUserRepository;
-import com.jianglibo.nutchbuilder.repository.RoleRepository;
+import com.jianglibo.nutchbuilder.facade.BootUserFacadeRepository;
+import com.jianglibo.nutchbuilder.facade.RoleFacadeRepository;
 import com.jianglibo.nutchbuilder.util.PairForStream;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
@@ -37,9 +37,9 @@ public class BootUserDetailManager implements UserDetailsManager {
     
     private static Logger logger = LoggerFactory.getLogger(BootUserDetailManager.class);
     
-    private BootUserRepository userRepo;
+    private BootUserFacadeRepository userRepo;
     
-    private RoleRepository roleRepo;
+    private RoleFacadeRepository roleRepo;
     
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -48,7 +48,7 @@ public class BootUserDetailManager implements UserDetailsManager {
     private PasswordEncoder passwordEncoder;
     
     @Autowired
-    public BootUserDetailManager(BootUserRepository userRepo, RoleRepository roleRepo) {
+    public BootUserDetailManager(BootUserFacadeRepository userRepo, RoleFacadeRepository roleRepo) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
     }
@@ -125,7 +125,7 @@ public class BootUserDetailManager implements UserDetailsManager {
     @Override
     public void deleteUser(String username) {
     	BootUser bootUser = userRepo.findByName(username);
-        userRepo.delete(bootUser);
+        userRepo.delete(bootUser.getId());
     }
 
     @Override

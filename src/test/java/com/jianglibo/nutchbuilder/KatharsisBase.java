@@ -75,7 +75,6 @@ public abstract class KatharsisBase extends Tbase {
 		BootUser bu = loginAsAdmin();
 		CrawlCat crawlCat = new CrawlCat();
 		crawlCat.setName("acc");
-		crawlCat.setProjectRoot("rj");
 		crawlCat.setDescription("dd");
 		crawlCat = ccrepository.save(crawlCat);
 		Site site = new Site();

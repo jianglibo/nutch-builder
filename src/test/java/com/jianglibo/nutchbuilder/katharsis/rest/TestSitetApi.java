@@ -45,7 +45,6 @@ public class TestSitetApi  extends KatharsisBase {
 		loginAsAdmin();
 		CrawlCat crawlCat = new CrawlCat();
 		crawlCat.setName("acc");
-		crawlCat.setProjectRoot("rj");
 		crawlCat.setDescription("dd");
 		crawlCat = ccrepository.save(crawlCat);
 		logout();
@@ -72,7 +71,6 @@ public class TestSitetApi  extends KatharsisBase {
 		loginAsAdmin();
 		CrawlCat crawlCat = new CrawlCat();
 		crawlCat.setName("acc");
-		crawlCat.setProjectRoot("rj");
 		crawlCat.setDescription("dd");
 		crawlCat = ccrepository.save(crawlCat);
 		Site site = new Site();

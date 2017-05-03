@@ -17,4 +17,11 @@ public interface BootUserFacadeRepository extends FacadeRepositoryBase<BootUser>
     @PreAuthorize("hasRole('ADMINISTRATOR') and (#id != principal.id)")
     @Transactional
     public void delete(@P("id") Long id);
+
+	BootUser findByEmail(String emailOrMobile);
+
+	BootUser findByMobile(String emailOrMobile);
+
+	BootUser findByName(String emailOrMobile);
+
 }

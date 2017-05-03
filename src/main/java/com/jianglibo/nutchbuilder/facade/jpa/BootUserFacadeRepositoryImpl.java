@@ -19,4 +19,19 @@ public class BootUserFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<BootU
 	public BootUserFacadeRepositoryImpl(BootUserRepository jpaRepo) {
 		super(jpaRepo);
 	}
+
+	@Override
+	public BootUser findByEmail(String email) {
+		return getRepository().findByEmail(email);
+	}
+
+	@Override
+	public BootUser findByMobile(String mobile) {
+		return getRepository().findByMobile(mobile);
+	}
+
+	@Override
+	public BootUser findByName(String name) {
+		return getRepository().findByName(name);
+	}
 }
