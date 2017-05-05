@@ -122,6 +122,12 @@ spring:
         enable-csrf: true
     thymeleaf:
       cache: false
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 #      prefix: file:///f:/github/boot-template/src/main/resources/templates/
     devtools.restart.exclude: public/**
     batch:
@@ -134,6 +140,14 @@ spring:
         maxUnjarNumber: 6
         # from core-default.xml, property name is "hadoop.tmp.dir"
         unjarFolder: D:/tmp/hadoop-admin
+logging:
+    level:
+        org.springframework.security.web.access: DEBUG
+        org.springframework.jdbc.core: DEBUG
+        org.springframework.data: DEBUG
+        org.hibernate.SQL: DEBUG
+#        org.springframework.batch: DEBUG
+#        org.apache.hadoop.mapreduce: DEBUG
 myapp:
     disableCsrf: false
     dataWriteSourcePath: E:\OneDriver\OneDrive\浙江政务服务网

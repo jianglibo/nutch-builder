@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import javax.validation.groups.Default;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -32,17 +31,6 @@ public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoLis
 		this.bootUserDetailManager = bootUserDetailManager;
 	}
     
-    @Override
-    public <S extends UserDto> S create(S resource) {
-    	return super.create(resource);
-    }
-    
-    @SuppressWarnings("unchecked")
-	@Override
-    @PreAuthorize("hasRole('KKKKKKK')")
-    public UserDto save(UserDto dto) {
-    	return super.save(dto);
-    }
     
     @Override
     public UserDto convertToDto(BootUser entity) {

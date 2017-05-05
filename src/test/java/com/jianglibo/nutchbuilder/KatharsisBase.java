@@ -28,9 +28,11 @@ import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.config.StatelessCSRFFilter;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.CrawlCat;
+import com.jianglibo.nutchbuilder.domain.MySite;
 import com.jianglibo.nutchbuilder.domain.Site;
 import com.jianglibo.nutchbuilder.domain.Site.SiteProtocol;
 import com.jianglibo.nutchbuilder.repository.CrawlCatRepository;
+import com.jianglibo.nutchbuilder.repository.MySiteRepository;
 import com.jianglibo.nutchbuilder.repository.SiteRepository;
 
 import io.katharsis.client.KatharsisClient;
@@ -46,6 +48,10 @@ public abstract class KatharsisBase extends Tbase {
 	
 	@Autowired
 	protected SiteRepository siteRepository;
+	
+	@Autowired
+	protected MySiteRepository mySiteRepository;
+
 	
 	@Autowired
 	protected CrawlCatRepository ccrepository;
@@ -64,12 +70,10 @@ public abstract class KatharsisBase extends Tbase {
 	private String pageSize;
 	
 	public void deleteAllSitesAndCrawlCats() {
-		loginAsAdmin();
 		List<Site> sites = siteRepository.findAll();
 		siteRepository.delete(sites);
 		List<CrawlCat> ccc = ccrepository.findAll();
 		ccrepository.delete(ccc);
-		logout();
 	}
 	
 	public Site createSite() {
@@ -85,6 +89,27 @@ public abstract class KatharsisBase extends Tbase {
 		site = siteRepository.save(site);
 		logout();
 		return site;
+	}
+	
+	public MySite createMySite() {
+		BootUser bu = loginAsAdmin();
+		CrawlCat crawlCat = new CrawlCat();
+		crawlCat.setName("acc");
+		crawlCat.setDescription("dd");
+		crawlCat = ccrepository.save(crawlCat);
+		Site site = new Site();
+		site.setProtocol(SiteProtocol.HTTP);
+		site.setDomainName("a.b.com");
+		site.setCrawlCat(crawlCat);
+		site = siteRepository.save(site);
+		
+		MySite mysite = new MySite();
+		mysite.setSite(site);
+		mysite.setCbsecret("secret");
+		mysite.setCburl("aaa");
+		mysite.setCburlVerified(true);
+		mysite.setCreator(bu);
+		return mySiteRepository.save(mysite);
 	}
 	
 	public Site createSite(CrawlCat crawlCat) {

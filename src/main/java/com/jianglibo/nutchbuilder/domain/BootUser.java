@@ -1,10 +1,8 @@
 package com.jianglibo.nutchbuilder.domain;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -46,9 +44,6 @@ public class BootUser extends BaseEntity {
     private boolean emailVerified;
 
     private boolean mobileVerified;
-    
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="creator")
-    private List<MySite> mysites = new ArrayList<>();
     
     @Enumerated(EnumType.STRING)
     private Gender gender = Gender.FEMALE;
@@ -251,14 +246,6 @@ public class BootUser extends BaseEntity {
     public void setThirdConns(Set<ThirdPartLogin> thirdConns) {
         this.thirdConns = thirdConns;
     }
-    
-    public List<MySite> getSites() {
-		return mysites;
-	}
-
-	public void setSites(List<MySite> sites) {
-		this.mysites = sites;
-	}
 
 	public static enum Gender {
         MALE, FEMALE

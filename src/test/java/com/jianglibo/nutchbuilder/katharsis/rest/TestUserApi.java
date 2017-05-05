@@ -74,6 +74,7 @@ public class TestUserApi  extends KatharsisBase {
 	public void tDeleteSelf() throws JsonParseException, JsonMappingException, IOException {
 		BootUser bu = userRepository.findByName("admin");
 		ResponseEntity<String> response = deleteByExchange(jwtToken, getItemUrl(bu.getId()));
+		printme(response.getBody());
 		verifyAllKeys(response, new String[]{"errors"});
 	}
 

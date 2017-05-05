@@ -30,10 +30,14 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.jianglibo.nutchbuilder.config.ApplicationConfig;
 import com.jianglibo.nutchbuilder.config.KatharsisModuleConfig;
+import com.jianglibo.nutchbuilder.facade.CrawlCatFacadeRepository;
+import com.jianglibo.nutchbuilder.katharsis.dto.MySiteDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
+import com.jianglibo.nutchbuilder.source.DiskMonitor.NutchProjectMonitor;
 
 import io.katharsis.client.KatharsisClient;
 import io.katharsis.client.http.apache.HttpClientAdapter;
@@ -77,6 +81,12 @@ public class Application {
 //    	return rbm;
 //    }
     
+	@Bean("watcherExecutor")
+	public ThreadPoolTaskExecutor watcherExecutor(ApplicationConfig applicationConfig, CrawlCatFacadeRepository crawlCatRepository) {
+		ThreadPoolTaskExecutor tple = new ThreadPoolTaskExecutor();
+		return tple;
+	}
+    
     @Bean
     public KatharsisClient katharsisClient(@Value("${katharsis.domainName}") String domainName, @Value("${katharsis.pathPrefix}") String pathPrefix) {
     	
@@ -92,6 +102,7 @@ public class Application {
     	kc.getRepositoryForType(SiteDto.class);
     	kc.getRepositoryForType(UserDto.class);
     	kc.getRepositoryForType(RoleDto.class);
+    	kc.getRepositoryForType(MySiteDto.class);
     	return kc;
     }
 	

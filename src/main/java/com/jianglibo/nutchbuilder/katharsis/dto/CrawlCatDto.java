@@ -21,12 +21,9 @@ public class CrawlCatDto extends DtoBase<CrawlCatDto, CrawlCat>{
 	@NotBlank
 	private String name;
 	
-	@NotBlank
-	private String projectRoot;
-	
 	private String description;
 	
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.LAZY, opposite="crawlCat")
+	@JsonApiRelation(lookUp=LookupIncludeBehavior.NONE,serialize=SerializeType.LAZY, opposite="crawlCat")
 	private List<SiteDto> sites = new ArrayList<>();
 
 	public String getName() {
@@ -35,14 +32,6 @@ public class CrawlCatDto extends DtoBase<CrawlCatDto, CrawlCat>{
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getProjectRoot() {
-		return projectRoot;
-	}
-
-	public void setProjectRoot(String projectRoot) {
-		this.projectRoot = projectRoot;
 	}
 
 	public String getDescription() {

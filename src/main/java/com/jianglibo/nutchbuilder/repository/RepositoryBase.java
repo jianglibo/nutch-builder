@@ -12,7 +12,6 @@ import io.katharsis.queryspec.QuerySpec;
 @NoRepositoryBean
 public interface RepositoryBase<T> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
 	List<T> findAll(QuerySpec querySpec);
-	
 	long count(QuerySpec querySpec);
 
 }

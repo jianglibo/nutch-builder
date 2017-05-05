@@ -19,7 +19,7 @@ public class UrlFilterDto extends DtoBase<UrlFilterDto, UrlFilter> {
 	private String regex;
 	
 	@NotNull
-	private SiteDto site;
+	private MySiteDto mysite;
 
 	public String getRegex() {
 		return regex;
@@ -29,12 +29,12 @@ public class UrlFilterDto extends DtoBase<UrlFilterDto, UrlFilter> {
 		this.regex = regex;
 	}
 
-	public SiteDto getSite() {
-		return site;
+	public MySiteDto getMysite() {
+		return mysite;
 	}
 
-	public void setSite(SiteDto site) {
-		this.site = site;
+	public void setMysite(MySiteDto mysite) {
+		this.mysite = mysite;
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class UrlFilterDto extends DtoBase<UrlFilterDto, UrlFilter> {
 		setId(entity.getId());
 		setRegex(entity.getRegex());
 		setCreatedAt(entity.getCreatedAt());
-		setSite(new SiteDto().fromEntity(entity.getSite()));
+		setMysite(new MySiteDto().fromEntity(entity.getMysite()));
 		return this;
 	}
 

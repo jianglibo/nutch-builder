@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.jianglibo.nutchbuilder.KatharsisBase;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
+import com.jianglibo.nutchbuilder.domain.MySite;
 import com.jianglibo.nutchbuilder.domain.Site;
 import com.jianglibo.nutchbuilder.domain.UrlFilter;
 import com.jianglibo.nutchbuilder.repository.UrlFilterRepository;
@@ -47,11 +48,11 @@ public class TestUrlFilterApi  extends KatharsisBase {
 	
 	@Test
 	public void tGetOneAndList() throws JsonParseException, JsonMappingException, IOException {
-		Site site = createSite();
+		MySite mysite = createMySite();
 		loginAsAdmin();
 		UrlFilter ul = new UrlFilter();
 		ul.setRegex("xxx");
-		ul.setSite(site);
+		ul.setMysite(mysite);
 		ul = urlrepository.save(ul);
 		logout();
 		ResponseEntity<String> response = getBody(jwtToken, getItemUrl(ul.getId()));

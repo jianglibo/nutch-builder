@@ -1,13 +1,9 @@
 package com.jianglibo.nutchbuilder.domain;
 
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -40,25 +36,11 @@ public class MySite extends BaseEntity {
 	@ManyToOne(fetch=FetchType.EAGER)
 	private Site site;
 	
-	/**
-	 * we don't use urlfiters in nutch builder. but in callback procedure.
-	 */
-	@OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="site")
-	private Set<UrlFilter> urlfilters = new HashSet<>();
-	
 	private String cburl;
 	
 	private boolean cburlVerified;
 	
 	private String cbsecret;
-
-	public Set<UrlFilter> getUrlfilters() {
-		return urlfilters;
-	}
-
-	public void setUrlfilters(Set<UrlFilter> urlfilters) {
-		this.urlfilters = urlfilters;
-	}
 
 	public String getCburl() {
 		return cburl;

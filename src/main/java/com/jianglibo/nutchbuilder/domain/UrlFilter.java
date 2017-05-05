@@ -8,7 +8,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "urlfilter", uniqueConstraints = { @UniqueConstraint(columnNames = {"regex", "SITE_ID"}) })
+@Table(name = "urlfilter", uniqueConstraints = { @UniqueConstraint(columnNames = {"regex", "MYSITE_ID"}) })
 public class UrlFilter extends BaseEntity {
 
 	/**
@@ -20,8 +20,8 @@ public class UrlFilter extends BaseEntity {
 	private String regex;
 	
 	@ManyToOne
-	@JoinColumn(name="SITE_ID", nullable=false)
-	private Site site;
+	@JoinColumn(name="MYSITE_ID", nullable=false)
+	private MySite mysite;
 
 	public String getRegex() {
 		return regex;
@@ -31,11 +31,12 @@ public class UrlFilter extends BaseEntity {
 		this.regex = regex;
 	}
 
-	public Site getSite() {
-		return site;
+	public MySite getMysite() {
+		return mysite;
 	}
 
-	public void setSite(Site site) {
-		this.site = site;
+	public void setMysite(MySite mysite) {
+		this.mysite = mysite;
 	}
+
 }

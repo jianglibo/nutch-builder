@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,8 @@ import com.jianglibo.nutchbuilder.repository.CrawlCatRepository;
 
 @Component
 public class CrawlCatInit implements InitializingBean {
+	
+	private static Logger LOG = LoggerFactory.getLogger(CrawlCatInit.class);
 	
 	@Autowired
 	private ApplicationConfig applicationConfig;
@@ -31,9 +35,13 @@ public class CrawlCatInit implements InitializingBean {
 		});
 		
 		Stream.of(files).forEach(dir -> {
-			CrawlCat cc = new CrawlCat();
-			cc.setName(dir.getName());
-			crawlCatRepository.save(cc);
+			try {
+				CrawlCat cc = new CrawlCat();
+				cc.setName(dir.getName());
+				crawlCatRepository.save(cc);
+			} catch (Exception e) {
+				LOG.info("crawlCat {} already exists. skiping...", dir.getName());
+			}
 		});
 	}
 }

@@ -29,22 +29,6 @@ public class TestCrawlCatApi  extends KatharsisBase {
 		deleteAllSitesAndCrawlCats();
 	}
 	
-//	@Test(expected=AccessDeniedException.class)
-//	public void byRepoUser() throws IOException {
-//		loginAs("user", "USER");
-//		CrawlCat cc = new CrawlCat();
-//		cc.setName("a");
-//		cc.setProjectRoot("b");
-//		ccrepository.save(cc);
-//	}
-//	
-//	@Test(expected=AuthenticationCredentialsNotFoundException.class)
-//	public void byRepoAdmin() {
-//		CrawlCat cc = new CrawlCat();
-//		cc.setName("a");
-//		cc.setProjectRoot("b");
-//		ccrepository.save(cc);
-//	}
 	
 	@Test
 	public void tAddOne() throws JsonParseException, JsonMappingException, IOException {
