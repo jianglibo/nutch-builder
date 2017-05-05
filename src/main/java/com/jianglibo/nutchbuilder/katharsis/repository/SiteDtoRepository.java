@@ -14,6 +14,6 @@ public interface SiteDtoRepository extends ResourceRepositoryV2<SiteDto, Long> {
 	}
 
 	@Override
-	public SiteDtoList findAll(QuerySpec querySpec);
+	SiteDtoList findAll(QuerySpec querySpec);
 }
 

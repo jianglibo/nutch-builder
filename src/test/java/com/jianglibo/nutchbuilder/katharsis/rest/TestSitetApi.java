@@ -62,7 +62,6 @@ public class TestSitetApi  extends KatharsisBase {
 		printme(response.getBody());
 		response = getBody(jwtToken, getItemUrl(sd.getId()));
 		assertNull(sd.getCrawlCat());
-		assertNull(sd.getCreator());
 		printme(response.getBody());
 	}
 	
@@ -74,9 +73,7 @@ public class TestSitetApi  extends KatharsisBase {
 		crawlCat.setDescription("dd");
 		crawlCat = ccrepository.save(crawlCat);
 		Site site = new Site();
-		site.setHomeUrl("http://a.b.c");
 		site.setCrawlCat(crawlCat);
-		site.setCreator(createBootUserPrincipal("kkk", null));
 		siteRepository.save(site);
 		logout();
 		ResponseEntity<String> response = getBody(jwtToken, getBaseURI());
@@ -86,7 +83,6 @@ public class TestSitetApi  extends KatharsisBase {
 		SiteDto siteDto = getOne(response, SiteDto.class);
 		assertThat(siteDto.getId(), equalTo(site.getId()));
 		assertNull(siteDto.getCrawlCat());
-		assertNull(siteDto.getCreator());
 		printme(response.getBody());
 	}
 

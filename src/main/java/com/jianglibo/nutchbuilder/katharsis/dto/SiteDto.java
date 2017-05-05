@@ -1,8 +1,5 @@
 package com.jianglibo.nutchbuilder.katharsis.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -10,6 +7,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.domain.Site;
+import com.jianglibo.nutchbuilder.domain.Site.SiteProtocol;
 
 import io.katharsis.resource.annotations.JsonApiRelation;
 import io.katharsis.resource.annotations.JsonApiResource;
@@ -21,76 +19,33 @@ import io.katharsis.resource.annotations.SerializeType;
 public class SiteDto extends DtoBase<SiteDto, Site> {
 
 	@NotBlank
-	private String homeUrl;
+	private SiteProtocol protocol;
 	
-	private String cburl;
+	@NotBlank
+	private String domainName;
 	
-	private boolean cburlVerified;
-	
-	private String cbsecret;
-	
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.LAZY, opposite="site")
-	private List<UrlFilterDto> urlfilters = new ArrayList<>();
-	
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.LAZY, opposite="site")
-	private List<CrawlFrequencyDto> crawlFrenquencies = new ArrayList<>();
+	private String entryPath;
 	
 	@NotNull
 	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.EAGER, opposite="sites")
 	private CrawlCatDto crawlCat;
 	
-	@NotNull
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.EAGER, opposite="sites")
-	private UserDto creator;
-	
 	@Override
 	public SiteDto fromEntity(Site entity) {
-		setCbsecret(entity.getCbsecret());
-		setCburl(entity.getCburl());
 		setCreatedAt(entity.getCreatedAt());
-		setHomeUrl(entity.getHomeUrl());
+		setDomainName(entity.getDomainName());
+		setEntryPath(entity.getEntryPath());
+		setProtocol(entity.getProtocol());
 		setId(entity.getId());
 		return this;
 	}
 
 	@Override
 	public Site patch(Site entity) {
-		entity.setCbsecret(cbsecret);
-		entity.setCburl(getCburl());
-		entity.setHomeUrl(getHomeUrl());
+		entity.setDomainName(getDomainName());
+		entity.setEntryPath(getEntryPath());
+		entity.setProtocol(getProtocol());
 		return entity;
-	}
-
-	public String getHomeUrl() {
-		return homeUrl;
-	}
-
-	public void setHomeUrl(String homeUrl) {
-		this.homeUrl = homeUrl;
-	}
-
-	public String getCburl() {
-		return cburl;
-	}
-
-	public void setCburl(String cburl) {
-		this.cburl = cburl;
-	}
-
-	public boolean isCburlVerified() {
-		return cburlVerified;
-	}
-
-	public void setCburlVerified(boolean cburlVerified) {
-		this.cburlVerified = cburlVerified;
-	}
-
-	public String getCbsecret() {
-		return cbsecret;
-	}
-
-	public void setCbsecret(String cbsecret) {
-		this.cbsecret = cbsecret;
 	}
 
 	public CrawlCatDto getCrawlCat() {
@@ -101,28 +56,27 @@ public class SiteDto extends DtoBase<SiteDto, Site> {
 		this.crawlCat = crawlCat;
 	}
 
-	public List<UrlFilterDto> getUrlfilters() {
-		return urlfilters;
+	public SiteProtocol getProtocol() {
+		return protocol;
 	}
 
-	public void setUrlfilters(List<UrlFilterDto> urlfilters) {
-		this.urlfilters = urlfilters;
+	public void setProtocol(SiteProtocol protocol) {
+		this.protocol = protocol;
 	}
 
-	public List<CrawlFrequencyDto> getCrawlFrenquencies() {
-		return crawlFrenquencies;
+	public String getDomainName() {
+		return domainName;
 	}
 
-	public void setCrawlFrenquencies(List<CrawlFrequencyDto> crawlFrenquencies) {
-		this.crawlFrenquencies = crawlFrenquencies;
+	public void setDomainName(String domainName) {
+		this.domainName = domainName;
 	}
 
-	public UserDto getCreator() {
-		return creator;
+	public String getEntryPath() {
+		return entryPath;
 	}
 
-	public void setCreator(UserDto creator) {
-		this.creator = creator;
+	public void setEntryPath(String entryPath) {
+		this.entryPath = entryPath;
 	}
-
 }

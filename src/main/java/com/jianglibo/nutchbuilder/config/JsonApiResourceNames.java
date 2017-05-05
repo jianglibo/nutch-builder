@@ -9,5 +9,6 @@ public class JsonApiResourceNames {
 	public static final String CRAWL_CAT = "crawlCats";
 	public static final String CRAWL_FRE = "crawlFres";
 	public static final String SITE = "sites";
+	public static final String MY_SITE = "mysites";
 	public static final String URL_FILTER = "urlfilters";
 }

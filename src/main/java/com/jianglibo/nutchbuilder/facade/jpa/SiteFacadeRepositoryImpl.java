@@ -16,4 +16,9 @@ public class SiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Site, Sit
 	public SiteFacadeRepositoryImpl(SiteRepository jpaRepo) {
 		super(jpaRepo);
 	}
+
+	@Override
+	public Site findByDomainName(String homepage) {
+		return getRepository().findByDomainName(homepage);
+	}
 }

@@ -48,7 +48,7 @@ public class BootUser extends BaseEntity {
     private boolean mobileVerified;
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="creator")
-    private List<Site> sites = new ArrayList<>();
+    private List<MySite> mysites = new ArrayList<>();
     
     @Enumerated(EnumType.STRING)
     private Gender gender = Gender.FEMALE;
@@ -252,12 +252,12 @@ public class BootUser extends BaseEntity {
         this.thirdConns = thirdConns;
     }
     
-    public List<Site> getSites() {
-		return sites;
+    public List<MySite> getSites() {
+		return mysites;
 	}
 
-	public void setSites(List<Site> sites) {
-		this.sites = sites;
+	public void setSites(List<MySite> sites) {
+		this.mysites = sites;
 	}
 
 	public static enum Gender {

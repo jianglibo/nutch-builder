@@ -29,6 +29,7 @@ import com.jianglibo.nutchbuilder.config.StatelessCSRFFilter;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.CrawlCat;
 import com.jianglibo.nutchbuilder.domain.Site;
+import com.jianglibo.nutchbuilder.domain.Site.SiteProtocol;
 import com.jianglibo.nutchbuilder.repository.CrawlCatRepository;
 import com.jianglibo.nutchbuilder.repository.SiteRepository;
 
@@ -78,22 +79,20 @@ public abstract class KatharsisBase extends Tbase {
 		crawlCat.setDescription("dd");
 		crawlCat = ccrepository.save(crawlCat);
 		Site site = new Site();
-		site.setHomeUrl("http://a.b.c");
+		site.setProtocol(SiteProtocol.HTTP);
+		site.setDomainName("a.b.com");
 		site.setCrawlCat(crawlCat);
-		site.setCreator(bu);
 		site = siteRepository.save(site);
 		logout();
 		return site;
 	}
 	
 	public Site createSite(CrawlCat crawlCat) {
-		BootUser bu = loginAsAdmin();
 		Site site = new Site();
-		site.setHomeUrl("http://a.b.c");
+		site.setProtocol(SiteProtocol.HTTP);
+		site.setDomainName("a.b.com");
 		site.setCrawlCat(crawlCat);
-		site.setCreator(bu);
 		site = siteRepository.save(site);
-		logout();
 		return site;
 	}
 	

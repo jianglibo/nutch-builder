@@ -1,7 +1,5 @@
 package com.jianglibo.nutchbuilder.katharsis.repository;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Component;
 import com.jianglibo.nutchbuilder.config.HttpRequestHolder;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.LoginAttempt;
-import com.jianglibo.nutchbuilder.domain.Site;
 import com.jianglibo.nutchbuilder.facade.BootUserFacadeRepository;
 import com.jianglibo.nutchbuilder.facade.LoginAttemptFacadeRepository;
 import com.jianglibo.nutchbuilder.jwt.JwtUtil;
@@ -82,7 +79,7 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 				dto.setPassword("");
 				dto.setJwtToken(jwtUtil.issuePrincipalToken(user));
 				BootUser bu = userRepository.findOne(user.getId());
-				List<Site> sites = bu.getSites();
+//				List<Site> sites = bu.getSites();
 				dto.setUser(new UserDto().fromEntity(bu));
 				return dto;
 		} catch (AuthenticationException e) {
