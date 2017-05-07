@@ -3,10 +3,6 @@ package com.jianglibo.nutchbuilder;
 import javax.sql.DataSource;
 
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.launch.support.SimpleJobLauncher;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,12 +19,8 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
@@ -40,7 +32,6 @@ import com.jianglibo.nutchbuilder.katharsis.dto.MySiteDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
-import com.jianglibo.nutchbuilder.source.DiskMonitor.NutchProjectMonitor;
 
 import io.katharsis.client.KatharsisClient;
 import io.katharsis.client.http.apache.HttpClientAdapter;
@@ -51,7 +42,6 @@ import io.katharsis.spring.boot.v3.KatharsisConfigV3;
 @EnableSpringDataWebSupport
 @EnableJpaRepositories(basePackages="com.jianglibo.nutchbuilder.repository")
 @EnableWebMvc
-@EnableBatchProcessing
 @EnableAsync
 @EnableScheduling
 @EnableAspectJAutoProxy
@@ -135,19 +125,19 @@ public class Application {
     }
     
     
-    @Bean("asyncJobLauncher")
-    public JobLauncher asyncJl(JobRepository jobRepository) {
-    	SimpleJobLauncher jl = new SimpleJobLauncher();
-    	jl.setJobRepository(jobRepository);
-    	ThreadPoolTaskExecutor tpte = new ThreadPoolTaskExecutor();
-    	jl.setTaskExecutor(new DelegatingSecurityContextAsyncTaskExecutor(tpte, SecurityContextHolder.getContext()));
-    	return jl;
-    }
-    
-    @Bean("syncJobLauncher")
-    public JobLauncher syncJl(JobRepository jobRepository) {
-    	SimpleJobLauncher jl = new SimpleJobLauncher();
-    	jl.setJobRepository(jobRepository);
-    	return jl;
-    }
+//    @Bean("asyncJobLauncher")
+//    public JobLauncher asyncJl(JobRepository jobRepository) {
+//    	SimpleJobLauncher jl = new SimpleJobLauncher();
+//    	jl.setJobRepository(jobRepository);
+//    	ThreadPoolTaskExecutor tpte = new ThreadPoolTaskExecutor();
+//    	jl.setTaskExecutor(new DelegatingSecurityContextAsyncTaskExecutor(tpte, SecurityContextHolder.getContext()));
+//    	return jl;
+//    }
+//    
+//    @Bean("syncJobLauncher")
+//    public JobLauncher syncJl(JobRepository jobRepository) {
+//    	SimpleJobLauncher jl = new SimpleJobLauncher();
+//    	jl.setJobRepository(jobRepository);
+//    	return jl;
+//    }
 }

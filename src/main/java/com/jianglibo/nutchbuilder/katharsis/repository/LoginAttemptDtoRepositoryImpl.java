@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import com.jianglibo.nutchbuilder.config.HttpRequestHolder;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.LoginAttempt;
 import com.jianglibo.nutchbuilder.facade.BootUserFacadeRepository;
@@ -45,7 +44,6 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 	
 	@Override
 	public LoginAttemptDto createNew(LoginAttemptDto dto) {
-		HttpRequestHolder request = applicationContext.getBean(HttpRequestHolder.class);
 		return invoke(dto);
 	}
 	
