@@ -1,0 +1,16 @@
+{
+  "errors" : [ {
+    "status" : "422",
+    "code" : "javax.validation.constraints.NotNull",
+    "title" : "不能为null",
+    "source" : {
+      "pointer" : "data/attributes/name"
+    },
+    "meta" : {
+      "resourceId" : null,
+      "type" : "ConstraintViolation",
+      "messageTemplate" : "{javax.validation.constraints.NotNull.message}",
+      "resourceType" : "roles"
+    }
+  } ]
+}

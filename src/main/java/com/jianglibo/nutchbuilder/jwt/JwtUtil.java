@@ -39,6 +39,8 @@ import io.katharsis.resource.Document;
 @Component
 public class JwtUtil implements InitializingBean {
 
+	public static String REFRESH_HEADER_NAME = "jwt_refresh";
+	
 	@Autowired
 	private ApplicationConfig applicationConfig;
 	

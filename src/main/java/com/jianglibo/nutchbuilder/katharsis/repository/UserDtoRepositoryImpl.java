@@ -50,20 +50,14 @@ public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoLis
 	public UserDto modify(UserDto dto) {
 		if (dto.isUpdatePassword()) {
 			validate(dto, OnCreateGroup.class, Default.class);
-			return updatePassword(dto);
+			getRepository().updatePassword(dto.getId(), passwordEncoder.encode(dto.getPassword()));
+			dto.setPassword("");
+			return dto;
 		} else {
 			validate(dto);
 			BootUser entity = getRepository().findOne(dto.getId());
-			entity = dto.patch(entity);
-			return dto.fromEntity(getRepository().save(entity));
+			entity = getRepository().patch(entity, dto);
+			return dto.fromEntity(entity);
 		}
-	}
-
-	private  UserDto updatePassword(UserDto dto) {
-		BootUser entity = getRepository().findOne(dto.getId());
-		entity.setPassword(passwordEncoder.encode(dto.getPassword()));
-		getRepository().save(entity);
-		dto.setPassword("");
-		return dto;
 	}
 }

@@ -2,6 +2,7 @@ package com.jianglibo.nutchbuilder.katharsis.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import com.jianglibo.nutchbuilder.facade.FacadeRepositoryBase;
 import com.jianglibo.nutchbuilder.katharsis.dto.Dto;
 import com.jianglibo.nutchbuilder.katharsis.exception.AppException;
 
+import io.katharsis.queryspec.FilterSpec;
 import io.katharsis.queryspec.QuerySpec;
 import io.katharsis.repository.ResourceRepositoryBase;
 import io.katharsis.resource.list.ResourceListBase;
@@ -71,7 +73,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		validate(dto);
 		E entity = repository.findOne(dto.getId());
 		entity = dto.patch(entity);
-		return dto.fromEntity(saveToJpaRepo(dto, entity));
+		return dto.fromEntity(saveToBackendRepo(dto, entity));
 	}
 	
 	public T createNew(T dto) {
@@ -79,14 +81,14 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		try {
 			E entity = entityClass.newInstance();
 			entity = dto.patch(entity);
-			return dto.fromEntity(saveToJpaRepo(dto, entity));
+			return dto.fromEntity(saveToBackendRepo(dto, entity));
 		} catch (InstantiationException | IllegalAccessException e) {
 			log.error("instantiationException {}", entityClass.getName());
 			throw new AppException().addError(1000, entityClass.getName(), "cannot instantiation " + entityClass.getName());
 		}
 	}
 	
-	public E saveToJpaRepo(T dto, E entity) {
+	public E saveToBackendRepo(T dto, E entity) {
 		return repository.save(entity);
 	}
 	
@@ -120,7 +122,6 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		try {
 			udl = resourceListClass.newInstance();
 			udl.addAll(bus.stream().map(entity -> convertToDto(entity)).collect(Collectors.toList()));
-//			udl.addAll(Dto.convertToDto(getResourceClass(), bus));
 			return udl;
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
@@ -130,25 +131,37 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	
 	@Override
 	public L findAll(QuerySpec querySpec) {
-		Long count = repository.count(querySpec);
-		List<E> entities = repository.findAll(querySpec);
-		List<T> list = entities.stream().map(entity -> convertToDto(entity)).collect(Collectors.toList());
+		Long count = 0L;
+		List<E> entities = new ArrayList<>();
+		E one;
 		
-		L listOb;
+		Optional<FilterSpec> fsOp = querySpec.getFilters().stream().filter(f -> f.getAttributePath().size() == 1 && f.getAttributePath().get(0).equals("id")).findAny();
+
+		if (fsOp.isPresent()) {
+			one = repository.findOne((Long) fsOp.get().getValue());
+			if (one != null) {
+				count = 1L;
+				entities.add(one);
+			}
+		} else {
+			count = repository.count(querySpec);
+			entities = repository.findAll(querySpec);
+		}
+		
+		List<T> list = entities.stream().map(entity -> convertToDto(entity)).collect(Collectors.toList());		
+		L listOb = null;
 		try {
 			listOb = resourceListClass.newInstance();
 			listOb.setMeta(new DtoListMeta(count));
 			listOb.setLinks(new DtoListLinks());
 			listOb.addAll(list);
-			return listOb;
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return listOb;
 	}
 	
 	public F getRepository() {
 		return repository;
 	}
-	
 }

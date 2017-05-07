@@ -38,7 +38,7 @@ public class TestUrlFilterApi  extends KatharsisBase {
 	@Test
 	public void tPostOne() throws JsonParseException, JsonMappingException, IOException {
 		Site site = createSite();
-		String fixture = getFixture("urlfilterpost");
+		String fixture = getFixtureWithExplicitName("urlfilterpost");
 		Document d = replaceRelationshipId(fixture, "id", String.valueOf(site.getId()), "data", "attributes", "site");
 		
 		ResponseEntity<String> response = postItem(d, jwtToken);
@@ -55,9 +55,9 @@ public class TestUrlFilterApi  extends KatharsisBase {
 		ul.setMysite(mysite);
 		ul = urlrepository.save(ul);
 		logout();
-		ResponseEntity<String> response = getBody(jwtToken, getItemUrl(ul.getId()));
+		ResponseEntity<String> response = requestForBody(jwtToken, getItemUrl(ul.getId()));
 		printme(response.getBody());
-		response = getBody(jwtToken, getBaseURI());
+		response = requestForBody(jwtToken, getBaseURI());
 		printme(response.getBody());
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.OK.value()));
 	}

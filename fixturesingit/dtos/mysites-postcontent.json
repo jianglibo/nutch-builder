@@ -1,0 +1,11 @@
+{
+    "data": {
+        "type": "mysites",
+        "attributes": {
+            "homepage": "http://www.abc.com/start",
+            "cburl": "http://a.b.c/callback",
+            "cbVerified": true,
+            "cbsecret": "nooneknow"
+        }
+    }
+}

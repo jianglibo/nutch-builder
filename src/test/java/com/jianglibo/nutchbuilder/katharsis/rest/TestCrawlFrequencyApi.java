@@ -37,7 +37,7 @@ public class TestCrawlFrequencyApi  extends KatharsisBase {
 	@Test
 	public void tPostOne() throws JsonParseException, JsonMappingException, IOException {
 		Site site = createSite();
-		String fixture = getFixture("crawlfrequencypost");
+		String fixture = getFixtureWithExplicitName("crawlfrequencypost");
 		Document d = replaceRelationshipId(fixture, "site", site.getId());
 		
 		ResponseEntity<String> response = postItem(d, jwtToken);
@@ -57,9 +57,9 @@ public class TestCrawlFrequencyApi  extends KatharsisBase {
 		fq = fqrepository.save(fq);
 		logout();
 		
-		ResponseEntity<String> response = getBody(jwtToken, getItemUrl(fq.getId()));
+		ResponseEntity<String> response = requestForBody(jwtToken, getItemUrl(fq.getId()));
 		printme(response.getBody());
-		response = getBody(jwtToken, getBaseURI());
+		response = requestForBody(jwtToken, getBaseURI());
 		printme(response.getBody());
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.OK.value()));
 	}

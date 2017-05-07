@@ -1,0 +1,31 @@
+{
+  "data" : [ {
+    "id" : "950273",
+    "type" : "crawlCats",
+    "attributes" : {
+      "createdAt" : 1494041785605,
+      "name" : "crawlcat1",
+      "description" : "hello"
+    },
+    "relationships" : {
+      "sites" : {
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/crawlCats/950273/relationships/sites",
+          "related" : "http://localhost:88/jsonapi/crawlCats/950273/sites"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/crawlCats/950273"
+    }
+  } ],
+  "links" : {
+    "first" : "http://localhost:88/jsonapi/crawlCats/?page[limit]=20",
+    "last" : "http://localhost:88/jsonapi/crawlCats/?page[limit]=20",
+    "next" : null,
+    "prev" : null
+  },
+  "meta" : {
+    "totalResourceCount" : 1
+  }
+}

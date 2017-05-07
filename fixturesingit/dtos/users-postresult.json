@@ -1,0 +1,43 @@
+{
+  "data" : {
+    "id" : "262144",
+    "type" : "users",
+    "attributes" : {
+      "updatePassword" : false,
+      "gender" : "FEMALE",
+      "displayName" : "admin1",
+      "credentialsNonExpired" : true,
+      "roles" : [ {
+        "id" : 2,
+        "createdAt" : 1490948215450,
+        "name" : "ROLE_USER"
+      }, {
+        "id" : 1,
+        "createdAt" : 1490948215365,
+        "name" : "ROLE_ABC"
+      } ],
+      "mobile" : "1234567890121",
+      "mobileVerified" : false,
+      "avatar" : null,
+      "enabled" : true,
+      "emailVerified" : true,
+      "createdAt" : null,
+      "password" : null,
+      "name" : "USER_T1",
+      "accountNonExpired" : true,
+      "email" : "admin@localhost.com1",
+      "accountNonLocked" : true
+    },
+    "relationships" : {
+      "mysites" : {
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/users/262144/relationships/mysites",
+          "related" : "http://localhost:88/jsonapi/users/262144/mysites"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/users/262144"
+    }
+  }
+}

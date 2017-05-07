@@ -61,8 +61,8 @@ import io.katharsis.resource.Resource;
  *
  */
 
-@Priority(19)
-@Component
+//@Priority(19)
+//@Component
 public class BeforeKatharsisFilter implements Filter, ApplicationContextAware {
 
 	private AuthenticationManager getAuthenticationManager() {

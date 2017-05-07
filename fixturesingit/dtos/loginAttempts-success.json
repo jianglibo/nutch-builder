@@ -1,0 +1,39 @@
+{
+  "data" : {
+    "id" : "1146881",
+    "type" : "loginAttempts",
+    "attributes" : {
+      "createdAt" : null,
+      "password" : "",
+      "provider" : "NORMAL",
+      "success" : true,
+      "jwtToken" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcmluY2lwYWwiLCJnZW5kZXIiOiJGRU1BTEUiLCJtb2JpbGUiOiIxMjM0NTY3ODkwMTIiLCJpc3MiOiJqaWFuZ2xpYm8iLCJpZCI6IjEiLCJleHAiOjE0OTQwNDQwMzAsImVtYWlsIjoiYWRtaW5AbG9jYWxob3N0LmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU5JU1RSQVRPUiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.U-T2SRoeZmSUyuZ1PkjHup_A20_YcMR2gplkWmFRb2Q",
+      "sessionId" : null,
+      "user" : {
+        "id" : 1,
+        "createdAt" : null,
+        "updatePassword" : false,
+        "displayName" : "admin",
+        "avatar" : null,
+        "emailVerified" : true,
+        "mobileVerified" : false,
+        "gender" : "FEMALE",
+        "mysites" : [ ],
+        "name" : "admin",
+        "email" : "admin@localhost.com",
+        "password" : null,
+        "mobile" : "123456789012",
+        "accountNonExpired" : true,
+        "accountNonLocked" : true,
+        "credentialsNonExpired" : true,
+        "enabled" : true,
+        "roles" : [ ]
+      },
+      "remoteAddress" : null,
+      "username" : "admin"
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/loginAttempts/1146881"
+    }
+  }
+}

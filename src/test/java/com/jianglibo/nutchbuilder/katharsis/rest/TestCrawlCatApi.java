@@ -32,20 +32,25 @@ public class TestCrawlCatApi  extends KatharsisBase {
 	
 	@Test
 	public void tAddOne() throws JsonParseException, JsonMappingException, IOException {
-		ResponseEntity<String> response = postItem("crawlcat", jwtToken);
-		printme(response.getBody());
+		ResponseEntity<String> response = postItem(jwtToken);
+		writeDto(response, getResourceName(), ActionNames.POST_RESULT);
 		CrawlCatDto ccd = getOne(response, CrawlCatDto.class);
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
 		assertThat("id should great than 0.", ccd.getId(), greaterThan(0L));
-		response = getBody(jwtToken, getBaseURI());
-		printme(response.getBody());
-		
+		response = requestForBody(jwtToken, getBaseURI());
+		writeDto(response, getResourceName(), ActionNames.GET_LIST);
+		response = requestForBody(jwtToken, getItemUrl(ccd.getId()));
+		writeDto(response, getResourceName(), ActionNames.GET_ONE);
 		createSite(ccrepository.findOne(ccd.getId()));
-		response = getBody(jwtToken, new JsonApiUrlBuilder(getItemUrl(ccd.getId())).withInclude("sites").build()); //include sites
-		
+		response = requestForBody(jwtToken, new JsonApiUrlBuilder(getItemUrl(ccd.getId())).withInclude("sites").build()); //include sites
+		writeDto(response, getResourceName(), ActionNames.GET_ONE_INCLUDE);
+		String crawlCatBody = response.getBody();
+		response = requestForBody(jwtToken, getRelationshipsSelf(crawlCatBody, JsonApiResourceNames.SITE));
+		printme(response.getBody());
+		response = requestForBody(jwtToken, getRelationshipsRelated(crawlCatBody, JsonApiResourceNames.SITE));
 		printme(response.getBody());
 	}
-
+	
 	@Override
 	protected String getResourceName() {
 		return JsonApiResourceNames.CRAWL_CAT;

@@ -19,7 +19,7 @@ public class TestJwtBasicFilter extends KatharsisBase {
 	public void t() throws IOException {
 		HttpHeaders requestHeaders = getCsrfHeader();
 		requestHeaders.set("Authorization", "Bearer " + bareHead);
-		HttpEntity<String> entity = new HttpEntity<String>(getFixture("role"),requestHeaders);
+		HttpEntity<String> entity = new HttpEntity<String>(getFixtureWithExplicitName("role"),requestHeaders);
 		ResponseEntity<String> response = restTemplate.postForEntity(getBaseURI(), entity, String.class);
 	}
 

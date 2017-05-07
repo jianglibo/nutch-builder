@@ -34,6 +34,7 @@ public class MySite extends BaseEntity {
 	private BootUser creator;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
+	@NotNull
 	private Site site;
 	
 	private String cburl;

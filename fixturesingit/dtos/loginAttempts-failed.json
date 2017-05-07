@@ -1,0 +1,6 @@
+{
+  "errors" : [ {
+    "title" : "org.springframework.security.core.AuthenticationException",
+    "detail" : "Bad credentials"
+  } ]
+}

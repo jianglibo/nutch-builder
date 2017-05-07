@@ -24,7 +24,7 @@ public class UrlFilterDtoRepositoryImpl  extends DtoRepositoryBase<UrlFilterDto,
 	}
 	
 	@Override
-	public UrlFilter saveToJpaRepo(UrlFilterDto dto, UrlFilter entity) {
+	public UrlFilter saveToBackendRepo(UrlFilterDto dto, UrlFilter entity) {
 		MySiteDto sd = dto.getMysite();
 		entity.setMysite(mySiteRepository.findOne(sd.getId()));
 		return getRepository().save(entity);

@@ -18,8 +18,7 @@ import io.katharsis.resource.annotations.SerializeType;
 @DtoToEntity(entityClass=Site.class)
 public class SiteDto extends DtoBase<SiteDto, Site> {
 
-	@NotBlank
-	private SiteProtocol protocol;
+	private SiteProtocol protocol = SiteProtocol.HTTP;
 	
 	@NotBlank
 	private String domainName;

@@ -23,7 +23,7 @@ public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoLi
 	}
 
 	@Override
-	public Site saveToJpaRepo(SiteDto dto, Site entity) {
+	public Site saveToBackendRepo(SiteDto dto, Site entity) {
 		entity.setCrawlCat(ccrepository.findOne(dto.getCrawlCat().getId()));
 		return getRepository().save(entity);
 	}

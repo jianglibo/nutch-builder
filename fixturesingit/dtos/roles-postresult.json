@@ -1,0 +1,13 @@
+{
+  "data" : {
+    "id" : "294912",
+    "type" : "roles",
+    "attributes" : {
+      "createdAt" : 1494126794307,
+      "name" : "ROLE_USER_T1"
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/roles/294912"
+    }
+  }
+}

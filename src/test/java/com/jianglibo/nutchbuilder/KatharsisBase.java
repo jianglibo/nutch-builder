@@ -1,18 +1,22 @@
 package com.jianglibo.nutchbuilder;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -43,6 +47,20 @@ public abstract class KatharsisBase extends Tbase {
 	
 	private static String mt = "application/vnd.api+json;charset=UTF-8";
 	
+	private static Path dtosPath = Paths.get("fixturesingit", "dtos");
+	
+	protected static class ActionNames {
+		public static String POST_RESULT = "postresult";
+		public static String POST_ERROR = "posterror";
+		public static String GET_LIST = "getlist";
+		public static String GET_ONE = "getone";
+		public static String GET_ONE_INCLUDE = "getoneinclude";
+	}
+	
+	@Autowired
+	@Qualifier("indentOm")
+	protected ObjectMapper indentOm;
+	
 	@Autowired
 	protected KatharsisBoot kboot;
 	
@@ -51,11 +69,9 @@ public abstract class KatharsisBase extends Tbase {
 	
 	@Autowired
 	protected MySiteRepository mySiteRepository;
-
 	
 	@Autowired
 	protected CrawlCatRepository ccrepository;
-
 	
 	@Autowired
 	protected KatharsisClient katharsisClient;
@@ -70,10 +86,26 @@ public abstract class KatharsisBase extends Tbase {
 	private String pageSize;
 	
 	public void deleteAllSitesAndCrawlCats() {
+		List<MySite> mysites = mySiteRepository.findAll();
+		mySiteRepository.delete(mysites);
 		List<Site> sites = siteRepository.findAll();
 		siteRepository.delete(sites);
 		List<CrawlCat> ccc = ccrepository.findAll();
 		ccrepository.delete(ccc);
+	}
+	
+	public void writeDto(String content, String resourceName, String action) {
+		try {
+			Map<String, Object> v = indentOm.readValue(content.getBytes(StandardCharsets.UTF_8), Map.class);
+			content = indentOm.writeValueAsString(v);
+			Files.write(dtosPath.resolve(resourceName + "-" + action + ".json"), content.getBytes(StandardCharsets.UTF_8));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void writeDto(ResponseEntity<String> re, String resourceName, String action) {
+		writeDto(re.getBody(), resourceName, action);
 	}
 	
 	public Site createSite() {
@@ -121,7 +153,7 @@ public abstract class KatharsisBase extends Tbase {
 		return site;
 	}
 	
-	public ResponseEntity<String> getBody(String jwtToken, String url) throws IOException {
+	public ResponseEntity<String> requestForBody(String jwtToken, String url) throws IOException {
 		HttpHeaders hds = getAuthorizationHaders(jwtToken);
 		HttpEntity<String> request = new HttpEntity<>(hds);
 		
@@ -130,8 +162,13 @@ public abstract class KatharsisBase extends Tbase {
 		        HttpMethod.GET, request, String.class);
 	}
 	
-	public ResponseEntity<String> postItem(String fixtureName, String jwtToken) throws IOException {
-		HttpEntity<String> request = new HttpEntity<String>(getFixture(fixtureName), getAuthorizationHaders(jwtToken));
+	public ResponseEntity<String> postItemWithExplicitFixtures(String fixtureName, String jwtToken) throws IOException {
+		HttpEntity<String> request = new HttpEntity<String>(getFixtureWithExplicitName(fixtureName), getAuthorizationHaders(jwtToken));
+		return restTemplate.postForEntity(getBaseURI(), request, String.class);
+	}
+	
+	public ResponseEntity<String> postItem(String jwtToken) throws IOException {
+		HttpEntity<String> request = new HttpEntity<String>(getFixture(getResourceName()), getAuthorizationHaders(jwtToken));
 		return restTemplate.postForEntity(getBaseURI(), request, String.class);
 	}
 	
@@ -155,7 +192,7 @@ public abstract class KatharsisBase extends Tbase {
 	}
 	
 	public String getAdminJwtToken() throws IOException {
-		HttpEntity<String> request = new HttpEntity<String>(getFixture("loginAdmin"));
+		HttpEntity<String> request = new HttpEntity<String>(getFixtureWithExplicitName("loginAdmin"));
 		ResponseEntity<String> response = restTemplate.postForEntity(getBaseURI(JsonApiResourceNames.LOGIN_ATTEMPT), request, String.class);
 		String body = response.getBody();
 		Document d =  kboot.getObjectMapper().readValue(body, Document.class);
@@ -220,9 +257,14 @@ public abstract class KatharsisBase extends Tbase {
 	}
 
 	
-	public String getFixture(String fname) throws IOException {
+	public String getFixtureWithExplicitName(String fname) throws IOException {
 		return new String(Files.readAllBytes(Paths.get("fixturesingit", "dtos", fname + ".json")));
 	}
+	
+	public String getFixture(String resourceName) throws IOException {
+		return new String(Files.readAllBytes(Paths.get("fixturesingit", "dtos", resourceName  + "-postcontent.json")));
+	}
+
 	
 	protected Document replaceRelationshipId(String origin,String key, String value, String...paths) throws JsonParseException, JsonMappingException, IOException {
 		return objectMapper.readValue(replaceRelationshipIdReturnString(origin, key, value, paths), Document.class);
@@ -260,7 +302,28 @@ public abstract class KatharsisBase extends Tbase {
 	protected Document replaceRelationshipLinkId(String origin,String relationName, String myType, Long value) throws JsonParseException, JsonMappingException, IOException {
 		return objectMapper.readValue(replaceRelationshipLinkIdReturnString(origin, relationName, myType, value), Document.class);
 	}
-
+	
+	private String getRelationships(String content, String resoureName, boolean self) throws JsonParseException, JsonMappingException, IOException {
+		Map<String, Object> m = objectMapper.readValue(content, Map.class);
+		Map<String, Object> dest = m;
+		String[] paths = new String[]{"data", "relationships", resoureName, "links"};
+		for(String seg : paths) {
+			dest = (Map<String, Object>) dest.get(seg);
+		}
+		if (self) {
+			return (String) dest.get("self");
+		} else {
+			return (String) dest.get("related");
+		}
+		
+	}
+	
+	protected String getRelationshipsSelf(String content, String resoureName) throws JsonParseException, JsonMappingException, IOException {
+		return getRelationships(content, resoureName, true);
+	}
+	protected String getRelationshipsRelated(String content, String resoureName) throws JsonParseException, JsonMappingException, IOException {
+		return getRelationships(content, resoureName, false);
+	}
 	
 	protected String replaceRelationshipLinkIdReturnString(String origin,String relationName, String myType, Long value) throws JsonParseException, JsonMappingException, IOException {
 		Map<String, Object> m = objectMapper.readValue(origin, Map.class);
@@ -322,8 +385,17 @@ public abstract class KatharsisBase extends Tbase {
         return ra;
 	}
 	
-	public void verifyRelationshipsKeys(ResponseEntity<String> response, String relationName, String...keys) throws JsonParseException, JsonMappingException, IOException {
-		verifyAllKeys(response, keys, new String[]{"data", "relationships", relationName});
+	/**
+	 * 
+	 * @param response
+	 * @param relationName
+	 * @param keys
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	public void verifyRelationships(ResponseEntity<String> response, String...relationNames) throws JsonParseException, JsonMappingException, IOException {
+		verifyAllKeys(response, relationNames, new String[]{"data", "relationships"});
 	}
 	
 	public void verifyAllKeys(ResponseEntity<String> response, String[] keys, String...paths) throws JsonParseException, JsonMappingException, IOException {
@@ -332,7 +404,7 @@ public abstract class KatharsisBase extends Tbase {
 		for(String seg : paths) {
 			dest = (Map<String, Object>) dest.get(seg);
 		}
-		assertThat(dest.keySet(), contains(keys));
+		assertThat(dest.keySet(), containsInAnyOrder(keys));
 	}
 	
 	public void verifyAnyKeys(ResponseEntity<String> response, String[] keys, String...paths) throws JsonParseException, JsonMappingException, IOException {

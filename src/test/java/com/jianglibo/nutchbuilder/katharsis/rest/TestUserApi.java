@@ -37,7 +37,7 @@ public class TestUserApi  extends KatharsisBase {
 	@Before
 	public void b() throws JsonParseException, JsonMappingException, IOException {
 		jwtToken = getAdminJwtToken();
-		ResponseEntity<String> response = getBody(jwtToken, getBaseURI());
+		ResponseEntity<String> response = requestForBody(jwtToken, getBaseURI());
 		String body = response.getBody();
 		printme(body);
 		originUsers = getList(body, UserDto.class);
@@ -57,17 +57,24 @@ public class TestUserApi  extends KatharsisBase {
 			logout();
 		}
 		long c= userRepository.count();
-		ResponseEntity<String> response = postItem("userwithroles", jwtToken);
-		printme(response.getBody());
+		ResponseEntity<String> response = postItem(jwtToken);
+		writeDto(response, getResourceName(), ActionNames.POST_RESULT);
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
 		assertThat(userRepository.count() - 1, equalTo(c));
 		UserDto newUser = getOne(response.getBody(), UserDto.class);
 		assertThat(newUser.getName(), equalTo(USER_T1));
 		assertTrue("password should be empty.", newUser.getPassword() == null || newUser.getPassword().isEmpty());
 		assertThat("id should great than 0.", newUser.getId(), greaterThan(0L));
+		response = requestForBody(jwtToken, getItemUrl(newUser.getId()));
+		writeDto(response, getResourceName(), ActionNames.GET_ONE);
 		response = deleteByExchange(jwtToken, getItemUrl(newUser.getId()));
-		printme(response.getBody());
 		assertThat(userRepository.count(), equalTo(c));
+	}
+	
+	@Test
+	public void tGet() throws JsonParseException, JsonMappingException, IOException {
+		ResponseEntity<String> response = requestForBody(jwtToken, getBaseURI());
+		writeDto(response, getResourceName(), ActionNames.GET_LIST);
 	}
 	
 	@Test

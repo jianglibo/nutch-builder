@@ -3,8 +3,6 @@ package com.jianglibo.nutchbuilder.katharsis.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
@@ -32,8 +30,7 @@ public class MySiteDto extends DtoBase<MySiteDto, MySite> {
 	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.LAZY, opposite="site")
 	private List<UrlFilterDto> urlfilters = new ArrayList<>();
 	
-	@NotNull
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.EAGER, opposite="sites")
+	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.EAGER, opposite="mysites")
 	private UserDto creator;
 	
 	@Override

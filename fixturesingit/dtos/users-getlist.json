@@ -1,0 +1,88 @@
+{
+  "data" : [ {
+    "id" : "1",
+    "type" : "users",
+    "attributes" : {
+      "updatePassword" : false,
+      "gender" : "FEMALE",
+      "displayName" : "admin",
+      "credentialsNonExpired" : true,
+      "roles" : [ {
+        "id" : 2,
+        "createdAt" : 1493985147502,
+        "name" : "ROLE_USER"
+      }, {
+        "id" : 1,
+        "createdAt" : 1493985147463,
+        "name" : "ROLE_ADMINISTRATOR"
+      } ],
+      "mobile" : "123456789012",
+      "mobileVerified" : false,
+      "avatar" : null,
+      "enabled" : true,
+      "emailVerified" : true,
+      "createdAt" : null,
+      "password" : null,
+      "name" : "admin",
+      "accountNonExpired" : true,
+      "email" : "admin@localhost.com",
+      "accountNonLocked" : true
+    },
+    "relationships" : {
+      "mysites" : {
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/users/1/relationships/mysites",
+          "related" : "http://localhost:88/jsonapi/users/1/mysites"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/users/1"
+    }
+  }, {
+    "id" : "229376",
+    "type" : "users",
+    "attributes" : {
+      "updatePassword" : false,
+      "gender" : "FEMALE",
+      "displayName" : null,
+      "credentialsNonExpired" : true,
+      "roles" : [ {
+        "id" : 2,
+        "createdAt" : 1493985147502,
+        "name" : "ROLE_USER"
+      } ],
+      "mobile" : null,
+      "mobileVerified" : false,
+      "avatar" : null,
+      "enabled" : true,
+      "emailVerified" : true,
+      "createdAt" : null,
+      "password" : null,
+      "name" : "uuu",
+      "accountNonExpired" : true,
+      "email" : "uuu@m3958.com",
+      "accountNonLocked" : true
+    },
+    "relationships" : {
+      "mysites" : {
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/users/229376/relationships/mysites",
+          "related" : "http://localhost:88/jsonapi/users/229376/mysites"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/users/229376"
+    }
+  } ],
+  "links" : {
+    "first" : "http://localhost:88/jsonapi/users/?page[limit]=20",
+    "last" : "http://localhost:88/jsonapi/users/?page[limit]=20",
+    "next" : null,
+    "prev" : null
+  },
+  "meta" : {
+    "totalResourceCount" : 2
+  }
+}

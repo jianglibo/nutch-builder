@@ -1,7 +1,5 @@
 package com.jianglibo.nutchbuilder.katharsis.dto;
 
-import java.util.Date;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -9,6 +7,7 @@ import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.domain.Role;
 
+import io.katharsis.resource.annotations.JsonApiMetaInformation;
 import io.katharsis.resource.annotations.JsonApiResource;
 
 @JsonApiResource(type = JsonApiResourceNames.ROLE)
@@ -19,7 +18,8 @@ public class RoleDto extends DtoBase<RoleDto, Role>{
 	@Size(min=3, max=30)
 	private String name;
 	
-	private Date createdAt;
+	@JsonApiMetaInformation
+	private String jwt;
 	
 	@Override
 	public RoleDto fromEntity(Role role) {
@@ -42,15 +42,17 @@ public class RoleDto extends DtoBase<RoleDto, Role>{
 		entity.setName(getName());
 		return entity;
 	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
 	
+	
+
+	public String getJwt() {
+		return jwt;
+	}
+
+	public void setJwt(String jwt) {
+		this.jwt = jwt;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("[%s,%s]", getId(), getName());

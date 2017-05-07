@@ -1,0 +1,17 @@
+{
+    "data": {
+        "type": "sites",
+        "attributes": {
+            "protocol": "HTTP",
+            "domainName": "http://a.b.c",
+            "entryPath": "/"
+        },
+        "relationships": {
+            "crawlCat": {
+                "data": {
+                    "id": 5566
+                }
+            }
+        }
+    }
+}

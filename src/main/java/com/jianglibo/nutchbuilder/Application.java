@@ -27,7 +27,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.jianglibo.nutchbuilder.config.ApplicationConfig;
@@ -112,6 +115,13 @@ public class Application {
     @ConfigurationProperties(prefix="spring.datasource")
     public DataSource primaryDataSource() {
         return DataSourceBuilder.create().build();
+    }
+    
+    @Bean("indentOm")
+    public ObjectMapper indentOm() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+        return mapper;
     }
     
     

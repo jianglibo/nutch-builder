@@ -24,7 +24,7 @@ public class UserDto extends DtoBase<UserDto, BootUser> {
 	
 	public static interface OnCreateGroup {}
 	
-	private boolean updatePassword;
+	private boolean updatePassword = false;
 	
     private String displayName;
 
@@ -34,10 +34,18 @@ public class UserDto extends DtoBase<UserDto, BootUser> {
 
     private boolean mobileVerified;
     
+    private boolean accountNonExpired;
+
+    private boolean accountNonLocked;
+
+    private boolean credentialsNonExpired;
+
+    private boolean enabled;
+    
     private Gender gender;
     
-    @JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.LAZY, opposite="creator")
-    private List<SiteDto> sites = new ArrayList<>();
+    @JsonApiRelation(lookUp=LookupIncludeBehavior.NONE,serialize=SerializeType.LAZY, opposite="creator")
+    private List<MySiteDto> mysites = new ArrayList<>();
     
     @NotNull
     @Size(min=6, max=36)
@@ -56,14 +64,6 @@ public class UserDto extends DtoBase<UserDto, BootUser> {
     @Size(min=8, max=16)
     private String mobile;
 
-    private boolean accountNonExpired;
-
-    private boolean accountNonLocked;
-
-    private boolean credentialsNonExpired;
-
-    private boolean enabled;
-    
     private List<RoleDto> roles = new ArrayList<>();
     
     public List<RoleDto> getRoles() {
@@ -201,18 +201,29 @@ public class UserDto extends DtoBase<UserDto, BootUser> {
 	public BootUser patch(BootUser entity) {
 		entity.setAccountNonExpired(isAccountNonExpired());
 		entity.setAccountNonLocked(isAccountNonLocked());
-		entity.setAvatar(getAvatar());
 		entity.setCredentialsNonExpired(isCredentialsNonExpired());
+		entity.setEmailVerified(isEmailVerified());
+		entity.setMobileVerified(isMobileVerified());
+		entity.setEnabled(isEnabled());
+		
+		entity.setAvatar(getAvatar());
 		entity.setDisplayName(getDisplayName());
 		entity.setEmail(getEmail());
-		entity.setEmailVerified(isEmailVerified());
-		entity.setEnabled(isEnabled());
 		entity.setGender(getGender());
 		entity.setId(getId());
 		entity.setMobile(getMobile());
-		entity.setMobileVerified(isMobileVerified());
 		entity.setName(getName());
-//		entity.setPassword(getPassword());
+		return entity;
+	}
+	
+	public BootUser patchLeaveStatusUnChanged(BootUser entity) {
+		entity.setAvatar(getAvatar());
+		entity.setDisplayName(getDisplayName());
+		entity.setEmail(getEmail());
+		entity.setGender(getGender());
+		entity.setId(getId());
+		entity.setMobile(getMobile());
+		entity.setName(getName());
 		return entity;
 	}
 
@@ -224,11 +235,11 @@ public class UserDto extends DtoBase<UserDto, BootUser> {
 		this.updatePassword = updatePassword;
 	}
 
-	public List<SiteDto> getSites() {
-		return sites;
+	public List<MySiteDto> getMysites() {
+		return mysites;
 	}
 
-	public void setSites(List<SiteDto> sites) {
-		this.sites = sites;
+	public void setMysites(List<MySiteDto> mysites) {
+		this.mysites = mysites;
 	}
 }

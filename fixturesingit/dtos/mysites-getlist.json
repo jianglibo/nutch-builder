@@ -1,0 +1,40 @@
+{
+  "data" : [ {
+    "id" : "98304",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "http://a.b.c/callback",
+      "createdAt" : 1494123923837,
+      "cburlVerified" : false,
+      "cbsecret" : "nooneknow",
+      "homepage" : "http://www.abc.com/start"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : null,
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/98304/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/98304/creator"
+        }
+      },
+      "urlfilters" : {
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/98304/relationships/urlfilters",
+          "related" : "http://localhost:88/jsonapi/mysites/98304/urlfilters"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/98304"
+    }
+  } ],
+  "links" : {
+    "first" : "http://localhost:88/jsonapi/mysites/?page[limit]=20",
+    "last" : "http://localhost:88/jsonapi/mysites/?page[limit]=20",
+    "next" : null,
+    "prev" : null
+  },
+  "meta" : {
+    "totalResourceCount" : 1
+  }
+}

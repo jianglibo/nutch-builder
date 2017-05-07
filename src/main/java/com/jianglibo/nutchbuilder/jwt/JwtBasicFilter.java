@@ -24,6 +24,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.jianglibo.nutchbuilder.vo.BootUserAuthentication;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
@@ -69,7 +71,7 @@ public class JwtBasicFilter implements Filter {
 				chain.doFilter(request, response);
 			} else if (pathPattern.matcher(request.getRequestURI()).matches()) {
 				try {
-					processBasicLogin(request);
+					processBasicLogin(request, response);
 					chain.doFilter(req, res);
 				} catch (AuthenticationException e) {
 		            SecurityContextHolder.clearContext();
@@ -81,27 +83,27 @@ public class JwtBasicFilter implements Filter {
 		}
 	}
 
-    private void processBasicLogin(HttpServletRequest request) throws AccessDeniedException, IOException {
+    private void processBasicLogin(HttpServletRequest request, HttpServletResponse response) throws AccessDeniedException, IOException {
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
             throw new AccessDeniedException("no jwt header.");
         }
+        String jwttoken = header.substring(7);
         SecurityContextHolder.clearContext();
-        BootUserPrincipal pricipal = jwtUtil.verifyPrincipalToken(header.substring(7));
         
+        BootUserPrincipal pricipal = jwtUtil.verifyPrincipalToken(jwttoken);
+
+        JWT jwtOb = JWT.decode(jwttoken);
+        response.setHeader("aaaaa5", "aaaaa5");
         BootUserAuthentication buan = new BootUserAuthentication(pricipal);
         SecurityContextHolder.getContext().setAuthentication(buan);
     }
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-		
 	}
 }

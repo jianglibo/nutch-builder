@@ -1,0 +1,24 @@
+{
+  "data" : {
+    "id" : "458752",
+    "type" : "sites",
+    "attributes" : {
+      "createdAt" : 1494041106466,
+      "protocol" : "HTTP",
+      "domainName" : "http://a.b.c",
+      "entryPath" : "/"
+    },
+    "relationships" : {
+      "crawlCat" : {
+        "data" : null,
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/sites/458752/relationships/crawlCat",
+          "related" : "http://localhost:88/jsonapi/sites/458752/crawlCat"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/sites/458752"
+    }
+  }
+}
