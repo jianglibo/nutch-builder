@@ -90,6 +90,27 @@ myapp:
     templateRoot: /home/nutchbuilder/templateRoot
     buildRoot: /home/nutchbuilder/buildRoot
     unjarRoot: C:\Users\admin\AppData\Local\Temp
+    hbaseRestHost: s62.host.name
+    hbaseRestPort: 8081
+    hbaseRestProtocol: http
+    hdfsHost: s62.host.name
+    hadoopExecutable: E:\hadoop-2.7.3\bin\hadoop.cmd
+    hdfsPort: 
+    antExec: D:/apache-ant-1.9.4/bin/ant.bat
+    tProjectRoot: e:/nutchBuilderRoot/buildRoot/a
+    zkQuoram: s62.host.name,s63.host.name,s64.host.name,s65.host.name,s66.host.name
+    jwtConfig:
+      file: d:\jwtsecret.txt
+      issuer: jianglibo
+      principalTokenAlive: 1800000 # 30 minutes
+      emailTokenAlive: 172800000 #2 days
+katharsis:
+    resourcePackage: com.jianglibo.nutchbuilder.katharsis
+    domainName: http://localhost:8080
+    pathPrefix: /jsonapi
+    default-page-limit: 20
+    jpa:
+      enabled: false
 ---
 spring:
     profiles: prod

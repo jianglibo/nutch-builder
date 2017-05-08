@@ -3,7 +3,6 @@
         "type": "crawlCats",
         "attributes": {
             "name": "crawlcat1",
-            "projectRoot": "abc/ddd",
             "description": "hello"
         }
     }

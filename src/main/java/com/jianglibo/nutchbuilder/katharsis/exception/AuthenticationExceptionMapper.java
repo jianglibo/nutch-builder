@@ -5,6 +5,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
+import com.jianglibo.nutchbuilder.constant.AppErrorCodes;
+
 import io.katharsis.errorhandling.ErrorData;
 import io.katharsis.errorhandling.ErrorResponse;
 import io.katharsis.errorhandling.mapper.ExceptionMapper;
@@ -14,14 +16,18 @@ public class AuthenticationExceptionMapper implements ExceptionMapper<AccessDeni
 
 	@Override
 	public ErrorResponse toErrorResponse(AccessDeniedException e) {
-		ErrorData ed = ErrorData.builder().setTitle(AuthenticationException.class.getName()).setDetail(e.getMessage()).build();
-		return ErrorResponse.builder().setStatus(HttpStatus.FORBIDDEN.value())
-		.setSingleErrorData(ed).build();
+		ErrorData ed = ErrorData
+				.builder()
+				.setTitle(AuthenticationException.class.getName())
+				.setCode(AppErrorCodes.AUTHENTICATION)
+				.setDetail(e.getMessage())
+				.build();
+		return ErrorResponse.builder().setStatus(HttpStatus.FORBIDDEN.value()).setSingleErrorData(ed).build();
 	}
 
 	@Override
 	public AccessDeniedException fromErrorResponse(ErrorResponse errorResponse) {
-		ErrorData ed =  errorResponse.getErrors().iterator().next();
+		ErrorData ed = errorResponse.getErrors().iterator().next();
 		AccessDeniedException ae = new AccessDeniedException(ed.getDetail()) {
 		};
 		return ae;

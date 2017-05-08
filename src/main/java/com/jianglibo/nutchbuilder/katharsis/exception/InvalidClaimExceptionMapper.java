@@ -1,34 +1,28 @@
 package com.jianglibo.nutchbuilder.katharsis.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import com.jianglibo.nutchbuilder.constant.AppErrorCodes;
+import com.auth0.jwt.exceptions.InvalidClaimException;
 
 import io.katharsis.errorhandling.ErrorData;
 import io.katharsis.errorhandling.ErrorResponse;
 import io.katharsis.errorhandling.mapper.ExceptionMapper;
 
 @Component
-public class AccessDeniedExceptionMapper implements ExceptionMapper<AuthenticationException> {
+public class InvalidClaimExceptionMapper implements ExceptionMapper<InvalidClaimException> {
 
 	@Override
-	public ErrorResponse toErrorResponse(AuthenticationException e) {
-		ErrorData ed = ErrorData
-				.builder()
-				.setTitle(AuthenticationException.class.getName())
-				.setCode(AppErrorCodes.ACCESS_DENIED)
-				.setDetail(e.getMessage())
-				.build();
+	public ErrorResponse toErrorResponse(InvalidClaimException e) {
+		ErrorData ed = ErrorData.builder().setTitle(InvalidClaimException.class.getName()).setDetail(e.getMessage()).build();
 		return ErrorResponse.builder().setStatus(HttpStatus.BAD_REQUEST.value())
 		.setSingleErrorData(ed).build();
 	}
 
 	@Override
-	public AuthenticationException fromErrorResponse(ErrorResponse errorResponse) {
+	public InvalidClaimException fromErrorResponse(ErrorResponse errorResponse) {
 		ErrorData ed =  errorResponse.getErrors().iterator().next();
-		AuthenticationException ae = new AuthenticationException(ed.getDetail()) {
+		InvalidClaimException ae = new InvalidClaimException(ed.getDetail()) {
 		};
 		return ae;
 	}

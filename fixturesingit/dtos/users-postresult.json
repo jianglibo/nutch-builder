@@ -1,6 +1,6 @@
 {
   "data" : {
-    "id" : "262144",
+    "id" : "196608",
     "type" : "users",
     "attributes" : {
       "updatePassword" : false,
@@ -10,11 +10,13 @@
       "roles" : [ {
         "id" : 2,
         "createdAt" : 1490948215450,
-        "name" : "ROLE_USER"
+        "name" : "ROLE_USER",
+        "jwt" : null
       }, {
         "id" : 1,
         "createdAt" : 1490948215365,
-        "name" : "ROLE_ABC"
+        "name" : "ROLE_ABC",
+        "jwt" : null
       } ],
       "mobile" : "1234567890121",
       "mobileVerified" : false,
@@ -31,13 +33,13 @@
     "relationships" : {
       "mysites" : {
         "links" : {
-          "self" : "http://localhost:88/jsonapi/users/262144/relationships/mysites",
-          "related" : "http://localhost:88/jsonapi/users/262144/mysites"
+          "self" : "http://localhost:8080/jsonapi/users/196608/relationships/mysites",
+          "related" : "http://localhost:8080/jsonapi/users/196608/mysites"
         }
       }
     },
     "links" : {
-      "self" : "http://localhost:88/jsonapi/users/262144"
+      "self" : "http://localhost:8080/jsonapi/users/196608"
     }
   }
 }

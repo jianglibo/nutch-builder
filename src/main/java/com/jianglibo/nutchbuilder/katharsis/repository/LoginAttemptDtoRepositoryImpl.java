@@ -1,5 +1,7 @@
 package com.jianglibo.nutchbuilder.katharsis.repository;
 
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.jianglibo.nutchbuilder.facade.BootUserFacadeRepository;
 import com.jianglibo.nutchbuilder.facade.LoginAttemptFacadeRepository;
 import com.jianglibo.nutchbuilder.jwt.JwtUtil;
 import com.jianglibo.nutchbuilder.katharsis.dto.LoginAttemptDto;
+import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.LoginAttemptDtoRepository.LoginAttemptDtoList;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
@@ -77,8 +80,9 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 				dto.setPassword("");
 				dto.setJwtToken(jwtUtil.issuePrincipalToken(user));
 				BootUser bu = userRepository.findOne(user.getId());
-//				List<Site> sites = bu.getSites();
-				dto.setUser(new UserDto().fromEntity(bu));
+				UserDto udto = new UserDto().fromEntity(bu);
+				udto.setRoles(bu.getRoles().stream().map(r -> new RoleDto().fromEntity(r)).collect(Collectors.toList()));
+				dto.setUser(udto);
 				return dto;
 		} catch (AuthenticationException e) {
 				getRepository().save(loginAttemp);

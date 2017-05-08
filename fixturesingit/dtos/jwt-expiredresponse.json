@@ -1,0 +1,8 @@
+{
+  "timestamp" : 1494216343637,
+  "status" : 500,
+  "error" : "Internal Server Error",
+  "exception" : "com.auth0.jwt.exceptions.InvalidClaimException",
+  "message" : "The Token has expired on Mon May 08 11:14:30 CST 2017.",
+  "path" : "/jsonapi/null"
+}

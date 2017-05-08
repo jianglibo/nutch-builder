@@ -28,6 +28,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.jianglibo.nutchbuilder.config.ApplicationConfig;
 import com.jianglibo.nutchbuilder.config.KatharsisModuleConfig;
 import com.jianglibo.nutchbuilder.facade.CrawlCatFacadeRepository;
+import com.jianglibo.nutchbuilder.katharsis.dto.LoginAttemptDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.MySiteDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
@@ -96,6 +97,7 @@ public class Application {
     	kc.getRepositoryForType(UserDto.class);
     	kc.getRepositoryForType(RoleDto.class);
     	kc.getRepositoryForType(MySiteDto.class);
+    	kc.getRepositoryForType(LoginAttemptDto.class);
     	return kc;
     }
 	

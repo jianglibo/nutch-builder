@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -40,6 +41,8 @@ import io.katharsis.resource.Document;
 public class JwtUtil implements InitializingBean {
 
 	public static String REFRESH_HEADER_NAME = "jwt_refresh";
+	
+	private static long REFRESH_TIME_BOTTOM = 5 * 60 * 60L;
 	
 	@Autowired
 	private ApplicationConfig applicationConfig;
@@ -98,6 +101,14 @@ public class JwtUtil implements InitializingBean {
 				, id
 				, "");
 	}
+	
+	public String regenToken(DecodedJWT decodedJwt, BootUserPrincipal principal) {
+		if ((Instant.now().getEpochSecond() - decodedJwt.getExpiresAt().getTime()) < REFRESH_TIME_BOTTOM) {
+			return issuePrincipalToken(principal);
+		} else {
+			return null;
+		}
+	}
 
 	
 	private Date getPrincipalExpireDate() {
@@ -122,10 +133,10 @@ public class JwtUtil implements InitializingBean {
 		        .sign(algorithm);
 	}
 	
-	public BootUserPrincipal verifyPrincipalToken(String token) {
-        DecodedJWT jwt = verifier.verify(token);
-        return toPrincipal(jwt);
-	}
+//	public BootUserPrincipal verifyPrincipalToken(String token) {
+//        DecodedJWT jwt = verifier.verify(token);
+//        return toPrincipal(jwt);
+//	}
 	
 	public DecodedJWT verifyEmailToken(String token) {
         return verifier.verify(token);
@@ -155,6 +166,13 @@ public class JwtUtil implements InitializingBean {
 	            .build();
 
 	}
-	
+
+	public JWTVerifier getVerifier() {
+		return verifier;
+	}
+
+	public void setVerifier(JWTVerifier verifier) {
+		this.verifier = verifier;
+	}
 
 }

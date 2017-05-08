@@ -24,7 +24,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
-import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.jianglibo.nutchbuilder.vo.BootUserAuthentication;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
@@ -90,13 +89,14 @@ public class JwtBasicFilter implements Filter {
         }
         String jwttoken = header.substring(7);
         SecurityContextHolder.clearContext();
-        
-        BootUserPrincipal pricipal = jwtUtil.verifyPrincipalToken(jwttoken);
-
-        JWT jwtOb = JWT.decode(jwttoken);
-        response.setHeader("aaaaa5", "aaaaa5");
-        BootUserAuthentication buan = new BootUserAuthentication(pricipal);
+        DecodedJWT decodedJwt = jwtUtil.getVerifier().verify(jwttoken);
+        BootUserPrincipal principal = jwtUtil.toPrincipal(decodedJwt);
+        BootUserAuthentication buan = new BootUserAuthentication(principal);
         SecurityContextHolder.getContext().setAuthentication(buan);
+        String refreshToken = jwtUtil.regenToken(decodedJwt, principal);
+        if (refreshToken != null) {
+        	response.setHeader(JwtUtil.REFRESH_HEADER_NAME, refreshToken);
+        }
     }
 
 	@Override
