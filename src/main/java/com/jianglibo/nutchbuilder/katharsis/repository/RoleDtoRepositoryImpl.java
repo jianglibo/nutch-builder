@@ -1,6 +1,8 @@
 package com.jianglibo.nutchbuilder.katharsis.repository;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -27,6 +29,12 @@ public class RoleDtoRepositoryImpl  extends DtoRepositoryBase<RoleDto, RoleDtoLi
 
 	@Override
 	protected RoleDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
+	}
+
+	@Override
+	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

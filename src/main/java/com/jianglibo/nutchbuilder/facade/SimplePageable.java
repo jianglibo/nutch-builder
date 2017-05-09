@@ -19,6 +19,23 @@ public class SimplePageable implements Pageable {
 	
 	private final int offset;
 	
+	public SimplePageable(long offset, long limit,SortBroker...filterFields) {
+		this.offset = (int) offset;
+		this.perPage = (int) limit;
+		this.curPage = (int) Math.ceil(offset / limit);
+		if (filterFields.length == 0) {
+			this.sort = null;
+		} else {
+			List<Order> orders = Stream.of(filterFields).map(field -> {
+				if (field.isAscending()) {
+					return new Order(Sort.Direction.ASC, field.getFieldName());
+				} else {
+					return new Order(Sort.Direction.DESC, field.getFieldName());
+				}
+			}).collect(Collectors.toList());
+			this.sort = new Sort(orders);
+		}
+	}
 	
 	public SimplePageable(long offset, long limit,String...filterFields) {
 		this.offset = (int) offset;

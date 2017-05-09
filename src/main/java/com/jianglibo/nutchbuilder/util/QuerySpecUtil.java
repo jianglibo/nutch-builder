@@ -3,6 +3,8 @@ package com.jianglibo.nutchbuilder.util;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.jianglibo.nutchbuilder.facade.SortBroker;
+
 import io.katharsis.queryspec.Direction;
 import io.katharsis.queryspec.FilterOperator;
 import io.katharsis.queryspec.FilterSpec;
@@ -33,6 +35,13 @@ public class QuerySpecUtil {
 			String f = sort.getAttributePath().stream().collect(Collectors.joining(","));
 			return sort.getDirection() == Direction.ASC ? f : "-" + f;
 		}).toArray(f -> new String[]{});
+	}
+	
+	public static SortBroker[] getSortBrokers(QuerySpec spec) {
+		return spec.getSort().stream().map(sort -> {
+			String f = sort.getAttributePath().stream().collect(Collectors.joining(","));
+			return sort.getDirection() == Direction.ASC ? new SortBroker(f, true) : new SortBroker(f, false);
+		}).toArray(f -> new SortBroker[]{});
 	}
 	
 	public static Optional<String> getFilterStringValue(QuerySpec querySpec, String fn) {

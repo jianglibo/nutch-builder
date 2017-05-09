@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface FacadeRepositoryBase<T> {
 	
-	List<T> findRange(long offset, long limit, String...sortFields);
+	List<T> findRange(long offset, long limit, SortBroker...sortFields);
 	
 	long count();
 	

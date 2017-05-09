@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jianglibo.nutchbuilder.facade.FacadeRepositoryBase;
 import com.jianglibo.nutchbuilder.facade.SimplePageable;
+import com.jianglibo.nutchbuilder.facade.SortBroker;
 import com.jianglibo.nutchbuilder.repository.RepositoryBase;
 
 public abstract class FacadeRepositoryBaseImpl<T, R extends RepositoryBase<T>> implements FacadeRepositoryBase<T> {
@@ -15,8 +16,8 @@ public abstract class FacadeRepositoryBaseImpl<T, R extends RepositoryBase<T>> i
 	}
 	
 	@Override
-	public List<T> findRange(long offset, long limit,String...sortFields) {
-		return jpaRepo.findAll(new SimplePageable(offset, limit)).getContent();
+	public List<T> findRange(long offset, long limit,SortBroker...sortFields) {
+		return jpaRepo.findAll(new SimplePageable(offset, limit, sortFields)).getContent();
 	}
 	
 	@Override

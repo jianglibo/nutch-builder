@@ -1,6 +1,8 @@
 package com.jianglibo.nutchbuilder.katharsis.repository;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +36,12 @@ public class CrawlFrequencyDtoRepositoryImpl  extends DtoRepositoryBase<CrawlFre
 
 	@Override
 	protected CrawlFrequencyDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
+	}
+
+	@Override
+	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

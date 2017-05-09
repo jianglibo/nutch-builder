@@ -17,7 +17,6 @@ public class AppException extends RuntimeException {
 		return this;
 	}
 	
-	
 	public List<CodeAndTitle> getErrors() {
 		return errors;
 	}

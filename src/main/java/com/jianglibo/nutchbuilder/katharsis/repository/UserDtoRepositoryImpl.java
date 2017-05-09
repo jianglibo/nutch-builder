@@ -1,5 +1,6 @@
 package com.jianglibo.nutchbuilder.katharsis.repository;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.groups.Default;
@@ -66,6 +67,13 @@ public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoLis
 
 	@Override
 	protected UserDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
+	}
+
+
+	@Override
+	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

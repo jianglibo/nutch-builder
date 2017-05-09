@@ -19,6 +19,7 @@ import com.jianglibo.nutchbuilder.domain.BaseEntity;
 import com.jianglibo.nutchbuilder.facade.FacadeRepositoryBase;
 import com.jianglibo.nutchbuilder.katharsis.dto.Dto;
 import com.jianglibo.nutchbuilder.katharsis.exception.AppException;
+import com.jianglibo.nutchbuilder.katharsis.exception.UnsortableException;
 import com.jianglibo.nutchbuilder.util.QuerySpecUtil;
 
 import io.katharsis.queryspec.QuerySpec;
@@ -144,13 +145,20 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 			return convertToResourceList(entities, 1L);
 		}
 		
+		List<String> unsported = checkAllSortableFieldAllowed(querySpec); 
+		if (unsported != null && unsported.size() > 0) {
+			 throw new UnsortableException(String.join(",", unsported));
+		}
+		
 		if (querySpec.getFilters().isEmpty()) {
-			return convertToResourceList(repository.findRange(querySpec.getOffset(), querySpec.getLimit(), QuerySpecUtil.getSortFields(querySpec)), repository.count());
+			return convertToResourceList(repository.findRange(querySpec.getOffset(), querySpec.getLimit(), QuerySpecUtil.getSortBrokers(querySpec)), repository.count());
 		} else {
 			return findAllWithQuerySpec(querySpec);
 		}
 	}
 	
+	protected abstract List<String> checkAllSortableFieldAllowed(QuerySpec querySpec);
+
 	protected abstract L findAllWithQuerySpec(QuerySpec querySpec);
 
 	protected L convertToResourceList(List<E> entities, long count) {

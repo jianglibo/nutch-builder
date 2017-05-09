@@ -1,5 +1,6 @@
 package com.jianglibo.nutchbuilder.katharsis.repository;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -94,6 +95,12 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 
 	@Override
 	protected LoginAttemptDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
+	}
+
+	@Override
+	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
