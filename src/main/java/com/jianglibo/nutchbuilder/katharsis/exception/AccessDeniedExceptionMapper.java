@@ -1,7 +1,7 @@
 package com.jianglibo.nutchbuilder.katharsis.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
 import com.jianglibo.nutchbuilder.constant.AppErrorCodes;
@@ -11,13 +11,13 @@ import io.katharsis.errorhandling.ErrorResponse;
 import io.katharsis.errorhandling.mapper.ExceptionMapper;
 
 @Component
-public class AccessDeniedExceptionMapper implements ExceptionMapper<AuthenticationException> {
+public class AccessDeniedExceptionMapper implements ExceptionMapper<AccessDeniedException> {
 
 	@Override
-	public ErrorResponse toErrorResponse(AuthenticationException e) {
+	public ErrorResponse toErrorResponse(AccessDeniedException e) {
 		ErrorData ed = ErrorData
 				.builder()
-				.setTitle(AuthenticationException.class.getName())
+				.setTitle(AccessDeniedException.class.getName())
 				.setCode(AppErrorCodes.ACCESS_DENIED)
 				.setDetail(e.getMessage())
 				.build();
@@ -26,9 +26,9 @@ public class AccessDeniedExceptionMapper implements ExceptionMapper<Authenticati
 	}
 
 	@Override
-	public AuthenticationException fromErrorResponse(ErrorResponse errorResponse) {
+	public AccessDeniedException fromErrorResponse(ErrorResponse errorResponse) {
 		ErrorData ed =  errorResponse.getErrors().iterator().next();
-		AuthenticationException ae = new AuthenticationException(ed.getDetail()) {
+		AccessDeniedException ae = new AccessDeniedException(ed.getDetail()) {
 		};
 		return ae;
 	}

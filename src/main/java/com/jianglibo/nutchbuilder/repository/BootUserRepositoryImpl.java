@@ -1,9 +1,10 @@
 package com.jianglibo.nutchbuilder.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 
 import com.jianglibo.nutchbuilder.domain.BootUser;
 
@@ -21,7 +22,12 @@ public class BootUserRepositoryImpl extends DistinctSimpleJpaRepository<BootUser
     }
 
 	@Override
-	protected Specification<BootUser> createSpecification(QuerySpec querySpec) {
+	protected long countIfNotCountOne(QuerySpec querySpec) {
+		return 0;
+	}
+
+	@Override
+	protected List<BootUser> findIfNotFindOne(QuerySpec querySpec) {
 		return null;
 	}
 }

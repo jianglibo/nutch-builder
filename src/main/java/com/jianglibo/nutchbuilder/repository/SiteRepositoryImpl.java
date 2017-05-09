@@ -1,11 +1,13 @@
 package com.jianglibo.nutchbuilder.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 
 import com.jianglibo.nutchbuilder.domain.Site;
+import com.jianglibo.nutchbuilder.katharsis.vo.SimplePageable;
 
 import io.katharsis.queryspec.QuerySpec;
 
@@ -20,13 +22,19 @@ public class SiteRepositoryImpl extends DistinctSimpleJpaRepository<Site> implem
         super(Site.class, entityManager);
     }
     
-    /**
-     * maybe disabling arbitrary filter feather is judicious.
-     */
+    @Override
+    public List<Site> findAll(QuerySpec querySpec) {
+    	return super.findAll(querySpec);
+    }
+
 	@Override
-	protected Specification<Site> createSpecification(QuerySpec querySpec) {
-//		return RoleSpecifications.nameLike(filterValue(querySpec, "name"));
-		return null;
+	protected long countIfNotCountOne(QuerySpec querySpec) {
+		return countBySpecifiation(null);
+	}
+
+	@Override
+	protected List<Site> findIfNotFindOne(QuerySpec querySpec) {
+		return findBySpecifiation(null, new SimplePageable(querySpec));
 	}
 
 }

@@ -54,7 +54,7 @@ public class TestMySitetApi  extends KatharsisBase {
 		writeDto(response, getResourceName(), ActionNames.POST_RESULT);
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
 		
-		verifyRelationships(response,"creator", "urlfilters");
+		verifyRelationships(response,"creator");
 		MySiteDto sd = getOne(response, MySiteDto.class);
 		List<MySiteDto> sds = getList(response, MySiteDto.class);
 		assertThat(sds.size(), equalTo(1));

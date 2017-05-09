@@ -1,8 +1,5 @@
 package com.jianglibo.nutchbuilder.katharsis.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
@@ -14,6 +11,11 @@ import io.katharsis.resource.annotations.JsonApiResource;
 import io.katharsis.resource.annotations.LookupIncludeBehavior;
 import io.katharsis.resource.annotations.SerializeType;
 
+/**
+ * All this app done is to fetch all pages of a site. no more.
+ * @author jianglibo@hotmail.com
+ *
+ */
 @JsonApiResource(type = JsonApiResourceNames.MY_SITE)
 @DtoToEntity(entityClass=MySite.class)
 public class MySiteDto extends DtoBase<MySiteDto, MySite> {
@@ -26,9 +28,6 @@ public class MySiteDto extends DtoBase<MySiteDto, MySite> {
 	private boolean cburlVerified;
 	
 	private String cbsecret;
-	
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.LAZY, opposite="site")
-	private List<UrlFilterDto> urlfilters = new ArrayList<>();
 	
 	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.EAGER, opposite="mysites")
 	private UserDto creator;
@@ -81,14 +80,6 @@ public class MySiteDto extends DtoBase<MySiteDto, MySite> {
 
 	public void setCbsecret(String cbsecret) {
 		this.cbsecret = cbsecret;
-	}
-
-	public List<UrlFilterDto> getUrlfilters() {
-		return urlfilters;
-	}
-
-	public void setUrlfilters(List<UrlFilterDto> urlfilters) {
-		this.urlfilters = urlfilters;
 	}
 
 	public UserDto getCreator() {

@@ -21,7 +21,7 @@ public class RoleNames {
     
     public static final String ROLE_ADMINISTRATOR = "ROLE_ADMINISTRATOR";
 
-    public static final String ROLE_SITEMANAGER = "ROLE_ADMINISTRATOR";
+    public static final String ROLE_SITEMANAGER = "ROLE_SITEMANAGER";
     
     public static final String ACL_OWNERSHIP = "ROLE_ACL_OWNERSHIP";
     public static final String ACL_AUDITING = "ROLE_ACL_AUDITING";

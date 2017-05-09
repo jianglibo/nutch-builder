@@ -3,7 +3,6 @@ package com.jianglibo.nutchbuilder.katharsis.dto;
 import java.util.Date;
 
 import io.katharsis.resource.annotations.JsonApiId;
-import io.katharsis.resource.annotations.JsonApiMetaInformation;
 
 public abstract class DtoBase<T, E> implements Dto<T, E> {
 
@@ -12,9 +11,6 @@ public abstract class DtoBase<T, E> implements Dto<T, E> {
 	
 	private Date createdAt;
 	
-//	@JsonApiMetaInformation
-//	private String jwt;
-
 	public Long getId() {
 		return id;
 	}
@@ -30,12 +26,4 @@ public abstract class DtoBase<T, E> implements Dto<T, E> {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
-//	public String getJwt() {
-//		return jwt;
-//	}
-//
-//	public void setJwt(String jwt) {
-//		this.jwt = jwt;
-//	}
 }

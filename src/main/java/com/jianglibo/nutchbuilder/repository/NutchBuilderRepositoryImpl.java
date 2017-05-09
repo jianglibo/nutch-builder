@@ -1,5 +1,7 @@
 package com.jianglibo.nutchbuilder.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -32,7 +34,13 @@ public class NutchBuilderRepositoryImpl extends DistinctSimpleJpaRepository<Nutc
     }
 
 	@Override
-	protected Specification<NutchBuilder> createSpecification(QuerySpec querySpec) {
+	protected long countIfNotCountOne(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	protected List<NutchBuilder> findIfNotFindOne(QuerySpec querySpec) {
 		// TODO Auto-generated method stub
 		return null;
 	}

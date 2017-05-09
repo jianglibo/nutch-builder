@@ -1,6 +1,5 @@
 package com.jianglibo.nutchbuilder;
 
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -14,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,9 +38,11 @@ import com.jianglibo.nutchbuilder.domain.Site.SiteProtocol;
 import com.jianglibo.nutchbuilder.repository.CrawlCatRepository;
 import com.jianglibo.nutchbuilder.repository.MySiteRepository;
 import com.jianglibo.nutchbuilder.repository.SiteRepository;
+import com.jianglibo.nutchbuilder.vo.RoleNames;
 
 import io.katharsis.client.KatharsisClient;
 import io.katharsis.core.internal.boot.KatharsisBoot;
+import io.katharsis.errorhandling.ErrorData;
 import io.katharsis.resource.Document;
 
 public abstract class KatharsisBase extends Tbase {
@@ -85,6 +87,16 @@ public abstract class KatharsisBase extends Tbase {
 	@Value("${katharsis.default-page-limit}")
 	private String pageSize;
 	
+	public List<ErrorData> getErrors(ResponseEntity<String> response) throws JsonParseException, JsonMappingException, IOException {
+		Document d = toDocument(response.getBody());
+		return d.getErrors();
+	}
+	
+	public ErrorData getErrorSingle(ResponseEntity<String> response) throws JsonParseException, JsonMappingException, IOException {
+		Document d = toDocument(response.getBody());
+		return d.getErrors().get(0);
+	}
+	
 	public void deleteAllSitesAndCrawlCats() {
 		List<MySite> mysites = mySiteRepository.findAll();
 		mySiteRepository.delete(mysites);
@@ -109,14 +121,13 @@ public abstract class KatharsisBase extends Tbase {
 	}
 	
 	public Site createSite() {
-		BootUser bu = loginAsAdmin();
 		CrawlCat crawlCat = new CrawlCat();
-		crawlCat.setName("acc");
+		crawlCat.setName("c" + new Random().nextLong());
 		crawlCat.setDescription("dd");
 		crawlCat = ccrepository.save(crawlCat);
 		Site site = new Site();
 		site.setProtocol(SiteProtocol.HTTP);
-		site.setDomainName("a.b.com");
+		site.setDomainName("a" + new Random().nextLong() + ".b.com");
 		site.setCrawlCat(crawlCat);
 		site = siteRepository.save(site);
 		logout();
@@ -192,13 +203,25 @@ public abstract class KatharsisBase extends Tbase {
 	}
 	
 	public String getAdminJwtToken() throws IOException {
-		HttpEntity<String> request = new HttpEntity<String>(getFixtureWithExplicitName("loginAdmin"));
+		return getJwtToken("loginAdmin", RoleNames.ROLE_ADMINISTRATOR);
+	}
+	
+	public String getJwtToken(String fixtrue, String...roles) throws IOException {
+		String c = getFixtureWithExplicitName(fixtrue);
+		
+		Map<String, Object> m = kboot.getObjectMapper().readValue(c, Map.class);
+		m = (Map<String, Object>) m.get("data");
+		m = (Map<String, Object>) m.get("attributes");
+		String username = (String) m.get("username");
+		String password = (String) m.get("password");
+		createBootUserPrincipal(username, password, roles);
+		
+		HttpEntity<String> request = new HttpEntity<String>(c);
 		ResponseEntity<String> response = restTemplate.postForEntity(getBaseURI(JsonApiResourceNames.LOGIN_ATTEMPT), request, String.class);
 		String body = response.getBody();
 		Document d =  kboot.getObjectMapper().readValue(body, Document.class);
 		return d.getSingleData().get().getAttributes().get("jwtToken").asText();
 	}
-	
 	
 	public Document toDocument(String responseBody) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = kboot.getObjectMapper();

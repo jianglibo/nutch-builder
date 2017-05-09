@@ -1,11 +1,13 @@
 package com.jianglibo.nutchbuilder.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 
 import com.jianglibo.nutchbuilder.domain.CrawlFrequency;
+import com.jianglibo.nutchbuilder.katharsis.vo.SimplePageable;
 
 import io.katharsis.queryspec.QuerySpec;
 
@@ -19,13 +21,15 @@ public class CrawlFrequencyRepositoryImpl extends DistinctSimpleJpaRepository<Cr
     public CrawlFrequencyRepositoryImpl(EntityManager entityManager) {
         super(CrawlFrequency.class, entityManager);
     }
-    
-    /**
-     * maybe disabling arbitrary filter feather is judicious.
-     */
+
 	@Override
-	protected Specification<CrawlFrequency> createSpecification(QuerySpec querySpec) {
-		return null;
+	protected long countIfNotCountOne(QuerySpec querySpec) {
+		return countBySpecifiation(null);
+	}
+
+	@Override
+	protected List<CrawlFrequency> findIfNotFindOne(QuerySpec querySpec) {
+		return findBySpecifiation(null, new SimplePageable(querySpec));
 	}
 
 }

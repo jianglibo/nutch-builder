@@ -1,6 +1,8 @@
 package com.jianglibo.nutchbuilder.domain;
 
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,7 +23,7 @@ import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
  */
 @Entity
 @Table(name = "site", uniqueConstraints = { @UniqueConstraint(columnNames = "domainName")})
-public class Site extends BaseEntity {
+public class Site extends BaseEntity implements HasUpdatedAt {
 	
 	public static enum SiteProtocol {
 		HTTP, HTTPS
@@ -34,6 +36,8 @@ public class Site extends BaseEntity {
 	
 	@Enumerated(EnumType.STRING)
 	private SiteProtocol protocol = SiteProtocol.HTTP;
+	
+	private Date updatedAt;
 	
 	@NotEmpty
 	private String domainName;
@@ -60,6 +64,14 @@ public class Site extends BaseEntity {
 		sdto.setProtocol(getProtocol());
 		sdto.setId(getId());
 		return sdto;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public SiteProtocol getProtocol() {

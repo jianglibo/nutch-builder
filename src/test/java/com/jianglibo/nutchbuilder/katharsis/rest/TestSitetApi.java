@@ -3,6 +3,7 @@ package com.jianglibo.nutchbuilder.katharsis.rest;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,9 +17,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.jianglibo.nutchbuilder.KatharsisBase;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
+import com.jianglibo.nutchbuilder.constant.AppErrorCodes;
 import com.jianglibo.nutchbuilder.domain.CrawlCat;
+import com.jianglibo.nutchbuilder.domain.Site;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 
+import io.katharsis.errorhandling.ErrorData;
 import io.katharsis.resource.Document;
 
 public class TestSitetApi  extends KatharsisBase {
@@ -63,7 +67,26 @@ public class TestSitetApi  extends KatharsisBase {
 		writeDto(response, getResourceName(), ActionNames.GET_LIST);
 	}
 	
-
+	
+	@Test
+	public void getListSort() throws InterruptedException, IOException {
+		Site s1 = createSite();
+		Thread.sleep(1000);
+		Site s2 = createSite();
+		assertTrue(s2.getUpdatedAt().after(s1.getUpdatedAt()));
+		ResponseEntity<String> response = requestForBody(jwtToken, getBaseURI() + "?sort=createdAt");
+		List<SiteDto> sds = getList(response, SiteDto.class);
+		assertTrue(sds.get(1).getCreatedAt().after(sds.get(0).getCreatedAt()));
+		
+		response = requestForBody(jwtToken, getBaseURI() + "?sort=-createdAt");
+		sds = getList(response, SiteDto.class);
+		assertTrue(sds.get(0).getCreatedAt().after(sds.get(1).getCreatedAt()));
+		
+		response = requestForBody(getJwtToken("loginUser"), getBaseURI() + "?sort=-createdAt");
+		ErrorData ed = getErrorSingle(response);
+		assertThat(ed.getCode(), equalTo(AppErrorCodes.ACCESS_DENIED));
+	}
+	
 	@Override
 	protected String getResourceName() {
 		return JsonApiResourceNames.SITE;

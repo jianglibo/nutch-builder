@@ -1,4 +1,4 @@
-package com.jianglibo.nutchbuilder.katharsis.dto;
+package com.jianglibo.nutchbuilder.katharsis.vo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +20,7 @@ public class SimplePageable implements Pageable {
 	
 	public SimplePageable(QuerySpec querySpec) {
 		if (querySpec.getLimit() == null) {
-			this.perPage = 10;
+			this.perPage = 0;
 			this.offset = (int)querySpec.getOffset();
 			this.curPage = 0;
 		} else {

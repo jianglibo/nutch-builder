@@ -1,5 +1,7 @@
 package com.jianglibo.nutchbuilder.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.BeansException;
@@ -39,7 +41,12 @@ public class LoginAttemptRepositoryImpl extends DistinctSimpleJpaRepository<Logi
     }
 
 	@Override
-	protected Specification<LoginAttempt> createSpecification(QuerySpec querySpec) {
+	protected long countIfNotCountOne(QuerySpec querySpec) {
+		return 0;
+	}
+
+	@Override
+	protected List<LoginAttempt> findIfNotFindOne(QuerySpec querySpec) {
 		return null;
 	}
 }

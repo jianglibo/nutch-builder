@@ -15,7 +15,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 
-
 @MappedSuperclass
 //@EntityListeners(value = {EntityChangeListener.class})
 public abstract class BaseEntity implements Serializable {
@@ -39,7 +38,11 @@ public abstract class BaseEntity implements Serializable {
     
     @PrePersist
     public void createCreatedAt() {
-    	setCreatedAt(Date.from(Instant.now()));
+    	Date d = Date.from(Instant.now());
+    	setCreatedAt(d);
+    	if (this instanceof HasUpdatedAt) {
+    		((HasUpdatedAt)this).setUpdatedAt(d);
+    	}
     }
     
 	@PreUpdate

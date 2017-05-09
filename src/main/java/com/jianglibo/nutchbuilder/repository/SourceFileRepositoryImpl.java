@@ -1,5 +1,7 @@
 package com.jianglibo.nutchbuilder.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -33,7 +35,14 @@ public class SourceFileRepositoryImpl extends DistinctSimpleJpaRepository<Source
     }
 
 	@Override
-	protected Specification<SourceFile> createSpecification(QuerySpec querySpec) {
+	protected long countIfNotCountOne(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	protected List<SourceFile> findIfNotFindOne(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
