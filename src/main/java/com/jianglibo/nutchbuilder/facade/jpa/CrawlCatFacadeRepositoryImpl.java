@@ -21,7 +21,7 @@ public class CrawlCatFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Crawl
 
 	@Override
 	public CrawlCat findByName(String rn) {
-		return null;
+		return getRepository().findByName(rn);
 	}
 
 }

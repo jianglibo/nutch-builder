@@ -10,6 +10,8 @@ import com.jianglibo.nutchbuilder.facade.RoleFacadeRepository;
 import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.RoleDtoRepository.RoleDtoList;
 
+import io.katharsis.queryspec.QuerySpec;
+
 @Component
 public class RoleDtoRepositoryImpl  extends DtoRepositoryBase<RoleDto, RoleDtoList, Role, RoleFacadeRepository> implements RoleDtoRepository {
 	
@@ -22,4 +24,9 @@ public class RoleDtoRepositoryImpl  extends DtoRepositoryBase<RoleDto, RoleDtoLi
 	}
 //	$r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/roles/32768 -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -Method Delete
 //	$r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/roles -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -ContentType "application/vnd.api+json;charset=UTF-8" -Body '{"data": {"attributes": {"name": "test"}, "type": "roles"}}' -Method Post
+
+	@Override
+	protected RoleDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
+	}
 }

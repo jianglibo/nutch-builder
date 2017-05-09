@@ -1,5 +1,6 @@
 package com.jianglibo.nutchbuilder.facade.jpa;
 
+
 import org.springframework.stereotype.Component;
 
 import com.jianglibo.nutchbuilder.domain.NutchBuilder;
@@ -21,4 +22,5 @@ public class NutchBuilderFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<N
 	public NutchBuilder findByName(String rn) {
 		return getRepository().findByName(rn);
 	}
+
 }

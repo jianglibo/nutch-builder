@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.jianglibo.nutchbuilder.facade.SimplePageable;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 import com.jianglibo.nutchbuilder.util.QuerySpecUtil;
 

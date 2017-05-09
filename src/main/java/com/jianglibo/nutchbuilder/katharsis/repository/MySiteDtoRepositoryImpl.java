@@ -17,6 +17,8 @@ import com.jianglibo.nutchbuilder.katharsis.repository.MySiteDtoRepository.MySit
 import com.jianglibo.nutchbuilder.util.HomepageSplitter;
 import com.jianglibo.nutchbuilder.util.SecurityUtil;
 
+import io.katharsis.queryspec.QuerySpec;
+
 @Component
 public class MySiteDtoRepositoryImpl  extends DtoRepositoryBase<MySiteDto, MySiteDtoList, MySite, MySiteFacadeRepository> implements MySiteDtoRepository {
 	
@@ -57,6 +59,11 @@ public class MySiteDtoRepositoryImpl  extends DtoRepositoryBase<MySiteDto, MySit
 		}
 		entity.setSite(site);
 		return getRepository().save(entity);
+	}
+
+	@Override
+	protected MySiteDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
 	}
 	
 }

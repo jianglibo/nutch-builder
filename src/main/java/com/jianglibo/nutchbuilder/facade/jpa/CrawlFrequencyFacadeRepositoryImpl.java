@@ -16,6 +16,4 @@ public class CrawlFrequencyFacadeRepositoryImpl extends FacadeRepositoryBaseImpl
 	public CrawlFrequencyFacadeRepositoryImpl(CrawlFrequencyRepository jpaRepo) {
 		super(jpaRepo);
 	}
-
-
 }

@@ -3,9 +3,8 @@ package com.jianglibo.nutchbuilder.facade.jpa;
 import java.util.List;
 
 import com.jianglibo.nutchbuilder.facade.FacadeRepositoryBase;
+import com.jianglibo.nutchbuilder.facade.SimplePageable;
 import com.jianglibo.nutchbuilder.repository.RepositoryBase;
-
-import io.katharsis.queryspec.QuerySpec;
 
 public abstract class FacadeRepositoryBaseImpl<T, R extends RepositoryBase<T>> implements FacadeRepositoryBase<T> {
 
@@ -16,13 +15,13 @@ public abstract class FacadeRepositoryBaseImpl<T, R extends RepositoryBase<T>> i
 	}
 	
 	@Override
-	public List<T> findAll(QuerySpec querySpec) {
-		return jpaRepo.findAll(querySpec);
+	public List<T> findRange(long offset, long limit,String...sortFields) {
+		return jpaRepo.findAll(new SimplePageable(offset, limit)).getContent();
 	}
-
+	
 	@Override
-	public long count(QuerySpec querySpec) {
-		return jpaRepo.count(querySpec);
+	public long count() {
+		return jpaRepo.count();
 	}
 
 	@Override

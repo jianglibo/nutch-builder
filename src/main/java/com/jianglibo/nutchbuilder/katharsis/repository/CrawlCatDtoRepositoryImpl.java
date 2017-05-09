@@ -9,6 +9,8 @@ import com.jianglibo.nutchbuilder.facade.CrawlCatFacadeRepository;
 import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.CrawlCatDtoRepository.CrawlCatDtoList;
 
+import io.katharsis.queryspec.QuerySpec;
+
 
 @Component
 public class CrawlCatDtoRepositoryImpl  extends DtoRepositoryBase<CrawlCatDto, CrawlCatDtoList, CrawlCat, CrawlCatFacadeRepository> implements CrawlCatDtoRepository {
@@ -19,4 +21,9 @@ public class CrawlCatDtoRepositoryImpl  extends DtoRepositoryBase<CrawlCatDto, C
 	}
 //	$r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/roles/32768 -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -Method Delete
 //	$r = Invoke-WebRequest -Uri http://localhost:8080/jsonapi/roles -Headers @{Accept="application/vnd.api+json;charset=UTF-8"} -ContentType "application/vnd.api+json;charset=UTF-8" -Body '{"data": {"attributes": {"name": "test"}, "type": "roles"}}' -Method Post
+
+	@Override
+	protected CrawlCatDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
+	}
 }

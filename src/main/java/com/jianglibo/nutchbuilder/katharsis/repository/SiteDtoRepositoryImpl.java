@@ -11,6 +11,8 @@ import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.SiteDtoRepository.SiteDtoList;
 
+import io.katharsis.queryspec.QuerySpec;
+
 @Component
 public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoList, Site, SiteFacadeRepository> implements SiteDtoRepository {
 	
@@ -33,6 +35,11 @@ public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoLi
 		SiteDto siteDto = super.convertToDto(site);
 		siteDto.setCrawlCat(new CrawlCatDto().fromEntity(site.getCrawlCat()));
 		return siteDto;
+	}
+
+	@Override
+	protected SiteDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
 	}
 
 }

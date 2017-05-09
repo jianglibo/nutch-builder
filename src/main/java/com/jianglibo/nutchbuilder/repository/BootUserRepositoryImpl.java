@@ -14,20 +14,20 @@ import io.katharsis.queryspec.QuerySpec;
  * @author jianglibo@gmail.com
  *
  */
-public class BootUserRepositoryImpl extends DistinctSimpleJpaRepository<BootUser> implements RepositoryBase<BootUser>{
+public class BootUserRepositoryImpl extends SimpleJpaRepositoryBase<BootUser> implements RepositoryBase<BootUser>{
 
     @Autowired
     public BootUserRepositoryImpl(EntityManager entityManager) {
         super(BootUser.class, entityManager);
     }
 
-	@Override
-	protected long countIfNotCountOne(QuerySpec querySpec) {
-		return 0;
-	}
-
-	@Override
-	protected List<BootUser> findIfNotFindOne(QuerySpec querySpec) {
-		return null;
-	}
+//	@Override
+//	protected long countIfNotCountOne(QuerySpec querySpec) {
+//		return 0;
+//	}
+//
+//	@Override
+//	protected List<BootUser> findIfNotFindOne(QuerySpec querySpec) {
+//		return null;
+//	}
 }

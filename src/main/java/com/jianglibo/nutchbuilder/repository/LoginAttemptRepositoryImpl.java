@@ -16,7 +16,7 @@ import com.jianglibo.nutchbuilder.domain.LoginAttempt;
 
 import io.katharsis.queryspec.QuerySpec;
 
-public class LoginAttemptRepositoryImpl extends DistinctSimpleJpaRepository<LoginAttempt>  implements  ApplicationContextAware, RepositoryBase<LoginAttempt> {
+public class LoginAttemptRepositoryImpl extends SimpleJpaRepositoryBase<LoginAttempt>  implements  ApplicationContextAware, RepositoryBase<LoginAttempt> {
 
     @SuppressWarnings("unused")
     private EntityManager entityManager;
@@ -40,13 +40,13 @@ public class LoginAttemptRepositoryImpl extends DistinctSimpleJpaRepository<Logi
         this.context = applicationContext;
     }
 
-	@Override
-	protected long countIfNotCountOne(QuerySpec querySpec) {
-		return 0;
-	}
-
-	@Override
-	protected List<LoginAttempt> findIfNotFindOne(QuerySpec querySpec) {
-		return null;
-	}
+//	@Override
+//	protected long countIfNotCountOne(QuerySpec querySpec) {
+//		return 0;
+//	}
+//
+//	@Override
+//	protected List<LoginAttempt> findIfNotFindOne(QuerySpec querySpec) {
+//		return null;
+//	}
 }

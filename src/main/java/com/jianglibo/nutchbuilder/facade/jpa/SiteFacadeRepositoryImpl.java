@@ -10,8 +10,6 @@ import com.jianglibo.nutchbuilder.facade.SiteFacadeRepository;
 import com.jianglibo.nutchbuilder.repository.SiteRepository;
 import com.jianglibo.nutchbuilder.vo.RoleNames;
 
-import io.katharsis.queryspec.QuerySpec;
-
 /**
  * @author jianglibo@gmail.com
  *
@@ -21,12 +19,6 @@ public class SiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Site, Sit
 
 	public SiteFacadeRepositoryImpl(SiteRepository jpaRepo) {
 		super(jpaRepo);
-	}
-	
-	@Override
-	@PreAuthorize("hasAnyRole(" + "'" + RoleNames.ROLE_ADMINISTRATOR + "'" + ",'" + RoleNames.ROLE_SITEMANAGER + "')")
-	public List<Site> findAll(QuerySpec querySpec) {
-		return super.findAll(querySpec);
 	}
 
 	@Override

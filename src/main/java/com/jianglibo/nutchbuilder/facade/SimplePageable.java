@@ -1,7 +1,8 @@
-package com.jianglibo.nutchbuilder.katharsis.vo;
+package com.jianglibo.nutchbuilder.facade;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,6 +18,25 @@ public class SimplePageable implements Pageable {
 	private final int curPage;
 	
 	private final int offset;
+	
+	
+	public SimplePageable(long offset, long limit,String...filterFields) {
+		this.offset = (int) offset;
+		this.perPage = (int) limit;
+		this.curPage = (int) Math.ceil(offset / limit);
+		if (filterFields.length == 0) {
+			this.sort = null;
+		} else {
+			List<Order> orders = Stream.of(filterFields).map(field -> {
+				if (field.startsWith("-")) {
+					return new Order(Sort.Direction.DESC, field);
+				} else {
+					return new Order(Sort.Direction.ASC, field);
+				}
+			}).collect(Collectors.toList());
+			this.sort = new Sort(orders);
+		}
+	}
 	
 	public SimplePageable(QuerySpec querySpec) {
 		if (querySpec.getLimit() == null) {
@@ -37,7 +57,6 @@ public class SimplePageable implements Pageable {
 			sort = null;
 		}
 	}
-
 
 	@Override
 	public int getPageNumber() {

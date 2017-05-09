@@ -19,8 +19,8 @@ import com.jianglibo.nutchbuilder.domain.BaseEntity;
 import com.jianglibo.nutchbuilder.facade.FacadeRepositoryBase;
 import com.jianglibo.nutchbuilder.katharsis.dto.Dto;
 import com.jianglibo.nutchbuilder.katharsis.exception.AppException;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil;
 
-import io.katharsis.queryspec.FilterSpec;
 import io.katharsis.queryspec.QuerySpec;
 import io.katharsis.repository.ResourceRepositoryBase;
 import io.katharsis.resource.list.ResourceListBase;
@@ -129,25 +129,31 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		return null;
 	}
 	
+	/**
+	 * Branch out from here. Implements common pattern here.
+	 */
 	@Override
 	public L findAll(QuerySpec querySpec) {
-		Long count = 0L;
+		Optional<Long> id = QuerySpecUtil.hasId(querySpec);
 		List<E> entities = new ArrayList<>();
-		E one;
-		
-		Optional<FilterSpec> fsOp = querySpec.getFilters().stream().filter(f -> f.getAttributePath().size() == 1 && f.getAttributePath().get(0).equals("id")).findAny();
-
-		if (fsOp.isPresent()) {
-			one = repository.findOne((Long) fsOp.get().getValue());
-			if (one != null) {
-				count = 1L;
-				entities.add(one);
+		if (id.isPresent()) {
+			E e = repository.findOne(id.get());
+			if (e != null) {
+				entities.add(e);
 			}
-		} else {
-			count = repository.count(querySpec);
-			entities = repository.findAll(querySpec);
+			return convertToResourceList(entities, 1L);
 		}
 		
+		if (querySpec.getFilters().isEmpty()) {
+			return convertToResourceList(repository.findRange(querySpec.getOffset(), querySpec.getLimit(), QuerySpecUtil.getSortFields(querySpec)), repository.count());
+		} else {
+			return findAllWithQuerySpec(querySpec);
+		}
+	}
+	
+	protected abstract L findAllWithQuerySpec(QuerySpec querySpec);
+
+	protected L convertToResourceList(List<E> entities, long count) {
 		List<T> list = entities.stream().map(entity -> convertToDto(entity)).collect(Collectors.toList());		
 		L listOb = null;
 		try {

@@ -17,6 +17,8 @@ import com.jianglibo.nutchbuilder.katharsis.dto.UserDto.OnCreateGroup;
 import com.jianglibo.nutchbuilder.katharsis.repository.UserDtoRepository.UserDtoList;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
+import io.katharsis.queryspec.QuerySpec;
+
 @Component
 public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoList, BootUser, BootUserFacadeRepository> implements UserDtoRepository {
 	
@@ -59,5 +61,11 @@ public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoLis
 			entity = getRepository().patch(entity, dto);
 			return dto.fromEntity(entity);
 		}
+	}
+
+
+	@Override
+	protected UserDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
 	}
 }

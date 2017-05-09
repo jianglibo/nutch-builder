@@ -21,6 +21,4 @@ public class NutchBuilderTemplateFacadeRepositoryImpl extends FacadeRepositoryBa
 	public NutchBuilderTemplate findByName(String rn) {
 		return getRepository().findByName(rn);
 	}
-
-
 }

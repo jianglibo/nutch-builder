@@ -23,6 +23,8 @@ import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.LoginAttemptDtoRepository.LoginAttemptDtoList;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
+import io.katharsis.queryspec.QuerySpec;
+
 @Component
 @Transactional
 public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttemptDto, LoginAttemptDtoList, LoginAttempt, LoginAttemptFacadeRepository> implements LoginAttemptDtoRepository {
@@ -88,6 +90,11 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 				getRepository().save(loginAttemp);
 				throw e;
 		}
+	}
+
+	@Override
+	protected LoginAttemptDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
 	}
 	
 }

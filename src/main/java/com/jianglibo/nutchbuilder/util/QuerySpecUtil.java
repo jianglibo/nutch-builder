@@ -1,7 +1,9 @@
 package com.jianglibo.nutchbuilder.util;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import io.katharsis.queryspec.Direction;
 import io.katharsis.queryspec.FilterOperator;
 import io.katharsis.queryspec.FilterSpec;
 import io.katharsis.queryspec.QuerySpec;
@@ -24,6 +26,13 @@ public class QuerySpecUtil {
 		} else {
 			return Optional.empty();
 		}
+	}
+	
+	public static String[] getSortFields(QuerySpec spec) {
+		return spec.getSort().stream().map(sort -> {
+			String f = sort.getAttributePath().stream().collect(Collectors.joining(","));
+			return sort.getDirection() == Direction.ASC ? f : "-" + f;
+		}).toArray(f -> new String[]{});
 	}
 	
 	public static Optional<String> getFilterStringValue(QuerySpec querySpec, String fn) {

@@ -24,5 +24,4 @@ public class MySiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<MySite,
 	public MySite save(MySite entity) {
 		return super.save(entity);
 	}
-	
 }

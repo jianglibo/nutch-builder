@@ -11,6 +11,8 @@ import com.jianglibo.nutchbuilder.katharsis.dto.CrawlFrequencyDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.CrawlFrequencyDtoRepository.CrawlFrequencyDtoList;
 
+import io.katharsis.queryspec.QuerySpec;
+
 
 @Component
 public class CrawlFrequencyDtoRepositoryImpl  extends DtoRepositoryBase<CrawlFrequencyDto, CrawlFrequencyDtoList, CrawlFrequency, CrawlFrequencyFacadeRepository> implements CrawlFrequencyDtoRepository {
@@ -28,5 +30,10 @@ public class CrawlFrequencyDtoRepositoryImpl  extends DtoRepositoryBase<CrawlFre
 		SiteDto sd = dto.getSite();
 		entity.setSite(siteRepository.findOne(sd.getId()));
 		return getRepository().save(entity);
+	}
+
+	@Override
+	protected CrawlFrequencyDtoList findAllWithQuerySpec(QuerySpec querySpec) {
+		return null;
 	}
 }

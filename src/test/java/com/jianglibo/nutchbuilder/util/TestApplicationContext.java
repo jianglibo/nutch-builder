@@ -14,7 +14,7 @@ import org.springframework.data.repository.support.Repositories;
 import com.jianglibo.nutchbuilder.Tbase;
 import com.jianglibo.nutchbuilder.config.DtoEntityMapper;
 import com.jianglibo.nutchbuilder.domain.Role;
-import com.jianglibo.nutchbuilder.repository.DistinctSimpleJpaRepository;
+import com.jianglibo.nutchbuilder.repository.SimpleJpaRepositoryBase;
 import com.jianglibo.nutchbuilder.repository.RepositoryBase;
 import com.jianglibo.nutchbuilder.repository.RoleRepository;
 
@@ -37,7 +37,7 @@ public class TestApplicationContext extends Tbase {
 	@Test
 	public void t() {
 		Map<String, RepositoryBase> rbs = context.getBeansOfType(RepositoryBase.class);
-		Map<String, DistinctSimpleJpaRepository> dsrs = context.getBeansOfType(DistinctSimpleJpaRepository.class);
+		Map<String, SimpleJpaRepositoryBase> dsrs = context.getBeansOfType(SimpleJpaRepositoryBase.class);
 		assertThat(rbs.size() / 2, equalTo(dsrs.size()));
 		
 		Set<String> keys = dsrs.keySet();

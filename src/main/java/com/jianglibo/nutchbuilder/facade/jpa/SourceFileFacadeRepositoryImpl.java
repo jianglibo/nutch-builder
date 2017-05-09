@@ -16,6 +16,4 @@ public class SourceFileFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Sou
 	public SourceFileFacadeRepositoryImpl(SourceFileRepository jpaRepo) {
 		super(jpaRepo);
 	}
-
-
 }
