@@ -1,13 +1,13 @@
 package com.jianglibo.nutchbuilder.facade;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+import java.util.List;
 
-import com.jianglibo.nutchbuilder.constant.PreAuthorizeExpression;
 import com.jianglibo.nutchbuilder.domain.MySite;
 
 public interface MySiteFacadeRepository extends FacadeRepositoryBase<MySite> {
 
-	@PreAuthorize(PreAuthorizeExpression.IS_FULLY_AUTHENTICATED)
-	MySite save(MySite entity);
+	List<MySite> findMine(long userId, long offset, Long limit, SortBroker...sortBrokers);
+
+	long countMine(long userId, long offset, Long limit, SortBroker...sortBrokers);
 	
 }

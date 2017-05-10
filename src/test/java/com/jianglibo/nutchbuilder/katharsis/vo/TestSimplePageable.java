@@ -33,8 +33,8 @@ public class TestSimplePageable {
 		assertThat(sp.getPageSize(), equalTo(10));
 		
 		spec = new QuerySpec(SiteDto.class);
-		FilterSpec idf = new FilterSpec(Arrays.asList("id"), FilterOperator.EQ, 1000L);
+		FilterSpec idf = new FilterSpec(Arrays.asList("id"), FilterOperator.EQ, Arrays.asList(1000L));
 		spec.setFilters(Arrays.asList(idf));
-		assertTrue(QuerySpecUtil.hasId(spec).isPresent());
+		assertTrue(QuerySpecUtil.hasMyId(spec).size() > 0);
 	}
 }

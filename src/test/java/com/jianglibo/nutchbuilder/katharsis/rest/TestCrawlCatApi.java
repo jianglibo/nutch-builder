@@ -29,7 +29,6 @@ public class TestCrawlCatApi  extends KatharsisBase {
 		deleteAllSitesAndCrawlCats();
 	}
 	
-	
 	@Test
 	public void tAddOne() throws JsonParseException, JsonMappingException, IOException {
 		ResponseEntity<String> response = postItem(jwtToken);
@@ -49,6 +48,12 @@ public class TestCrawlCatApi  extends KatharsisBase {
 		printme(response.getBody());
 		response = requestForBody(jwtToken, getRelationshipsRelated(crawlCatBody, JsonApiResourceNames.SITE));
 		printme(response.getBody());
+	}
+	
+	@Test
+	public void notAllowAdd() throws IOException {
+		ResponseEntity<String> response = postItem(getNormalJwtToken());
+		assertErrors(response);
 	}
 	
 	@Override

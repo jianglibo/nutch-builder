@@ -10,6 +10,7 @@ import com.jianglibo.nutchbuilder.domain.CrawlCat;
 import com.jianglibo.nutchbuilder.facade.CrawlCatFacadeRepository;
 import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.CrawlCatDtoRepository.CrawlCatDtoList;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil.RelationQuery;
 
 import io.katharsis.queryspec.QuerySpec;
 
@@ -31,6 +32,12 @@ public class CrawlCatDtoRepositoryImpl  extends DtoRepositoryBase<CrawlCatDto, C
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected CrawlCatDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
 		// TODO Auto-generated method stub
 		return null;
 	}

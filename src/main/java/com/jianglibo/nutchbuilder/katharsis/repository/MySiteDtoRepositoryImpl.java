@@ -15,8 +15,11 @@ import com.jianglibo.nutchbuilder.facade.CrawlCatFacadeRepository;
 import com.jianglibo.nutchbuilder.facade.MySiteFacadeRepository;
 import com.jianglibo.nutchbuilder.facade.SiteFacadeRepository;
 import com.jianglibo.nutchbuilder.katharsis.dto.MySiteDto;
+import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.MySiteDtoRepository.MySiteDtoList;
 import com.jianglibo.nutchbuilder.util.HomepageSplitter;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil.RelationQuery;
 import com.jianglibo.nutchbuilder.util.SecurityUtil;
 
 import io.katharsis.queryspec.QuerySpec;
@@ -36,6 +39,14 @@ public class MySiteDtoRepositoryImpl  extends DtoRepositoryBase<MySiteDto, MySit
 		this.siteRepository = siteRepository;
 		this.bootUserRepository = bootUserRepository;
 		this.crawlCatFacadeRepository = crawlCatFacadeRepository;
+	}
+	
+	@Override
+	public MySiteDto findOne(Long id, QuerySpec querySpec) {
+		MySite md =  getRepository().findOne(id);
+		MySiteDto mdo = new MySiteDto().fromEntity(md);
+		mdo.setCreator(new UserDto().fromEntity(md.getCreator()));
+		return mdo;
 	}
 
 	@Override
@@ -70,7 +81,16 @@ public class MySiteDtoRepositoryImpl  extends DtoRepositoryBase<MySiteDto, MySit
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
-		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected MySiteDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
+		if ("creator".equals(rq.getRelationName())) {
+			List<MySite> mysites = getRepository().findMine(rq.getRelationIds().get(0), querySpec.getOffset(), querySpec.getLimit(), QuerySpecUtil.getSortBrokers(querySpec));
+			long count = getRepository().countMine(rq.getRelationIds().get(0), querySpec.getOffset(), querySpec.getLimit(), QuerySpecUtil.getSortBrokers(querySpec));
+			return convertToResourceList(mysites, count);
+		}
 		return null;
 	}
 	

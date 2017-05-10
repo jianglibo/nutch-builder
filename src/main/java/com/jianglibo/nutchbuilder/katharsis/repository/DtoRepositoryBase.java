@@ -2,7 +2,6 @@ package com.jianglibo.nutchbuilder.katharsis.repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +20,7 @@ import com.jianglibo.nutchbuilder.katharsis.dto.Dto;
 import com.jianglibo.nutchbuilder.katharsis.exception.AppException;
 import com.jianglibo.nutchbuilder.katharsis.exception.UnsortableException;
 import com.jianglibo.nutchbuilder.util.QuerySpecUtil;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil.RelationQuery;
 
 import io.katharsis.queryspec.QuerySpec;
 import io.katharsis.repository.ResourceRepositoryBase;
@@ -132,17 +132,15 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	
 	/**
 	 * Branch out from here. Implements common pattern here.
+	 * [creator.id EQ [229376]]
 	 */
 	@Override
 	public L findAll(QuerySpec querySpec) {
-		Optional<Long> id = QuerySpecUtil.hasId(querySpec);
+		List<Long> ids = QuerySpecUtil.hasMyId(querySpec);
 		List<E> entities = new ArrayList<>();
-		if (id.isPresent()) {
-			E e = repository.findOne(id.get());
-			if (e != null) {
-				entities.add(e);
-			}
-			return convertToResourceList(entities, 1L);
+		if (ids.size() > 0) {
+			entities = ids.stream().map(id -> repository.findOne(id)).filter(ne -> ne != null).collect(Collectors.toList());
+			return convertToResourceList(entities, entities.size());
 		}
 		
 		List<String> unsported = checkAllSortableFieldAllowed(querySpec); 
@@ -153,10 +151,16 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		if (querySpec.getFilters().isEmpty()) {
 			return convertToResourceList(repository.findRange(querySpec.getOffset(), querySpec.getLimit(), QuerySpecUtil.getSortBrokers(querySpec)), repository.count());
 		} else {
+			RelationQuery rq = QuerySpecUtil.findRelationQuery(querySpec); 
+			if (rq != null) {
+				return findWithRelationAdnSpec(rq, querySpec);
+			}
 			return findAllWithQuerySpec(querySpec);
 		}
 	}
 	
+	protected abstract L findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec);
+
 	protected abstract List<String> checkAllSortableFieldAllowed(QuerySpec querySpec);
 
 	protected abstract L findAllWithQuerySpec(QuerySpec querySpec);

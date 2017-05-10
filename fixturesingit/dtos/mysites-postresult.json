@@ -1,25 +1,24 @@
 {
   "data" : {
-    "id" : "32768",
+    "id" : "851969",
     "type" : "mysites",
     "attributes" : {
       "cburl" : "http://a.b.c/callback",
-      "createdAt" : 1494311270613,
+      "createdAt" : 1494385449797,
       "cburlVerified" : false,
       "cbsecret" : "nooneknow",
       "homepage" : "http://www.abc.com/start"
     },
     "relationships" : {
       "creator" : {
-        "data" : null,
         "links" : {
-          "self" : "http://localhost:8080/jsonapi/mysites/32768/relationships/creator",
-          "related" : "http://localhost:8080/jsonapi/mysites/32768/creator"
+          "self" : "http://localhost:8080/jsonapi/mysites/851969/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/851969/creator"
         }
       }
     },
     "links" : {
-      "self" : "http://localhost:8080/jsonapi/mysites/32768"
+      "self" : "http://localhost:8080/jsonapi/mysites/851969"
     }
   }
 }

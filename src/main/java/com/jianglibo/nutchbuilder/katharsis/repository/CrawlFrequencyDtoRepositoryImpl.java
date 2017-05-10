@@ -12,6 +12,7 @@ import com.jianglibo.nutchbuilder.facade.SiteFacadeRepository;
 import com.jianglibo.nutchbuilder.katharsis.dto.CrawlFrequencyDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.CrawlFrequencyDtoRepository.CrawlFrequencyDtoList;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil.RelationQuery;
 
 import io.katharsis.queryspec.QuerySpec;
 
@@ -41,6 +42,12 @@ public class CrawlFrequencyDtoRepositoryImpl  extends DtoRepositoryBase<CrawlFre
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected CrawlFrequencyDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
 		// TODO Auto-generated method stub
 		return null;
 	}

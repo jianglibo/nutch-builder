@@ -1,7 +1,5 @@
 package com.jianglibo.nutchbuilder.facade.jpa;
 
-import java.util.List;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
@@ -25,11 +23,5 @@ public class SiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Site, Sit
 	@PreAuthorize("hasAnyRole(" + "'" + RoleNames.ROLE_ADMINISTRATOR + "'" + ",'" + RoleNames.ROLE_SITEMANAGER + "')")
 	public Site findByDomainName(String homepage) {
 		return getRepository().findByDomainName(homepage);
-	}
-
-	@Override
-	@PreAuthorize("hasAnyRole(" + "'" + RoleNames.ROLE_ADMINISTRATOR + "'" + ",'" + RoleNames.ROLE_SITEMANAGER + "')")
-	public List<Site> findAllByOrderByUpdatedAtDesc() {
-		return getRepository().findAllByOrderByUpdatedAtDesc();
 	}
 }

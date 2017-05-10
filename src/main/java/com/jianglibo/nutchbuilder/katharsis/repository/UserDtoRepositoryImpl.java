@@ -16,6 +16,7 @@ import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto.OnCreateGroup;
 import com.jianglibo.nutchbuilder.katharsis.repository.UserDtoRepository.UserDtoList;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil.RelationQuery;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 import io.katharsis.queryspec.QuerySpec;
@@ -73,6 +74,13 @@ public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoLis
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	protected UserDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
 		// TODO Auto-generated method stub
 		return null;
 	}

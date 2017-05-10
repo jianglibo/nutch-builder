@@ -22,6 +22,7 @@ import com.jianglibo.nutchbuilder.katharsis.dto.LoginAttemptDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.UserDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.LoginAttemptDtoRepository.LoginAttemptDtoList;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil.RelationQuery;
 import com.jianglibo.nutchbuilder.vo.BootUserPrincipal;
 
 import io.katharsis.queryspec.QuerySpec;
@@ -100,6 +101,12 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected LoginAttemptDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -9,7 +9,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -38,19 +37,8 @@ public class TestMySitetApi  extends KatharsisBase {
 	 */
 	@Test
 	public void tAddOne() throws JsonParseException, JsonMappingException, IOException {
-		// required for site object.
-		CrawlCat crawlCat = new CrawlCat();
-		crawlCat.setName("html");
-		crawlCat.setDescription("dd");
-		crawlCat = ccrepository.save(crawlCat);
-		
-		Site site = new Site();
-		site.setProtocol(SiteProtocol.HTTP);
-		site.setDomainName("www.abc.com"); // must equals to the domainName's value in mysites-postcontent.json
-		site.setCrawlCat(crawlCat);
-		site = siteRepository.save(site);
-		
-		ResponseEntity<String> response = postItem(jwtToken);
+		csite();
+		response = postItem(jwtToken);
 		writeDto(response, getResourceName(), ActionNames.POST_RESULT);
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
 		
@@ -64,6 +52,44 @@ public class TestMySitetApi  extends KatharsisBase {
 		
 		response = requestForBody(jwtToken, getBaseURI());
 		writeDto(response, getResourceName(), ActionNames.GET_LIST);
+	}
+	
+	private Site csite() {
+		// required for site object.
+		CrawlCat crawlCat = new CrawlCat();
+		crawlCat.setName("html");
+		crawlCat.setDescription("dd");
+		crawlCat = ccrepository.save(crawlCat);
+		
+		Site site = new Site();
+		site.setProtocol(SiteProtocol.HTTP);
+		site.setDomainName("www.abc.com"); // must equals to the domainName's value in mysites-postcontent.json
+		site.setCrawlCat(crawlCat);
+		return siteRepository.save(site);
+	}
+	
+	@Test
+	public void getIncludeCreator() throws IOException {
+		csite();
+		response = postItem(jwtToken);
+		MySiteDto sd = getOne(response, MySiteDto.class);
+		response = requestForBody(jwtToken, getItemUrl(sd.getId()) + "?include=creator");
+		verifyAnyKeys(response, new String[]{"included"});
+		writeDto(response, getResourceName(), ActionNames.GET_ONE_INCLUDE);
+	}
+	
+	@Test
+	public void notAllowFetchAll() throws IOException {
+		response = requestForBody(getNormalJwtToken(), getBaseURI());
+		assertErrors(response);
+	}
+	
+	// /jsonapi/users/196608/relationships/mysites
+	@Test
+	public void allowFetchAll() throws IOException {
+		String tk = getNormalJwtToken();
+		response = requestForBody(tk, getBaseURI(JsonApiResourceNames.BOOT_USER) + "/" + getNormalUserId() + "/relationships/mysites");
+		assertData(response);
 	}
 
 	@Override

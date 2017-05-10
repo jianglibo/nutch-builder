@@ -12,6 +12,7 @@ import com.jianglibo.nutchbuilder.facade.SiteFacadeRepository;
 import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.SiteDtoRepository.SiteDtoList;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil.RelationQuery;
 
 import io.katharsis.queryspec.QuerySpec;
 
@@ -46,6 +47,12 @@ public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoLi
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected SiteDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
 		// TODO Auto-generated method stub
 		return null;
 	}

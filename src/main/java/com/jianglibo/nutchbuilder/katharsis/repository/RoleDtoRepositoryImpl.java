@@ -11,6 +11,7 @@ import com.jianglibo.nutchbuilder.domain.Role;
 import com.jianglibo.nutchbuilder.facade.RoleFacadeRepository;
 import com.jianglibo.nutchbuilder.katharsis.dto.RoleDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.RoleDtoRepository.RoleDtoList;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil.RelationQuery;
 
 import io.katharsis.queryspec.QuerySpec;
 
@@ -34,6 +35,12 @@ public class RoleDtoRepositoryImpl  extends DtoRepositoryBase<RoleDto, RoleDtoLi
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected RoleDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
 		// TODO Auto-generated method stub
 		return null;
 	}

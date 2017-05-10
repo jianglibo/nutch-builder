@@ -1,6 +1,7 @@
 package com.jianglibo.nutchbuilder;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -59,6 +60,8 @@ public abstract class KatharsisBase extends Tbase {
 		public static String GET_ONE_INCLUDE = "getoneinclude";
 	}
 	
+	protected ResponseEntity<String> response;
+	
 	@Autowired
 	@Qualifier("indentOm")
 	protected ObjectMapper indentOm;
@@ -92,9 +95,24 @@ public abstract class KatharsisBase extends Tbase {
 		return d.getErrors();
 	}
 	
+	public void assertErrors(ResponseEntity<String> response) throws JsonParseException, JsonMappingException, IOException {
+		Document d = toDocument(response.getBody());
+		assertThat(d.getErrors().size(), greaterThan(0));
+	}
+	
+	public void assertData(ResponseEntity<String> response) throws JsonParseException, JsonMappingException, IOException {
+		Document d = toDocument(response.getBody());
+		d.getData();
+	}
+
+	
 	public ErrorData getErrorSingle(ResponseEntity<String> response) throws JsonParseException, JsonMappingException, IOException {
 		Document d = toDocument(response.getBody());
 		return d.getErrors().get(0);
+	}
+	
+	public Long getNormalUserId() {
+		return bootUserRepo.findByName("user").getId();
 	}
 	
 	public void deleteAllSitesAndCrawlCats() {
@@ -204,6 +222,10 @@ public abstract class KatharsisBase extends Tbase {
 	
 	public String getAdminJwtToken() throws IOException {
 		return getJwtToken("loginAdmin", RoleNames.ROLE_ADMINISTRATOR);
+	}
+	
+	public String getNormalJwtToken() throws IOException {
+		return getJwtToken("loginUser");
 	}
 	
 	public String getJwtToken(String fixtrue, String...roles) throws IOException {

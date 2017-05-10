@@ -29,7 +29,7 @@ public class MySiteDto extends DtoBase<MySiteDto, MySite> {
 	
 	private String cbsecret;
 	
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.EAGER, opposite="mysites")
+	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_WHEN_NULL,serialize=SerializeType.LAZY, opposite="mysites")
 	private UserDto creator;
 	
 	@Override

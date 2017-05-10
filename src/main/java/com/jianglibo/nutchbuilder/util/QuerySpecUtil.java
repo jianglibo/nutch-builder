@@ -1,5 +1,7 @@
 package com.jianglibo.nutchbuilder.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -19,14 +21,47 @@ import io.katharsis.queryspec.QuerySpec;
  */
 
 public class QuerySpecUtil {
+	
+	public static class RelationQuery {
+		private String relationName;
+		private List<Long> relationIds;
+		
+		public RelationQuery(String relationName, List<Long> relationIds) {
+			setRelationName(relationName);
+			setRelationIds(relationIds);
+		}
+		
+		public String getRelationName() {
+			return relationName;
+		}
+		public void setRelationName(String relationName) {
+			this.relationName = relationName;
+		}
+		public List<Long> getRelationIds() {
+			return relationIds;
+		}
+		public void setRelationIds(List<Long> relationIds) {
+			this.relationIds = relationIds;
+		}
+	}
 
-	public static Optional<Long> hasId(QuerySpec spec) {
+	public static List<Long> hasMyId(QuerySpec spec) {
+		List<Long> ids = new ArrayList<>();
 		Optional<FilterSpec> fs =  spec.getFilters().stream().filter(f -> f.getOperator() == FilterOperator.EQ && f.getAttributePath().size() == 1 && "id".equals(f.getAttributePath().get(0))).findAny();
 		if (fs.isPresent()) {
-			Long id = (Long) fs.get().getValue();
-			return Optional.of(id);
+			return (List<Long>) fs.get().getValue();
 		} else {
-			return Optional.empty();
+			return new ArrayList<>();
+		}
+	}
+	
+	public static RelationQuery findRelationQuery(QuerySpec spec) {
+		List<Long> ids = new ArrayList<>();
+		Optional<FilterSpec> fs =  spec.getFilters().stream().filter(f -> f.getOperator() == FilterOperator.EQ && f.getAttributePath().size() > 1 && "id".equals(f.getAttributePath().get(f.getAttributePath().size() - 1))).findAny();
+		if (fs.isPresent()) {
+			return new RelationQuery(fs.get().getAttributePath().get(0), (List<Long>) fs.get().getValue());
+		} else {
+			return null;
 		}
 	}
 	

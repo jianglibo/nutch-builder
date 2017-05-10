@@ -1,0 +1,61 @@
+{
+  "data" : {
+    "id" : "851968",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "http://a.b.c/callback",
+      "createdAt" : 1494385448848,
+      "cburlVerified" : false,
+      "cbsecret" : "nooneknow",
+      "homepage" : "http://www.abc.com/start"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "131072",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/851968/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/851968/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/851968"
+    }
+  },
+  "included" : [ {
+    "id" : "131072",
+    "type" : "users",
+    "attributes" : {
+      "updatePassword" : false,
+      "gender" : "FEMALE",
+      "displayName" : "admin",
+      "credentialsNonExpired" : true,
+      "roles" : [ ],
+      "mobile" : "123456789012",
+      "mobileVerified" : false,
+      "avatar" : null,
+      "enabled" : true,
+      "emailVerified" : true,
+      "createdAt" : null,
+      "password" : null,
+      "name" : "admin",
+      "accountNonExpired" : true,
+      "email" : "admin@localhost.com",
+      "accountNonLocked" : true
+    },
+    "relationships" : {
+      "mysites" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/users/131072/relationships/mysites",
+          "related" : "http://localhost:8080/jsonapi/users/131072/mysites"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/users/131072"
+    }
+  } ]
+}
