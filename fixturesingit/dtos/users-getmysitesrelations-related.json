@@ -1,0 +1,213 @@
+{
+  "data" : [ {
+    "id" : "1310730",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494797300,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-9102311163502744541.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310730/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310730/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310730"
+    }
+  }, {
+    "id" : "1310731",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494797301,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-7476435405408598104.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310731/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310731/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310731"
+    }
+  }, {
+    "id" : "1310732",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494797303,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-7631957356297380483.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310732/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310732/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310732"
+    }
+  }, {
+    "id" : "1310733",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494797304,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp5475948021809025103.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310733/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310733/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310733"
+    }
+  }, {
+    "id" : "1310734",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494797305,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp8584767217171616735.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310734/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310734/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310734"
+    }
+  }, {
+    "id" : "1310735",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494797307,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-7719667390482840591.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310735/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310735/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310735"
+    }
+  }, {
+    "id" : "1310736",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494797308,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp3512184384685609078.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310736/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310736/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310736"
+    }
+  }, {
+    "id" : "1310737",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494797309,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp2481070792218670621.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310737/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310737/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310737"
+    }
+  }, {
+    "id" : "1310738",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494797311,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-2128827316665563782.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310738/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310738/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310738"
+    }
+  }, {
+    "id" : "1310739",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494797313,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp3517228447444106302.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310739/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310739/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310739"
+    }
+  } ]
+}

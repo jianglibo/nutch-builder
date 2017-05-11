@@ -74,14 +74,12 @@ public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoLis
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
 	protected UserDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

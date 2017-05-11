@@ -99,7 +99,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		return convertToDto(entity);
 	}
 	
-	public T convertToDto(E entity) {
+	protected T convertToDto(E entity) {
 		if (entity == null) {
 			return null;
 		}

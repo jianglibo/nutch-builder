@@ -1,0 +1,24 @@
+{
+  "data" : [ {
+    "id" : "1310720",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494494795494,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-2110870245792515116.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "links" : {
+          "self" : "http://localhost:8080/jsonapi/mysites/1310720/relationships/creator",
+          "related" : "http://localhost:8080/jsonapi/mysites/1310720/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:8080/jsonapi/mysites/1310720"
+    }
+  } ]
+}

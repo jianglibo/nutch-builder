@@ -83,6 +83,13 @@ public class MySiteDtoRepositoryImpl  extends DtoRepositoryBase<MySiteDto, MySit
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
 		return null;
 	}
+	
+	@Override
+	protected MySiteDto convertToDto(MySite entity) {
+		MySiteDto dto = super.convertToDto(entity);
+		dto.setCreator(new UserDto().fromEntity(entity.getCreator()));
+		return dto;
+	}
 
 	@Override
 	protected MySiteDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {

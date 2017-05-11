@@ -115,6 +115,11 @@ public abstract class KatharsisBase extends Tbase {
 		return bootUserRepo.findByName("user").getId();
 	}
 	
+	public void deleteAllUsers() {
+		mySiteRepository.deleteAll();
+		bootUserRepo.deleteAll();
+	}
+	
 	public void deleteAllSitesAndCrawlCats() {
 		List<MySite> mysites = mySiteRepository.findAll();
 		mySiteRepository.delete(mysites);
@@ -152,12 +157,23 @@ public abstract class KatharsisBase extends Tbase {
 		return site;
 	}
 	
+	
+	public Site createSite(CrawlCat crawlCat) {
+		Site site = new Site();
+		site.setProtocol(SiteProtocol.HTTP);
+		site.setDomainName("a.b.com");
+		site.setCrawlCat(crawlCat);
+		site = siteRepository.save(site);
+		return site;
+	}
+	
 	public MySite createMySite() {
 		BootUser bu = loginAsAdmin();
 		CrawlCat crawlCat = new CrawlCat();
 		crawlCat.setName("acc");
 		crawlCat.setDescription("dd");
 		crawlCat = ccrepository.save(crawlCat);
+		
 		Site site = new Site();
 		site.setProtocol(SiteProtocol.HTTP);
 		site.setDomainName("a.b.com");
@@ -173,13 +189,15 @@ public abstract class KatharsisBase extends Tbase {
 		return mySiteRepository.save(mysite);
 	}
 	
-	public Site createSite(CrawlCat crawlCat) {
-		Site site = new Site();
-		site.setProtocol(SiteProtocol.HTTP);
-		site.setDomainName("a.b.com");
-		site.setCrawlCat(crawlCat);
-		site = siteRepository.save(site);
-		return site;
+	public MySite createMySite(BootUser bu, Site site) {
+		MySite mysite = new MySite();
+		mysite.setHomepage("http://hp" + new Random().nextLong() + ".c.com");
+		mysite.setSite(site);
+		mysite.setCbsecret("secret");
+		mysite.setCburl("aaa");
+		mysite.setCburlVerified(true);
+		mysite.setCreator(bu);
+		return mySiteRepository.save(mysite);
 	}
 	
 	public ResponseEntity<String> requestForBody(String jwtToken, String url) throws IOException {
@@ -421,14 +439,14 @@ public abstract class KatharsisBase extends Tbase {
 	
 	protected abstract String getResourceName();
 
-	public ResultActions getList() throws Exception {
-		String s = getBaseURI();
-        MockHttpServletRequestBuilder rhrb = get(s);
-        ResultActions ra = mvc.perform(rhrb//
-                .contentType(mt)//
-                .accept(mt));
-        return ra;
-	}
+//	public ResultActions getList() throws Exception {
+//		String s = getBaseURI();
+//        MockHttpServletRequestBuilder rhrb = get(s);
+//        ResultActions ra = mvc.perform(rhrb//
+//                .contentType(mt)//
+//                .accept(mt));
+//        return ra;
+//	}
 	
 	/**
 	 * 

@@ -27,6 +27,7 @@ public class MySite extends BaseEntity {
 	/**
 	 * urlfilter must contain homeurl. 
 	 */
+	@NotNull
 	private String homepage;
 	
 	@ManyToOne(fetch=FetchType.EAGER)

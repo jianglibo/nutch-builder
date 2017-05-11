@@ -1,24 +1,22 @@
 {
   "data" : [ {
-    "id" : "131072",
+    "id" : "688128",
     "type" : "users",
     "attributes" : {
       "updatePassword" : false,
       "gender" : "FEMALE",
-      "displayName" : "admin",
+      "displayName" : null,
       "credentialsNonExpired" : true,
       "roles" : [ {
-        "id" : 2,
-        "createdAt" : 1493972521093,
-        "name" : "ROLE_USER",
-        "jwt" : null
-      }, {
         "id" : 1,
         "createdAt" : 1493972521017,
-        "name" : "ROLE_ADMINISTRATOR",
-        "jwt" : null
+        "name" : "ROLE_ADMINISTRATOR"
+      }, {
+        "id" : 2,
+        "createdAt" : 1493972521093,
+        "name" : "ROLE_USER"
       } ],
-      "mobile" : "123456789012",
+      "mobile" : null,
       "mobileVerified" : false,
       "avatar" : null,
       "enabled" : true,
@@ -27,19 +25,19 @@
       "password" : null,
       "name" : "admin",
       "accountNonExpired" : true,
-      "email" : "admin@localhost.com",
+      "email" : "admin@m3958.com",
       "accountNonLocked" : true
     },
     "relationships" : {
       "mysites" : {
         "links" : {
-          "self" : "http://localhost:8080/jsonapi/users/131072/relationships/mysites",
-          "related" : "http://localhost:8080/jsonapi/users/131072/mysites"
+          "self" : "http://localhost:8080/jsonapi/users/688128/relationships/mysites",
+          "related" : "http://localhost:8080/jsonapi/users/688128/mysites"
         }
       }
     },
     "links" : {
-      "self" : "http://localhost:8080/jsonapi/users/131072"
+      "self" : "http://localhost:8080/jsonapi/users/688128"
     }
   } ],
   "links" : {
