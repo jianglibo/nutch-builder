@@ -1,6 +1,6 @@
 {
   "data" : [ {
-    "id" : "688128",
+    "id" : "360449",
     "type" : "users",
     "attributes" : {
       "updatePassword" : false,
@@ -8,13 +8,13 @@
       "displayName" : null,
       "credentialsNonExpired" : true,
       "roles" : [ {
-        "id" : 1,
-        "createdAt" : 1493972521017,
-        "name" : "ROLE_ADMINISTRATOR"
-      }, {
         "id" : 2,
-        "createdAt" : 1493972521093,
+        "createdAt" : 1493985147502,
         "name" : "ROLE_USER"
+      }, {
+        "id" : 1,
+        "createdAt" : 1493985147463,
+        "name" : "ROLE_ADMINISTRATOR"
       } ],
       "mobile" : null,
       "mobileVerified" : false,
@@ -31,18 +31,18 @@
     "relationships" : {
       "mysites" : {
         "links" : {
-          "self" : "http://localhost:8080/jsonapi/users/688128/relationships/mysites",
-          "related" : "http://localhost:8080/jsonapi/users/688128/mysites"
+          "self" : "http://localhost:88/jsonapi/users/360449/relationships/mysites",
+          "related" : "http://localhost:88/jsonapi/users/360449/mysites"
         }
       }
     },
     "links" : {
-      "self" : "http://localhost:8080/jsonapi/users/688128"
+      "self" : "http://localhost:88/jsonapi/users/360449"
     }
   } ],
   "links" : {
-    "first" : "http://localhost:8080/jsonapi/users/?page[limit]=20",
-    "last" : "http://localhost:8080/jsonapi/users/?page[limit]=20",
+    "first" : "http://localhost:88/jsonapi/users/?page[limit]=20",
+    "last" : "http://localhost:88/jsonapi/users/?page[limit]=20",
     "next" : null,
     "prev" : null
   },

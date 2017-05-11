@@ -1,24 +1,24 @@
 {
   "data" : [ {
-    "id" : "1310720",
+    "id" : "196608",
     "type" : "mysites",
     "attributes" : {
       "cburl" : "aaa",
-      "createdAt" : 1494494795494,
+      "createdAt" : 1494505419644,
       "cburlVerified" : false,
       "cbsecret" : "secret",
-      "homepage" : "http://hp-2110870245792515116.c.com"
+      "homepage" : "http://hp-6437340638591137994.c.com"
     },
     "relationships" : {
       "creator" : {
         "links" : {
-          "self" : "http://localhost:8080/jsonapi/mysites/1310720/relationships/creator",
-          "related" : "http://localhost:8080/jsonapi/mysites/1310720/creator"
+          "self" : "http://localhost:88/jsonapi/mysites/196608/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/196608/creator"
         }
       }
     },
     "links" : {
-      "self" : "http://localhost:8080/jsonapi/mysites/1310720"
+      "self" : "http://localhost:88/jsonapi/mysites/196608"
     }
   } ]
 }

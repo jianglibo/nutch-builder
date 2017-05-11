@@ -1,6 +1,6 @@
 {
   "data" : {
-    "id" : "688132",
+    "id" : "360453",
     "type" : "users",
     "attributes" : {
       "updatePassword" : false,
@@ -31,13 +31,13 @@
     "relationships" : {
       "mysites" : {
         "links" : {
-          "self" : "http://localhost:8080/jsonapi/users/688132/relationships/mysites",
-          "related" : "http://localhost:8080/jsonapi/users/688132/mysites"
+          "self" : "http://localhost:88/jsonapi/users/360453/relationships/mysites",
+          "related" : "http://localhost:88/jsonapi/users/360453/mysites"
         }
       }
     },
     "links" : {
-      "self" : "http://localhost:8080/jsonapi/users/688132"
+      "self" : "http://localhost:88/jsonapi/users/360453"
     }
   }
 }

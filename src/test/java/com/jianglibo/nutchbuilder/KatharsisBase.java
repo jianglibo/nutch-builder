@@ -209,6 +209,12 @@ public abstract class KatharsisBase extends Tbase {
 		        HttpMethod.GET, request, String.class);
 	}
 	
+	public ResponseEntity<String> addRelation(String fixtureName,String relationName,Long itemId, String jwtToken) throws IOException {
+		HttpEntity<String> request = new HttpEntity<String>(getFixtureWithExplicitName(fixtureName), getAuthorizationHaders(jwtToken));
+		return restTemplate.postForEntity(getItemUrl(itemId) + "/relationships/" + relationName, request, String.class);
+	}
+
+	
 	public ResponseEntity<String> postItemWithExplicitFixtures(String fixtureName, String jwtToken) throws IOException {
 		HttpEntity<String> request = new HttpEntity<String>(getFixtureWithExplicitName(fixtureName), getAuthorizationHaders(jwtToken));
 		return restTemplate.postForEntity(getBaseURI(), request, String.class);

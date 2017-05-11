@@ -63,6 +63,13 @@ public class TestUserApi  extends KatharsisBase {
 		assertThat(userRepository.count(), equalTo(c));
 	}
 	
+//	@Test
+//	public void tAddSiteToUser() throws IOException {
+//		BootUser bu = loginAsAdmin();
+//		response = addRelation("mysites-postcontent", "mysites", bu.getId(), jwtToken);
+//		writeDto(response, getResourceName(), "add-mysites-relation-result");
+//	}
+	
 	@Test
 	public void getMysitesRelationsSelf() throws Exception {
 		BootUser bu = loginAsAdmin();
@@ -79,7 +86,6 @@ public class TestUserApi  extends KatharsisBase {
 		writeDto(response, JsonApiResourceNames.BOOT_USER, "getmysitesrelations-self");
 		mysites = getList(response, MySiteDto.class);
 		assertThat(mysites.size(), equalTo(1));
-
 	}
 	
 	@Test
