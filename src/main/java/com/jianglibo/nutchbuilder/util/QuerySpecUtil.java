@@ -1,6 +1,7 @@
 package com.jianglibo.nutchbuilder.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,7 +60,7 @@ public class QuerySpecUtil {
 		List<Long> ids = new ArrayList<>();
 		Optional<FilterSpec> fs =  spec.getFilters().stream().filter(f -> f.getOperator() == FilterOperator.EQ && f.getAttributePath().size() > 1 && "id".equals(f.getAttributePath().get(f.getAttributePath().size() - 1))).findAny();
 		if (fs.isPresent()) {
-			return new RelationQuery(fs.get().getAttributePath().get(0), (List<Long>) fs.get().getValue());
+			return new RelationQuery(fs.get().getAttributePath().get(0), fs.get().getValue() instanceof Iterable ? (List<Long>)fs.get().getValue() : Arrays.asList((Long)fs.get().getValue()));
 		} else {
 			return null;
 		}
@@ -69,14 +70,14 @@ public class QuerySpecUtil {
 		return spec.getSort().stream().map(sort -> {
 			String f = sort.getAttributePath().stream().collect(Collectors.joining(","));
 			return sort.getDirection() == Direction.ASC ? f : "-" + f;
-		}).toArray(f -> new String[]{});
+		}).toArray(String[]::new);
 	}
 	
 	public static SortBroker[] getSortBrokers(QuerySpec spec) {
 		return spec.getSort().stream().map(sort -> {
 			String f = sort.getAttributePath().stream().collect(Collectors.joining(","));
 			return sort.getDirection() == Direction.ASC ? new SortBroker(f, true) : new SortBroker(f, false);
-		}).toArray(f -> new SortBroker[]{});
+		}).toArray(f -> new SortBroker[f]);
 	}
 	
 	public static Optional<String> getFilterStringValue(QuerySpec querySpec, String fn) {

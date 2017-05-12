@@ -1,6 +1,7 @@
 package com.jianglibo.nutchbuilder.katharsis.repository;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,9 @@ public class CrawlCatDtoRepositoryImpl  extends DtoRepositoryBase<CrawlCatDto, C
 
 	@Override
 	protected CrawlCatDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
-		// TODO Auto-generated method stub
+		if ("sites".equals(rq.getRelationName())) {
+			return convertToResourceList(Arrays.asList(getRepository().findOne(rq.getRelationIds().get(0))), 1);
+		}
 		return null;
 	}
 }

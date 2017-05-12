@@ -58,6 +58,8 @@ public abstract class KatharsisBase extends Tbase {
 		public static String GET_LIST = "getlist";
 		public static String GET_ONE = "getone";
 		public static String GET_ONE_INCLUDE = "getoneinclude";
+		public static String GET_RELATION_SELF = "getrelation-self";
+		public static String GET_RELATION_RELATED = "getrelation-related";
 	}
 	
 	protected ResponseEntity<String> response;
@@ -340,7 +342,8 @@ public abstract class KatharsisBase extends Tbase {
 	}
 	
 	protected Document replaceRelationshipId(String origin,String relationName, Long id) throws JsonParseException, JsonMappingException, IOException {
-		return objectMapper.readValue(replaceRelationshipIdReturnString(origin, relationName, id), Document.class);
+		String ns = replaceRelationshipIdReturnString(origin, relationName, id);
+		return objectMapper.readValue(ns, Document.class);
 	}
 	
 	protected String replaceRelationshipIdReturnString(String origin,String relationName, Long id) throws JsonParseException, JsonMappingException, IOException {

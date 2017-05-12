@@ -26,7 +26,7 @@ public class SiteDto extends DtoBase<SiteDto, Site> {
 	private String entryPath;
 	
 	@NotNull
-	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_ALWAYS,serialize=SerializeType.EAGER, opposite="sites")
+	@JsonApiRelation(lookUp=LookupIncludeBehavior.AUTOMATICALLY_WHEN_NULL,serialize=SerializeType.LAZY, opposite="sites")
 	private CrawlCatDto crawlCat;
 	
 	@Override

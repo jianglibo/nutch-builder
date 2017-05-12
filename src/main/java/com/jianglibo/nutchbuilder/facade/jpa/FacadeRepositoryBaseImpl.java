@@ -20,6 +20,10 @@ public abstract class FacadeRepositoryBaseImpl<T, R extends RepositoryBase<T>> i
 		return jpaRepo.findAll(new SimplePageable(offset, limit, sortFields)).getContent();
 	}
 	
+	protected SimplePageable getSimplePageable(long offset, long limit,SortBroker...sortFields) {
+		return new SimplePageable(offset, limit, sortFields);
+	}
+	
 	@Override
 	public long count() {
 		return jpaRepo.count();

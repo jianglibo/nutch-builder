@@ -1,0 +1,23 @@
+{
+  "data" : [ {
+    "id" : "2392064",
+    "type" : "sites",
+    "attributes" : {
+      "createdAt" : 1494602949503,
+      "protocol" : "HTTP",
+      "domainName" : "a.b.com",
+      "entryPath" : null
+    },
+    "relationships" : {
+      "crawlCat" : {
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/sites/2392064/relationships/crawlCat",
+          "related" : "http://localhost:88/jsonapi/sites/2392064/crawlCat"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/sites/2392064"
+    }
+  } ]
+}

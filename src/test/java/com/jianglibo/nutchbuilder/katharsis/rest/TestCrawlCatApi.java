@@ -44,10 +44,12 @@ public class TestCrawlCatApi  extends KatharsisBase {
 		response = requestForBody(jwtToken, new JsonApiUrlBuilder(getItemUrl(ccd.getId())).withInclude("sites").build()); //include sites
 		writeDto(response, getResourceName(), ActionNames.GET_ONE_INCLUDE);
 		String crawlCatBody = response.getBody();
-		response = requestForBody(jwtToken, getRelationshipsSelf(crawlCatBody, JsonApiResourceNames.SITE));
-		printme(response.getBody());
-		response = requestForBody(jwtToken, getRelationshipsRelated(crawlCatBody, JsonApiResourceNames.SITE));
-		printme(response.getBody());
+		String self = getRelationshipsSelf(crawlCatBody, JsonApiResourceNames.SITE);
+		response = requestForBody(jwtToken, self);
+		writeDto(response, getResourceName(), ActionNames.GET_RELATION_SELF);
+		String related = getRelationshipsRelated(crawlCatBody, JsonApiResourceNames.SITE);
+		response = requestForBody(jwtToken, related);
+		writeDto(response, getResourceName(), ActionNames.GET_RELATION_RELATED);
 	}
 	
 	@Test

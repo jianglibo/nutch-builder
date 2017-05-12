@@ -4,7 +4,6 @@ package com.jianglibo.nutchbuilder.katharsis.repository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.jianglibo.nutchbuilder.domain.Role;
@@ -18,9 +17,6 @@ import io.katharsis.queryspec.QuerySpec;
 @Component
 public class RoleDtoRepositoryImpl  extends DtoRepositoryBase<RoleDto, RoleDtoList, Role, RoleFacadeRepository> implements RoleDtoRepository {
 	
-	@Autowired
-	private ApplicationContext applicationContext;
-
 	@Autowired
 	public RoleDtoRepositoryImpl(RoleFacadeRepository repository) {
 		super(RoleDto.class, RoleDtoList.class, Role.class, repository);

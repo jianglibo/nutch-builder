@@ -61,6 +61,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		repository.delete(id);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public <S extends T> S save(S dto) {
 		if (dto.getId() == null || dto.getId() == 0) {
@@ -149,7 +150,9 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		}
 		
 		if (querySpec.getFilters().isEmpty()) {
-			return convertToResourceList(repository.findRange(querySpec.getOffset(), querySpec.getLimit(), QuerySpecUtil.getSortBrokers(querySpec)), repository.count());
+			entities = repository.findRange(querySpec.getOffset(), querySpec.getLimit(), QuerySpecUtil.getSortBrokers(querySpec));
+			long count = repository.count();
+			return convertToResourceList(entities, count);
 		} else {
 			RelationQuery rq = QuerySpecUtil.findRelationQuery(querySpec); 
 			if (rq != null) {

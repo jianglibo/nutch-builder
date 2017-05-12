@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.jianglibo.nutchbuilder.KatharsisBase;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
+import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.CrawlCat;
 import com.jianglibo.nutchbuilder.domain.Site;
 import com.jianglibo.nutchbuilder.domain.Site.SiteProtocol;
@@ -76,6 +78,20 @@ public class TestMySitetApi  extends KatharsisBase {
 		response = requestForBody(jwtToken, getItemUrl(sd.getId()) + "?include=creator");
 		verifyAnyKeys(response, new String[]{"included"});
 		writeDto(response, getResourceName(), ActionNames.GET_ONE_INCLUDE);
+	}
+	
+	
+	@Test
+	public void getByCreator() throws Exception {
+		BootUser bu = loginAsAdmin();
+		Site site = createSite();
+		IntStream.range(0, 10).forEach(i -> {
+			createMySite(bu, site);
+		});
+		response = requestForBody(jwtToken, getBaseURI() + "?page[limit]=20&filter[mysites][creator][id][EQ]=" + bu.getId() + "&include[mysites]=creator");
+		writeDto(response, JsonApiResourceNames.MY_SITE, "getbycreator");
+		List<MySiteDto> mysites = getList(response, MySiteDto.class);
+		assertThat(mysites.size(), equalTo(10));
 	}
 	
 	@Test

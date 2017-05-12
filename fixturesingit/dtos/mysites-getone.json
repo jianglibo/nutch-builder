@@ -1,10 +1,10 @@
 {
   "data" : {
-    "id" : "851969",
+    "id" : "753665",
     "type" : "mysites",
     "attributes" : {
       "cburl" : "http://a.b.c/callback",
-      "createdAt" : 1494385449797,
+      "createdAt" : 1494601117674,
       "cburlVerified" : false,
       "cbsecret" : "nooneknow",
       "homepage" : "http://www.abc.com/start"
@@ -12,13 +12,13 @@
     "relationships" : {
       "creator" : {
         "links" : {
-          "self" : "http://localhost:8080/jsonapi/mysites/851969/relationships/creator",
-          "related" : "http://localhost:8080/jsonapi/mysites/851969/creator"
+          "self" : "http://localhost:88/jsonapi/mysites/753665/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753665/creator"
         }
       }
     },
     "links" : {
-      "self" : "http://localhost:8080/jsonapi/mysites/851969"
+      "self" : "http://localhost:88/jsonapi/mysites/753665"
     }
   }
 }

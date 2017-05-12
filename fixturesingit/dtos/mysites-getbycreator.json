@@ -1,0 +1,295 @@
+{
+  "data" : [ {
+    "id" : "753666",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494601117959,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-3801501922851432986.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "655365",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/753666/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753666/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/753666"
+    }
+  }, {
+    "id" : "753667",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494601117959,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-1285629112199837821.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "655365",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/753667/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753667/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/753667"
+    }
+  }, {
+    "id" : "753668",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494601117959,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-4676231404975080127.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "655365",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/753668/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753668/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/753668"
+    }
+  }, {
+    "id" : "753669",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494601117959,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-494278979062935012.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "655365",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/753669/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753669/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/753669"
+    }
+  }, {
+    "id" : "753670",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494601117959,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp-6363371836954421721.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "655365",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/753670/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753670/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/753670"
+    }
+  }, {
+    "id" : "753671",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494601117959,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp5884316942961332054.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "655365",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/753671/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753671/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/753671"
+    }
+  }, {
+    "id" : "753672",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494601117959,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp7922900450898770465.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "655365",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/753672/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753672/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/753672"
+    }
+  }, {
+    "id" : "753673",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494601117959,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp8394400584919861466.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "655365",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/753673/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753673/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/753673"
+    }
+  }, {
+    "id" : "753674",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494601117959,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp3839917660228584529.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "655365",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/753674/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753674/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/753674"
+    }
+  }, {
+    "id" : "753675",
+    "type" : "mysites",
+    "attributes" : {
+      "cburl" : "aaa",
+      "createdAt" : 1494601117975,
+      "cburlVerified" : false,
+      "cbsecret" : "secret",
+      "homepage" : "http://hp3169392640784801280.c.com"
+    },
+    "relationships" : {
+      "creator" : {
+        "data" : {
+          "id" : "655365",
+          "type" : "users"
+        },
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/mysites/753675/relationships/creator",
+          "related" : "http://localhost:88/jsonapi/mysites/753675/creator"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/mysites/753675"
+    }
+  } ],
+  "included" : [ {
+    "id" : "655365",
+    "type" : "users",
+    "attributes" : {
+      "updatePassword" : false,
+      "gender" : "FEMALE",
+      "displayName" : null,
+      "credentialsNonExpired" : true,
+      "roles" : [ ],
+      "mobile" : null,
+      "mobileVerified" : false,
+      "avatar" : null,
+      "enabled" : true,
+      "emailVerified" : true,
+      "createdAt" : null,
+      "password" : null,
+      "name" : "admin",
+      "accountNonExpired" : true,
+      "email" : "admin@m3958.com",
+      "accountNonLocked" : true
+    },
+    "relationships" : {
+      "mysites" : {
+        "links" : {
+          "self" : "http://localhost:88/jsonapi/users/655365/relationships/mysites",
+          "related" : "http://localhost:88/jsonapi/users/655365/mysites"
+        }
+      }
+    },
+    "links" : {
+      "self" : "http://localhost:88/jsonapi/users/655365"
+    }
+  } ],
+  "links" : {
+    "first" : "http://localhost:88/jsonapi/mysites/?page[limit]=20&filter[mysites][creator][id][EQ]=655365&include[mysites]=creator",
+    "last" : "http://localhost:88/jsonapi/mysites/?page[limit]=20&filter[mysites][creator][id][EQ]=655365&include[mysites]=creator",
+    "next" : null,
+    "prev" : null
+  },
+  "meta" : {
+    "totalResourceCount" : 10
+  }
+}

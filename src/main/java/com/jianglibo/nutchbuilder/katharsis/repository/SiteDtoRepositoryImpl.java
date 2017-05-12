@@ -12,6 +12,7 @@ import com.jianglibo.nutchbuilder.facade.SiteFacadeRepository;
 import com.jianglibo.nutchbuilder.katharsis.dto.CrawlCatDto;
 import com.jianglibo.nutchbuilder.katharsis.dto.SiteDto;
 import com.jianglibo.nutchbuilder.katharsis.repository.SiteDtoRepository.SiteDtoList;
+import com.jianglibo.nutchbuilder.util.QuerySpecUtil;
 import com.jianglibo.nutchbuilder.util.QuerySpecUtil.RelationQuery;
 
 import io.katharsis.queryspec.QuerySpec;
@@ -53,7 +54,11 @@ public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoLi
 
 	@Override
 	protected SiteDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
-		// TODO Auto-generated method stub
+		if ("crawlCat".equals(rq.getRelationName())) {
+			List<Site> sites = getRepository().findByCrawlCat(rq.getRelationIds().get(0), querySpec.getOffset(), querySpec.getLimit(), QuerySpecUtil.getSortBrokers(querySpec));
+			long count = getRepository().countByCrawlCat(rq.getRelationIds().get(0));
+			return convertToResourceList(sites, count);
+		}
 		return null;
 	}
 

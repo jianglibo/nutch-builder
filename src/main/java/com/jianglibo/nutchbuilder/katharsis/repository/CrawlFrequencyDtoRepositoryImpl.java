@@ -42,13 +42,11 @@ public class CrawlFrequencyDtoRepositoryImpl  extends DtoRepositoryBase<CrawlFre
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected CrawlFrequencyDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
