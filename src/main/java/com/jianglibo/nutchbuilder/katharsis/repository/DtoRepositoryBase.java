@@ -140,7 +140,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		List<Long> ids = QuerySpecUtil.hasMyId(querySpec);
 		List<E> entities = new ArrayList<>();
 		if (ids.size() > 0) {
-			entities = ids.stream().map(id -> repository.findOne(id)).filter(ne -> ne != null).collect(Collectors.toList());
+			entities = ids.stream().map(id -> repository.findOneBecauseOfRelation(id)).filter(ne -> ne != null).collect(Collectors.toList());
 			return convertToResourceList(entities, entities.size());
 		}
 		

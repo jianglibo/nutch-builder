@@ -44,6 +44,11 @@ public abstract class FacadeRepositoryBaseImpl<T, R extends RepositoryBase<T>> i
 		return jpaRepo.findOne(id);
 	}
 	
+	@Override
+	public T findOneBecauseOfRelation(Long id) {
+		return jpaRepo.findOne(id);
+	}
+	
 	R getRepository() {
 		return jpaRepo;
 	}

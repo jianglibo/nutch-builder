@@ -8,7 +8,7 @@ spring:
         test-on-borrow: true
     secondarydatasource:
         url: jdbc:mysql://localhost:3306/nutchbuilder?useUnicode=true&characterEncoding=utf-8
-        username: nutchbuilder
+        username: nutchbuilderuser
         password: 123456
         driver-class-name: com.mysql.jdbc.Driver
         validation-query: SELECT 1
@@ -100,13 +100,13 @@ myapp:
     tProjectRoot: e:/nutchBuilderRoot/buildRoot/a
     zkQuoram: s62.host.name,s63.host.name,s64.host.name,s65.host.name,s66.host.name
     jwtConfig:
-      file: d:\jwtsecret.txt
+      file: /etc/nutchbuilder/jwtsecret.txt
       issuer: jianglibo
       principalTokenAlive: 1800000 # 30 minutes
       emailTokenAlive: 172800000 #2 days
 katharsis:
     resourcePackage: com.jianglibo.nutchbuilder.katharsis
-    domainName: http://localhost:8080
+    domainName: https://jianglibo.com:8080
     pathPrefix: /jsonapi
     default-page-limit: 20
     jpa:
