@@ -109,22 +109,16 @@ public class Application {
         return DataSourceBuilder.create().build();
     }
     
-    @Bean("indentOm")
-    public ObjectMapper indentOm() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        return mapper;
-    }
+    // pay attention on JacksonAutoConfiguration.
     
-    
-    @Bean("xmlObjectMapper")
-    public ObjectMapper xmlObjectMapper() {
-    	JacksonXmlModule module = new JacksonXmlModule();
-    	// and then configure, for example:
-//    	module.setDefaultUseWrapper();
-    	return new XmlMapper(module);
-    	// and you can also configure AnnotationIntrospectors 
-    }
+//    @Bean("xmlObjectMapper")
+//    public ObjectMapper xmlObjectMapper() {
+//    	JacksonXmlModule module = new JacksonXmlModule();
+//    	// and then configure, for example:
+////    	module.setDefaultUseWrapper();
+//    	return new XmlMapper(module);
+//    	// and you can also configure AnnotationIntrospectors 
+//    }
     
     
 //    @Bean("asyncJobLauncher")

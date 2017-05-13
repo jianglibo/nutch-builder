@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -63,7 +64,8 @@ public class JwtUtil implements InitializingBean {
 		jwtb.withClaim("avatar", principal.getAvatar());
 		jwtb.withClaim("gender", principal.getGender().name());
 		jwtb.withSubject("principal");
-		jwtb.withArrayClaim("authorities", principal.getAuthorities().stream().map(a -> a.getAuthority()).toArray(size -> new String[size]));
+		String[] ars = principal.getAuthorities().stream().map(a -> a.getAuthority()).toArray(size -> new String[size]);
+		jwtb.withArrayClaim("authorities", ars);
 		return jwtb;
 	}
 	

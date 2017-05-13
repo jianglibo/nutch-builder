@@ -1,12 +1,5 @@
 spring:
     datasource:
-        url: jdbc:hsqldb:file:db/nutchbuilder;shutdown=true
-        username: sa
-        password:
-        driver-class-name: org.hsqldb.jdbc.JDBCDriver
-        validation-query: select 1 from INFORMATION_SCHEMA.SYSTEM_USERS
-        test-on-borrow: true
-    secondarydatasource:
         url: jdbc:mysql://localhost:3306/nutchbuilder?useUnicode=true&characterEncoding=utf-8
         username: nutchbuilderuser
         password: 123456
