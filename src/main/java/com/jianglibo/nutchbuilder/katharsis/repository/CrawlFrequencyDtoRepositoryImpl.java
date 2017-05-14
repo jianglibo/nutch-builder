@@ -31,7 +31,7 @@ public class CrawlFrequencyDtoRepositoryImpl  extends DtoRepositoryBase<CrawlFre
 	@Override
 	public CrawlFrequency saveToBackendRepo(CrawlFrequencyDto dto, CrawlFrequency entity) {
 		SiteDto sd = dto.getSite();
-		entity.setSite(siteRepository.findOne(sd.getId()));
+		entity.setSite(siteRepository.findOne(sd.getId(), true));
 		return getRepository().save(entity);
 	}
 

@@ -1,6 +1,6 @@
 {
   "data" : {
-    "id" : "655364",
+    "id" : "753668",
     "type" : "users",
     "attributes" : {
       "updatePassword" : false,
@@ -31,13 +31,13 @@
     "relationships" : {
       "mysites" : {
         "links" : {
-          "self" : "http://localhost:88/jsonapi/users/655364/relationships/mysites",
-          "related" : "http://localhost:88/jsonapi/users/655364/mysites"
+          "self" : "http://localhost:88/jsonapi/users/753668/relationships/mysites",
+          "related" : "http://localhost:88/jsonapi/users/753668/mysites"
         }
       }
     },
     "links" : {
-      "self" : "http://localhost:88/jsonapi/users/655364"
+      "self" : "http://localhost:88/jsonapi/users/753668"
     }
   }
 }

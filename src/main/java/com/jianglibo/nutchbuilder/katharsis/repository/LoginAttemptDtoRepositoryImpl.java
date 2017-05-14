@@ -83,7 +83,7 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 				dto.setSuccess(true);
 				dto.setPassword("");
 				dto.setJwtToken(jwtUtil.issuePrincipalToken(user));
-				BootUser bu = userRepository.findOne(user.getId());
+				BootUser bu = userRepository.findOne(user.getId(), true);
 				UserDto udto = new UserDto().fromEntity(bu);
 				udto.setRoles(bu.getRoles().stream().map(r -> new RoleDto().fromEntity(r)).collect(Collectors.toList()));
 				dto.setUser(udto);
@@ -101,13 +101,11 @@ public class LoginAttemptDtoRepositoryImpl  extends DtoRepositoryBase<LoginAttem
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected LoginAttemptDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

@@ -3,6 +3,7 @@ package com.jianglibo.nutchbuilder.facade.jpa;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
@@ -29,8 +30,8 @@ public class SiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Site, Sit
 	}
 
 	@Override
-	@PreAuthorize("hasAnyRole(" + "'" + RoleNames.ROLE_ADMINISTRATOR + "'" + ",'" + RoleNames.ROLE_SITEMANAGER + "')")
-	public Site findByDomainName(String homepage) {
+	@PreAuthorize("hasAnyRole(" + "'" + RoleNames.ROLE_ADMINISTRATOR + "'" + ",'" + RoleNames.ROLE_SITEMANAGER + "') or #internalCall")
+	public Site findByDomainName(String homepage,@P("internalCall") boolean internalCall) {
 		return getRepository().findByDomainName(homepage);
 	}
 	
@@ -41,6 +42,7 @@ public class SiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Site, Sit
 	}
 
 	@Override
+	@PreAuthorize("hasAnyRole(" + "'" + RoleNames.ROLE_ADMINISTRATOR + "'" + ",'" + RoleNames.ROLE_SITEMANAGER + "')")
 	public List<Site> findByCrawlCat(Long crawlCatId, long offset, Long limit, SortBroker...sortBrokers) {
 		return getRepository().findByCrawlCat(ccRepository.findOne(crawlCatId), getSimplePageable(offset, limit, sortBrokers));
 	}
@@ -48,5 +50,11 @@ public class SiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<Site, Sit
 	@Override
 	public long countByCrawlCat(Long crawlCatId) {
 		return getRepository().countByCrawlCat(ccRepository.findOne(crawlCatId));
+	}
+	
+	@Override
+	@PreAuthorize("hasAnyRole(" + "'" + RoleNames.ROLE_ADMINISTRATOR + "'" + ",'" + RoleNames.ROLE_SITEMANAGER + "')")
+	public Site findOne(Long id, boolean internalCall) {
+		return super.findOne(id, internalCall);
 	}
 }

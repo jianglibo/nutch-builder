@@ -17,6 +17,7 @@ import com.jianglibo.nutchbuilder.KatharsisBase;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.CrawlCat;
+import com.jianglibo.nutchbuilder.domain.MySite;
 import com.jianglibo.nutchbuilder.domain.Site;
 import com.jianglibo.nutchbuilder.domain.Site.SiteProtocol;
 import com.jianglibo.nutchbuilder.katharsis.dto.MySiteDto;
@@ -38,7 +39,7 @@ public class TestMySitetApi  extends KatharsisBase {
 	 * @throws IOException
 	 */
 	@Test
-	public void tAddOne() throws JsonParseException, JsonMappingException, IOException {
+	public void tAdminAddOne() throws JsonParseException, JsonMappingException, IOException {
 		csite();
 		response = postItem(jwtToken);
 		writeDto(response, getResourceName(), ActionNames.POST_RESULT);
@@ -55,6 +56,23 @@ public class TestMySitetApi  extends KatharsisBase {
 		response = requestForBody(jwtToken, getBaseURI());
 		writeDto(response, getResourceName(), ActionNames.GET_LIST);
 	}
+	
+	@Test
+	public void tNormalUserAddOne() throws JsonParseException, JsonMappingException, IOException {
+		csite();
+		response = postItem(getNormalJwtToken());
+		assertData(response);
+	}
+	
+	
+	@Test
+	public void tGetOtherUsers() throws IOException {
+		Site site = csite();
+		MySite ms = createMySite(createBootUser("a", "ccccccccc"),site);
+		response = requestForBody(getNormalJwtToken(), getItemUrl(ms.getId()));
+		assertAccessDenied(response);
+	}
+
 	
 	private Site csite() {
 		// required for site object.
@@ -83,7 +101,7 @@ public class TestMySitetApi  extends KatharsisBase {
 	
 	@Test
 	public void getByCreator() throws Exception {
-		BootUser bu = loginAsAdmin();
+		BootUser bu = createBootUser("a", "ssssssssskiisks");
 		Site site = createSite();
 		IntStream.range(0, 10).forEach(i -> {
 			createMySite(bu, site);
@@ -97,7 +115,7 @@ public class TestMySitetApi  extends KatharsisBase {
 	@Test
 	public void notAllowFetchAll() throws IOException {
 		response = requestForBody(getNormalJwtToken(), getBaseURI());
-		assertErrors(response);
+		assertAccessDenied(response);
 	}
 	
 	// /jsonapi/users/196608/relationships/mysites

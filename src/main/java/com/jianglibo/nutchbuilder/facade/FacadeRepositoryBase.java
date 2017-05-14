@@ -12,7 +12,6 @@ public interface FacadeRepositoryBase<T> {
 	
 	void delete(Long id);
 
-	T findOne(Long id);
-	
-	T findOneBecauseOfRelation(Long id);
+	T findOne(Long id, boolean internalCall);
+
 }

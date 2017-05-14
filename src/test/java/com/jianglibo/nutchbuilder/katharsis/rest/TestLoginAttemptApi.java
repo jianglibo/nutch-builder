@@ -26,26 +26,28 @@ public class TestLoginAttemptApi  extends KatharsisBase {
 	@Test
 	public void tWrongCredential() throws JsonParseException, JsonMappingException, IOException {
 		HttpEntity<String> request = new HttpEntity<String>(getFixtureWithExplicitName("loginAttemptWrongCredential"));
-		ResponseEntity<String> response = restTemplate.postForEntity(getBaseURI(), request, String.class);
-		
+		response = restTemplate.postForEntity(getBaseURI(), request, String.class);
 		String body = response.getBody();
 		writeDto(response, getResourceName(), "failed");
+		
 		Document d =  kboot.getObjectMapper().readValue(body, Document.class);
 		List<ErrorData> eds = d.getErrors();
 		assertThat(eds.size(), equalTo(1));
-		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.BAD_REQUEST.value()));
+		
+		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.FORBIDDEN.value()));
 	}
 	
 	@Test
 	public void tRightCredential() throws JsonParseException, JsonMappingException, IOException {
 		HttpEntity<String> request = new HttpEntity<String>(getFixtureWithExplicitName("loginAttemptRightCredential"));
-		ResponseEntity<String> response = restTemplate.postForEntity(getBaseURI(), request, String.class);
+		response = restTemplate.postForEntity(getBaseURI(), request, String.class);
 		String body = response.getBody();
 		writeDto(response, getResourceName(), "success");
 		Document d =  kboot.getObjectMapper().readValue(body, Document.class);
 		List<ErrorData> eds = d.getErrors();
 		assertNull(eds);
 		assertThat(response.getStatusCodeValue(), equalTo(HttpStatus.CREATED.value()));
+		verifyOneKey(response, "jwtToken", "data", "attributes");
 	}
 
 	@Override

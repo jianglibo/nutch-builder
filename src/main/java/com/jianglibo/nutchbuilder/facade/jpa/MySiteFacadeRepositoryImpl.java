@@ -9,6 +9,7 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.method.P;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
@@ -55,6 +56,12 @@ public class MySiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<MySite,
 		return getRepository().count(creatorEq(userId));
 	}
 	
+	@Override
+	@PostAuthorize("(returnObject.creator.id == principal.id) or #internalCall")
+	public MySite findOne(Long id, @P("internalCall") boolean internalCall) {
+		return super.findOne(id, internalCall);
+	}
+	
 	public Specification<MySite> creatorEq(long userId) {
 		return new Specification<MySite>() {
 			public Predicate toPredicate(Root<MySite> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
@@ -63,5 +70,4 @@ public class MySiteFacadeRepositoryImpl extends FacadeRepositoryBaseImpl<MySite,
 			}
 		};
 	}
-	
 }

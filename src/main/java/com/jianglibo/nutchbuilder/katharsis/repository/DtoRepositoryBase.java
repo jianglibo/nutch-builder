@@ -73,7 +73,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	
 	public T modify(T dto) {
 		validate(dto);
-		E entity = repository.findOne(dto.getId());
+		E entity = repository.findOne(dto.getId(), false);
 		entity = dto.patch(entity);
 		return dto.fromEntity(saveToBackendRepo(dto, entity));
 	}
@@ -96,7 +96,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	
 	@Override
 	public T findOne(Long id, QuerySpec querySpec) {
-		E entity = repository.findOne(id);
+		E entity = repository.findOne(id, false);
 		return convertToDto(entity);
 	}
 	
@@ -118,7 +118,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 	public L findAll(Iterable<Long> ids, QuerySpec querySpec) {
 		List<E> bus = new ArrayList<>();
 		for (Long lid : ids) {
-			bus.add(repository.findOne(lid));
+			bus.add(repository.findOne(lid, false));
 		}
 		L udl;
 		try {
@@ -140,7 +140,7 @@ public abstract class DtoRepositoryBase<T extends Dto<T, E>, L extends ResourceL
 		List<Long> ids = QuerySpecUtil.hasMyId(querySpec);
 		List<E> entities = new ArrayList<>();
 		if (ids.size() > 0) {
-			entities = ids.stream().map(id -> repository.findOneBecauseOfRelation(id)).filter(ne -> ne != null).collect(Collectors.toList());
+			entities = ids.stream().map(id -> repository.findOne(id, true)).filter(ne -> ne != null).collect(Collectors.toList());
 			return convertToResourceList(entities, entities.size());
 		}
 		

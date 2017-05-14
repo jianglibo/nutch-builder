@@ -43,7 +43,7 @@ public class MySiteDtoRepositoryImpl  extends DtoRepositoryBase<MySiteDto, MySit
 	
 	@Override
 	public MySiteDto findOne(Long id, QuerySpec querySpec) {
-		MySite md =  getRepository().findOne(id);
+		MySite md =  getRepository().findOne(id, false);
 		MySiteDto mdo = new MySiteDto().fromEntity(md);
 		mdo.setCreator(new UserDto().fromEntity(md.getCreator()));
 		return mdo;
@@ -57,16 +57,16 @@ public class MySiteDtoRepositoryImpl  extends DtoRepositoryBase<MySiteDto, MySit
 		} else {
 			uid = SecurityUtil.getLoginUserId();
 		}
-		BootUser bu = bootUserRepository.findOne(uid);
+		BootUser bu = bootUserRepository.findOne(uid, true);
 		entity.setCreator(bu);
 		HomepageSplitter hs = new HomepageSplitter(dto.getHomepage()).split();		
-		Site site = siteRepository.findByDomainName(hs.getDomainName());
+		Site site = siteRepository.findByDomainName(hs.getDomainName(), true);
 		if (site == null) {
 			site = new Site();
 			site.setProtocol(hs.getProtocol());
 			site.setDomainName(hs.getDomainName());
 			site.setEntryPath(hs.getEntryPath());
-			CrawlCat cc = crawlCatFacadeRepository.findByName("html");
+			CrawlCat cc = crawlCatFacadeRepository.findByName("html", true);
 			site.setCrawlCat(cc);
 			site = siteRepository.save(site);
 		}

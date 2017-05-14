@@ -2,6 +2,8 @@ package com.jianglibo.nutchbuilder.startup;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import org.slf4j.Logger;
@@ -27,7 +29,11 @@ public class CrawlCatInit implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		File[] files = applicationConfig.getBuildRootPath().toFile().listFiles(new FileFilter() {
+		Path p = applicationConfig.getBuildRootPath();
+		if (!(Files.exists(p) && Files.isDirectory(p))) {
+			return;
+		}
+		File[] files = p.toFile().listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File pathname) {
 				return pathname.isDirectory();

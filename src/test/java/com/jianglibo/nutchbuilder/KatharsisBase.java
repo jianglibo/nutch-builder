@@ -1,10 +1,10 @@
 package com.jianglibo.nutchbuilder;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -23,14 +23,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
 import com.jianglibo.nutchbuilder.config.StatelessCSRFFilter;
+import com.jianglibo.nutchbuilder.constant.AppErrorCodes;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.CrawlCat;
 import com.jianglibo.nutchbuilder.domain.MySite;
@@ -102,9 +101,14 @@ public abstract class KatharsisBase extends Tbase {
 		assertThat(d.getErrors().size(), greaterThan(0));
 	}
 	
+	public void assertAccessDenied(ResponseEntity<String> response) throws JsonParseException, JsonMappingException, IOException {
+		ErrorData ed = getErrorSingle(response);
+		assertThat(ed.getCode(), equalTo(AppErrorCodes.ACCESS_DENIED));
+	}
+	
 	public void assertData(ResponseEntity<String> response) throws JsonParseException, JsonMappingException, IOException {
 		Document d = toDocument(response.getBody());
-		d.getData();
+		assertTrue(d.getData().isPresent());
 	}
 
 	
@@ -262,7 +266,7 @@ public abstract class KatharsisBase extends Tbase {
 		m = (Map<String, Object>) m.get("attributes");
 		String username = (String) m.get("username");
 		String password = (String) m.get("password");
-		createBootUserPrincipal(username, password, roles);
+		createBootUser(username, password, roles);
 		
 		HttpEntity<String> request = new HttpEntity<String>(c);
 		ResponseEntity<String> response = restTemplate.postForEntity(getBaseURI(JsonApiResourceNames.LOGIN_ATTEMPT), request, String.class);
@@ -488,6 +492,15 @@ public abstract class KatharsisBase extends Tbase {
 		for(String k: keys) {
 			assertTrue("should contains key: " + k, dest.containsKey(k));
 		}
+	}
+	
+	public void verifyOneKey(ResponseEntity<String> response, String key, String...paths) throws JsonParseException, JsonMappingException, IOException {
+		Map<String, Object> m = objectMapper.readValue(response.getBody(), Map.class);
+		Map<String, Object> dest = m;
+		for(String seg : paths) {
+			dest = (Map<String, Object>) dest.get(seg);
+		}
+		assertTrue("should contains key: " + key, dest.containsKey(key));
 	}
 
 }

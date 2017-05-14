@@ -1,6 +1,6 @@
 {
   "errors" : [ {
-    "code" : "E400003",
+    "code" : "E4001000",
     "title" : "org.springframework.security.core.AuthenticationException",
     "detail" : "Bad credentials"
   } ]

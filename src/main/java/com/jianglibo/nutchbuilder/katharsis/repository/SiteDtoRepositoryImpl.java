@@ -30,7 +30,7 @@ public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoLi
 
 	@Override
 	public Site saveToBackendRepo(SiteDto dto, Site entity) {
-		entity.setCrawlCat(ccrepository.findOne(dto.getCrawlCat().getId()));
+		entity.setCrawlCat(ccrepository.findOne(dto.getCrawlCat().getId(), true));
 		return getRepository().save(entity);
 	}
 	
@@ -48,7 +48,6 @@ public class SiteDtoRepositoryImpl  extends DtoRepositoryBase<SiteDto, SiteDtoLi
 
 	@Override
 	protected List<String> checkAllSortableFieldAllowed(QuerySpec querySpec) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

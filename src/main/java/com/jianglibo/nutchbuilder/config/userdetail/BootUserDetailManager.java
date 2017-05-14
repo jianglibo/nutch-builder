@@ -155,7 +155,7 @@ public class BootUserDetailManager implements UserDetailsManager {
 
 		logger.debug("Changing password for user '" + username + "'");
 		BootUserPrincipal pvo = (BootUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		BootUser p = userRepo.findOne(pvo.getId());		
+		BootUser p = userRepo.findOne(pvo.getId(), true);		
 		p.setPassword(passwordEncoder.encode(newPassword));		
 		userRepo.save(p);
 		SecurityContextHolder.getContext().setAuthentication(

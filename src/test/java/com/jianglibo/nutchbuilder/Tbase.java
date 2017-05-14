@@ -103,7 +103,7 @@ public abstract class Tbase extends M3958TsBase {
     }
     
     protected BootUser loginAsAdmin() {
-    	BootUser bu = createBootUserPrincipal("admin",null,RoleNames.ROLE_ADMINISTRATOR);
+    	BootUser bu = createBootUser("admin",null,RoleNames.ROLE_ADMINISTRATOR);
         BootUserPrincipal pv = new BootUserPrincipal(bu);
         BootUserAuthentication saut = new BootUserAuthentication(pv);
         SecurityUtil.doLogin(saut);
@@ -111,12 +111,12 @@ public abstract class Tbase extends M3958TsBase {
     }
     
     protected void loginAs(String name, String...rns) {
-        BootUserPrincipal pv = new BootUserPrincipal(createBootUserPrincipal(name,null,rns));
+        BootUserPrincipal pv = new BootUserPrincipal(createBootUser(name,null,rns));
         BootUserAuthentication saut = new BootUserAuthentication(pv);
         SecurityUtil.doLogin(saut);
     }
 
-    protected BootUser createBootUserPrincipal(String name,String password, String... rns) {
+    protected BootUser createBootUser(String name,String password, String... rns) {
     	
         List<Role> rnl = Stream.of(rns).map(Role::new).collect(Collectors.toList()); 
         

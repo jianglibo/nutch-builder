@@ -30,14 +30,14 @@
       "self" : "http://localhost:88/jsonapi/roles/3"
     }
   }, {
-    "id" : "327680",
+    "id" : "425984",
     "type" : "roles",
     "attributes" : {
-      "createdAt" : 1494340861358,
+      "createdAt" : 1494682830480,
       "name" : "ROLE_USER_T1"
     },
     "links" : {
-      "self" : "http://localhost:88/jsonapi/roles/327680"
+      "self" : "http://localhost:88/jsonapi/roles/425984"
     }
   } ],
   "links" : {

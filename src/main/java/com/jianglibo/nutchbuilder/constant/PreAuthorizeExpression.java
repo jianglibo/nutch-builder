@@ -15,5 +15,9 @@ public class PreAuthorizeExpression {
 	public static final String DENY_ALL = "denyAll";
 	
 	public static final String ID_EQUAL_OR_HAS_ADMINISTRATOR_ROLE = "hasRole('ADMINISTRATOR') or (#id == principal.id)";
+	
+	public static final String RETURN_OBJECT_EQ = "returnObject";
+	
+	public static final String PRINCIPAL_ID = "principal.id";
 
 }

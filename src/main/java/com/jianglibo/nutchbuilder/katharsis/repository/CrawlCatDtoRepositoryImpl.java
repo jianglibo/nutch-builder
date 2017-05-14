@@ -40,7 +40,7 @@ public class CrawlCatDtoRepositoryImpl  extends DtoRepositoryBase<CrawlCatDto, C
 	@Override
 	protected CrawlCatDtoList findWithRelationAdnSpec(RelationQuery rq, QuerySpec querySpec) {
 		if ("sites".equals(rq.getRelationName())) {
-			return convertToResourceList(Arrays.asList(getRepository().findOne(rq.getRelationIds().get(0))), 1);
+			return convertToResourceList(Arrays.asList(getRepository().findOne(rq.getRelationIds().get(0), true)), 1);
 		}
 		return null;
 	}

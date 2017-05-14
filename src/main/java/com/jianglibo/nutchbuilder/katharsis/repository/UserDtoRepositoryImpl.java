@@ -59,7 +59,7 @@ public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoLis
 			return dto;
 		} else {
 			validate(dto);
-			BootUser entity = getRepository().findOne(dto.getId());
+			BootUser entity = getRepository().findOne(dto.getId(), false);
 			entity = getRepository().patch(entity, dto);
 			return dto.fromEntity(entity);
 		}

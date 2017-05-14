@@ -56,7 +56,7 @@ public class TestRoleApi  extends KatharsisBase {
 	}
 	
 	@Test
-	public void tAddOne() throws JsonParseException, JsonMappingException, IOException {
+	public void tAdmionAddOne() throws JsonParseException, JsonMappingException, IOException {
 		ResponseEntity<String> response = postItem(jwtToken);
 		response.getHeaders().containsKey(JwtUtil.REFRESH_HEADER_NAME);
 		writeDto(response, getResourceName(), ActionNames.POST_RESULT);
@@ -76,6 +76,13 @@ public class TestRoleApi  extends KatharsisBase {
 		writeDto(response, getResourceName(), ActionNames.GET_ONE);
 		deleteByExchange(jwtToken, getItemUrl(newRole.getId()));
 	}
+	
+	@Test
+	public void tNormalUserAddOne() throws JsonParseException, JsonMappingException, IOException {
+		response = postItem(getNormalJwtToken());
+		assertAccessDenied(response);
+	}
+
 
 	@Override
 	protected String getResourceName() {
