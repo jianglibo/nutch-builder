@@ -24,8 +24,6 @@ public class UserDto extends DtoBase<UserDto, BootUser> {
 	
 	public static interface OnCreateGroup {}
 	
-	private boolean updatePassword = false;
-	
     private String displayName;
 
     private String avatar;
@@ -225,14 +223,6 @@ public class UserDto extends DtoBase<UserDto, BootUser> {
 		entity.setMobile(getMobile());
 		entity.setName(getName());
 		return entity;
-	}
-
-	public boolean isUpdatePassword() {
-		return updatePassword;
-	}
-
-	public void setUpdatePassword(boolean updatePassword) {
-		this.updatePassword = updatePassword;
 	}
 
 	public List<MySiteDto> getMysites() {

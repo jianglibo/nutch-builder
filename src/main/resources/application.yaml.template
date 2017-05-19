@@ -78,6 +78,7 @@ logging:
 #        org.springframework.batch: DEBUG
 #        org.apache.hadoop.mapreduce: DEBUG
 myapp:
+    disableCsrf: true
     dataWriteSourcePath: E:\OneDriver\OneDrive\浙江政务服务网
     mapredout: e:\mapredout
     templateRoot: /home/nutchbuilder/templateRoot
@@ -133,7 +134,7 @@ spring:
         validation-query: SELECT 1
         test-on-borrow: true
     security:
-        enable-csrf: true
+        enable-csrf: false
     thymeleaf:
       cache: false
     jpa:
@@ -163,7 +164,7 @@ logging:
 #        org.springframework.batch: DEBUG
 #        org.apache.hadoop.mapreduce: DEBUG
 myapp:
-    disableCsrf: false
+    disableCsrf: true
     dataWriteSourcePath: E:\OneDriver\OneDrive\浙江政务服务网
     mapredout: e:\mapredout
     templateRoot: e:\nutchBuilderRoot\templateRoot

@@ -3,7 +3,7 @@ package com.jianglibo.nutchbuilder.katharsis.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.jianglibo.nutchbuilder.annotation.DtoToEntity;
 import com.jianglibo.nutchbuilder.config.JsonApiResourceNames;
@@ -18,7 +18,7 @@ import io.katharsis.resource.annotations.SerializeType;
 @DtoToEntity(entityClass=CrawlCat.class)
 public class CrawlCatDto extends DtoBase<CrawlCatDto, CrawlCat>{
 	
-	@NotBlank
+	@Pattern(regexp="[a-zA-Z]{1}[a-zA-Z0-9]+")
 	private String name;
 	
 	private String description;

@@ -11,6 +11,10 @@ public abstract class DtoBase<T, E> implements Dto<T, E> {
 	
 	private Date createdAt;
 	
+	private String dtoApplyTo;
+	
+	private String dtoAction;
+	
 	public Long getId() {
 		return id;
 	}
@@ -26,4 +30,21 @@ public abstract class DtoBase<T, E> implements Dto<T, E> {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	public String getDtoApplyTo() {
+		return dtoApplyTo;
+	}
+
+	public void setDtoApplyTo(String dtoApplyTo) {
+		this.dtoApplyTo = dtoApplyTo;
+	}
+
+	public String getDtoAction() {
+		return dtoAction;
+	}
+
+	public void setDtoAction(String dtoAction) {
+		this.dtoAction = dtoAction;
+	}
+
 }

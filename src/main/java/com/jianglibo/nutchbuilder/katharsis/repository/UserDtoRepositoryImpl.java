@@ -52,7 +52,7 @@ public class UserDtoRepositoryImpl extends DtoRepositoryBase<UserDto, UserDtoLis
 	
 	@Override
 	public UserDto modify(UserDto dto) {
-		if (dto.isUpdatePassword()) {
+		if ("password".equals(dto.getDtoApplyTo())) {
 			validate(dto, OnCreateGroup.class, Default.class);
 			getRepository().updatePassword(dto.getId(), passwordEncoder.encode(dto.getPassword()));
 			dto.setPassword("");
