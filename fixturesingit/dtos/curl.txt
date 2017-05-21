@@ -1,0 +1,3 @@
+curl -X POST -d @loginAdmin.json http://localhost/jsonapi/loginAttempts
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcmluY.zdWIiOiJwcmlu" http://localhost/jsonapi/users
+

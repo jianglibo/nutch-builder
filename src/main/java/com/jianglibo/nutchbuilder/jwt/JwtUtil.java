@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +27,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jianglibo.nutchbuilder.config.ApplicationConfig;
+import com.jianglibo.nutchbuilder.constant.AppErrorCodes;
 import com.jianglibo.nutchbuilder.domain.Role;
 import com.jianglibo.nutchbuilder.domain.BootUser;
 import com.jianglibo.nutchbuilder.domain.BootUser.Gender;
@@ -146,7 +146,7 @@ public class JwtUtil implements InitializingBean {
 	
 	
 	public void writeForbidenResponse(HttpServletResponse response, String message) throws JsonGenerationException, JsonMappingException, IOException {
-		ErrorData ed = new ErrorDataBuilder().setCode(String.valueOf(HttpServletResponse.SC_FORBIDDEN)).setTitle("Forbidden").setDetail(message).build();
+		ErrorData ed = new ErrorDataBuilder().setCode(String.valueOf(AppErrorCodes.AUTHENTICATION)).setTitle("Hadn't authenticated yet.").setDetail(message).build();
 		ErrorResponse er = ErrorResponse.builder().setStatus(500).setSingleErrorData(ed).build();
 		Document newd = er.toResponse()
 						.getDocument();

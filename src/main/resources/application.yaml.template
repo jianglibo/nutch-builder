@@ -1,6 +1,6 @@
 spring:
     datasource:
-        url: jdbc:mysql://localhost:3306/nutchbuilder?useUnicode=true&characterEncoding=utf-8
+        url: jdbc:mysql://localhost:3306/nutchbuilder?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
         username: nutchbuilderuser
         password: 123456
         driver-class-name: com.mysql.jdbc.Driver
@@ -32,7 +32,7 @@ spring:
         prefix: classpath:/templates/
         suffix: .html
     security:
-        enable-csrf: true
+        enable-csrf: false
     batch:
         job: 
             names: mknutchbasefolder-job 
@@ -109,7 +109,7 @@ katharsis:
 spring:
     profiles: prod
     security:
-        enable-csrf: true
+        enable-csrf: false
 server:
     port: 9008
     tomcat:
@@ -155,6 +155,8 @@ spring:
         maxUnjarNumber: 6
         # from core-default.xml, property name is "hadoop.tmp.dir"
         unjarFolder: D:/tmp/hadoop-admin
+server:
+    port: 88
 logging:
     level:
         org.springframework.security.web.access: DEBUG
