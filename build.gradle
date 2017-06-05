@@ -3,11 +3,9 @@ buildscript {
         springBootVersion = '1.5.3.RELEASE'
     }
     repositories {
+        jcenter()
         mavenCentral()
         mavenLocal()
-        maven {
-            url "http://maven.jahia.org/maven2"
-        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -61,11 +59,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
+    jcenter()
     mavenCentral()
     mavenLocal()
-    maven {
-       url "http://maven.jahia.org/maven2"
-    }
 }
 
 //    compile("org.springframework.boot:spring-boot-starter-amqp")

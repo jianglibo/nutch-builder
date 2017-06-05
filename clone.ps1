@@ -6,6 +6,8 @@ Param(
 
 $templateProject = $PSCommandPath | Split-Path -Parent
 
+$DistinctPackageName = "nutchbuilder"
+
 if (-not (Split-Path $DstFolder -IsAbsolute)) {
     $DstFolder = $templateProject | Split-Path -Parent | Join-Path -ChildPath $DstFolder
 }
@@ -25,8 +27,8 @@ if ($wholePackagePath.Count -lt 3) {
 $packagePathButLast = $wholePackagePath[0..($wholePackagePath.Count - 2)] -join "/"
 $lastPackageName = $wholePackagePath[-1]
 
-$resource = "java/main/resources"
-$testSource = "src/test/java"
+# $resource = "java/main/resources"
+# $testSource = "src/test/java"
 
 $fixPositionsToCopy = "gradle","gradlew","gradlew.bat","emberworkspace","learning", ".gitignore", ".gitattributes", "build.gradle", "CHANGE.md", "clone.ps1", "gradle.properties.template","README.md", "roo.txt"
 
@@ -34,13 +36,13 @@ function Copy-JaveSource {
     Param([parameter(ValueFromPipeline=$true)]$srcFolders)
     Process {
         $srcFolder = $_
-        $s = $templateProject | Join-Path -ChildPath $srcFolder | Join-Path -ChildPath "hello"
+        $s = $templateProject | Join-Path -ChildPath $srcFolder | Join-Path -ChildPath $DistinctPackageName
         $d = $DstFolder | Join-Path -ChildPath $srcFolder | Join-Path -ChildPath $packagePathButLast
         if (-not (Test-Path $d -PathType Container)) {
             New-Item -Path $d -ItemType Directory -Force
         }
         Copy-Item -Path $s -Destination $d -Recurse
-        Rename-Item -Path ($d | Join-Path -ChildPath "hello") -NewName ($d | Join-Path -ChildPath $lastPackageName)
+        Rename-Item -Path ($d | Join-Path -ChildPath $DistinctPackageName) -NewName ($d | Join-Path -ChildPath $lastPackageName)
 
         Get-ChildItem -Path $d -Recurse `
         | Where-Object {$_ -is [System.IO.FileInfo]} `
@@ -55,14 +57,14 @@ function Copy-JaveSource {
                 # if ($done) {
                 #     $newLines += $line
                 # } else {
-                    if ($line -match "^package\s+hello;$") {
+                    if ($line -match "^package\s+${DistinctPackageName};$") {
                         $newLines += "package ${RootPackage};"
-                    } elseif ($line -match "^package\s+hello(\..*)$") {
+                    } elseif ($line -match "^package\s+${DistinctPackageName}(\..*)$") {
                         $newLines += "package $RootPackage" + $Matches[1]
-                    } elseif ($line -match "^import\s+hello(\..*)$") {
+                    } elseif ($line -match "^import\s+${DistinctPackageName}(\..*)$") {
                         $newLines += "import $RootPackage" + $Matches[1]
                     } else {
-                        $newLines += $line -replace "\Whello\.", "${RootPackage}."
+                        $newLines += $line -replace "\W${DistinctPackageName}\.", "${RootPackage}."
                     }
                 # }
             }
