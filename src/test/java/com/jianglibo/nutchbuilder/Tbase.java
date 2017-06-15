@@ -72,15 +72,6 @@ public abstract class Tbase extends M3958TsBase {
         return objectMapper;
     }
     
-//	@TestConfiguration
-//	static class Config {
-//		// does't work
-//		@Bean
-//		public TestRestTemplate testTemplate() {
-//			return new TestRestTemplate();
-//		}
-//	}
-//
     @Before
     public void before() {
         mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
